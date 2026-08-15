@@ -1,0 +1,17 @@
+# 金鑰 — 絕對不可進版控（本 repo 為公開）
+.env
+.env.*
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 作業系統
+.DS_Store
+Thumbs.db
+
+# 範本檔要進版控（上面的 .env.* 會誤擋）
+!.env.example

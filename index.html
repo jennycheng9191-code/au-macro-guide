@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>澳洲總經指標手冊</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314120E'/><path d='M5 22 L11 14 L17 18 L27 7' stroke='%23C08A2A' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* 密碼閘門：未解鎖前整頁不顯示（gate.js 驗證通過後移除 .locked） */
+  html.locked body > *{visibility:hidden}
+  html.locked #gate{visibility:visible}
+  #gate{position:fixed;inset:0;z-index:99;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;padding:24px}
+  #gate form{width:100%;max-width:320px;background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:10px}
+  .gate-title{font-size:16px;font-weight:600}
+  .gate-sub{font-size:12.5px;color:var(--text3);margin-bottom:4px}
+  #gatepw{background:var(--card2);border:1px solid var(--border);border-radius:8px;
+    color:var(--text);padding:10px 12px;font-size:15px;min-height:42px;font-family:inherit}
+  #gatego{justify-content:center}
+  .gate-msg{font-size:12px;color:var(--bear);min-height:16px}
+</style>
+<script>document.documentElement.className='locked';</script>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>澳洲總經指標手冊</h1>
+    <div class="sub"><span id="cardcount">—</span> 個指標 · 資料每日自動更新 · <span id="buildtime">載入中…</span></div>
+    <div class="actions">
+      <a class="btn btn-primary"
+         href="https://github.com/jennycheng9191-code/au-macro-guide/actions/workflows/update.yml"
+         target="_blank" rel="noopener"
+         title="開啟 GitHub Actions，按 Run workflow 立刻重抓一次；跑完切回本頁會自動載入新資料">
+        立即更新 ↗
+      </a>
+      <button class="btn" id="reload" title="不重整頁面，直接重抓 latest.json">↻ 重新載入</button>
+      <span class="hint" id="reloadhint"></span>
+    </div>
+    <div class="legend" title="箭頭表示數值本身的升降；顏色與標籤表示這個變動對債市的意義">
+      箭頭＝數值升降　顏色＝債市含義（紅漲綠跌以債價為準）：
+      <span class="bull">利多債市（債價漲）</span>
+      <span class="bear">利空債市（殖利率上行）</span>
+      <span class="flat">灰＝語義不明確，不做判斷</span>
+    </div>
+  </div>
+  <div class="statusbar" id="statusbar"></div>
+</header>
+
+<h2>發布節奏（何時看什麼 · 時間為 AEST）</h2>
+<div class="rhythm">
+  <div class="slot"><div class="when">每週</div><div class="what">AOFM 標售(TB/TN/TIB)</div></div>
+  <div class="slot"><div class="when">每週五 16:30</div><div class="what">RBA 資產負債表 A1</div></div>
+  <div class="slot"><div class="when">月初</div><div class="what">建築許可 · 貿易帳 · PMI</div></div>
+  <div class="slot"><div class="when">約第3–4個週四 11:30</div><div class="what">勞動力調查(失業率/參與率/月工時)</div></div>
+  <div class="slot"><div class="when">約第4個週三 11:30</div><div class="what">月度 CPI 與月度核心</div></div>
+  <div class="slot"><div class="when">月底週四 11:30</div><div class="what">MHSI 家庭月度支出</div></div>
+  <div class="slot"><div class="when">月底最後營業日 11:30</div><div class="what">RBA 金融總量(私部門信貸)</div></div>
+  <div class="slot"><div class="when">RBA 決議日 · 每年8次</div><div class="what">現金利率決議</div></div>
+  <div class="slot"><div class="when">決議後 2 週 11:30</div><div class="what">會議紀要</div></div>
+  <div class="slot"><div class="when">季 · 2/5/8/11月 14:30</div><div class="what">SMP 貨幣政策聲明</div></div>
+  <div class="slot"><div class="when">季 · 1/4/7/10月下旬</div><div class="what">季度 CPI(RBA 正式引用版)</div></div>
+  <div class="slot"><div class="when">季 · 2/5/8/11月中</div><div class="what">WPI 薪資 · Capex(月底)</div></div>
+  <div class="slot"><div class="when">季 · 3/6/9/12月初</div><div class="what">GDP 國民所得帳</div></div>
+</div>
+
+<div class="controls">
+  <div class="chips" id="chips"></div>
+  <div class="searchrow">
+    <input id="q" type="search" placeholder="搜尋指標名稱、機構、母報告…">
+    <span id="count"></span>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>
+  <b>燈號語義</b>　🟢 資料在正常發布間隔內且通過三道關卡　·　🟡 資料過期、或未通過驗證而沿用前值　·　⚪ 未取得<br>
+  <b>方向箭頭</b>　▲▼ 表示該指標<u>本身</u>相對上期的變動方向與幅度；對債市的多空由顏色與標籤另行標示（<span class="bull">紅＝利多債市</span> <span class="bear">綠＝利空債市</span>，比照紅漲綠跌但以債券價格為準）。語義取決於當下情境的指標一律留白不編碼。<br>
+  <b>判讀文字</b>　由量化規則自動生成（榮枯線、3個月年化、V/U比、百分位等）。需要跨指標推理的評論不自動生成，留白由人補。<br>
+  <b>CPI 雙軌</b>　澳洲同時發布月度與季度 CPI，兩者並存且不可互相取代。<u>RBA 貨幣政策聲明與 SMP 引用的是季度數字</u>，月度只提供更即時的方向。各卡已標明「月度」或「季度」，比較時務必對齊同一口徑。<br>
+  <b>資料規則</b>　一律取自官方 API 與官方發布：ABS Data API（SDMX）、RBA 統計表 CSV、AOFM Data Hub。私人機構指標（PMI、NAB、Westpac、Cotality、HIA）只取新聞稿已公開的頭條數字。未通過驗證即保留前值並亮黃燈，不顯示未經驗證的數字。<br>
+  <b>不含行情</b>　本手冊為純總經參考，不收錄 BBSW、ACGB 殖利率、利差等日頻市場行情——行情以 TradingView 為準，手冊硬塞只會產生過期數字。<br>
+  <span id="footer-sources"></span>
+</footer>
+
+<!-- gate.js 驗證通過後才會載入 assets/app.js -->
+<script src="assets/gate.js"></script>
+</body>
+</html>

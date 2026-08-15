@@ -1,0 +1,743 @@
+[
+ {
+  "id": "monthly_cpi_indicator",
+  "order": 0,
+  "n": "CPI 月度(總指數)",
+  "e": "Monthly CPI Indicator",
+  "f": [
+   "inf"
+  ],
+  "mom": "CPI月度報告",
+  "org": "ABS",
+  "t": "月 · 每月最後週三(2027/2起改第4週三)",
+  "read": "2025/11起為官方主要月頻通膨指標,涵蓋完整籃子。看MoM原始值與3個月動能,YoY受基期干擾;RBA政策溝通仍以季度數字為正式錨點,月度數字提供更即時方向感。",
+  "bond": "高於預期強化RBA維持鷹派/延後降息定價,前端AU利率曲線與AU-US利差首當其衝反應。",
+  "rel": "領先:燃油週度價格、進口物價;對照:CPI季度報告(RBA正式引用版)。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/latest-release",
+  "sn": "ABS CPI(月)"
+ },
+ {
+  "id": "monthly_trimmed_mean_cpi",
+  "order": 1,
+  "n": "月度Trimmed Mean(核心)",
+  "e": "Monthly Trimmed Mean CPI",
+  "f": [
+   "inf"
+  ],
+  "p": "CPI月度報告",
+  "org": "ABS",
+  "t": "月 · 隨CPI月度報告",
+  "read": "截尾均值濾除單月極端漲跌分項,是月頻中最受關注的核心通膨代理,但政策權威性仍不如季度版本。",
+  "bond": "月度核心連續高於年化目標區間時,提前預示季度數字風險偏上,曲線前端率先反應。",
+  "rel": "對照:季度Trimmed Mean(官方核心指標)、季度Weighted Median。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/latest-release",
+  "sn": "ABS CPI(月)"
+ },
+ {
+  "id": "quarterly_cpi",
+  "order": 2,
+  "n": "CPI 季度(總指數,RBA正式引用版)",
+  "e": "Quarterly CPI",
+  "f": [
+   "inf"
+  ],
+  "mom": "CPI季度報告",
+  "org": "ABS",
+  "t": "季 · 1/4/7/10月下旬",
+  "read": "RBA貨幣政策聲明與SMP引用的官方通膨基準,樣本涵蓋度優於月度指標;季度數字才是校準現金利率路徑的核心依據。",
+  "bond": "季度數字若與月度趨勢矛盾,是最大的單一事件風險,會引發劇烈曲線重定價。",
+  "rel": "濃縮版:CPI月度Indicator;核心版:季度Trimmed Mean、季度Weighted Median。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/latest-release",
+  "sn": "ABS CPI(季)"
+ },
+ {
+  "id": "quarterly_trimmed_mean_cpi",
+  "order": 3,
+  "n": "季度Trimmed Mean(核心,RBA首選)",
+  "e": "Quarterly Trimmed Mean CPI",
+  "f": [
+   "inf"
+  ],
+  "p": "CPI季度報告",
+  "org": "ABS/RBA",
+  "t": "季 · 隨CPI季度報告",
+  "read": "RBA聲明最常引用的核心通膨量尺,2-3%目標區間的主要校準對象;連續高於3%即構成鷹派敘事支柱。",
+  "bond": "RBA利率決策溝通的第一級變數,權重高於總指數CPI。",
+  "rel": "對照組:季度Weighted Median;早期訊號:月度Trimmed Mean。",
+  "src": "https://www.rba.gov.au/inflation/measures-cpi.html",
+  "sn": "RBA通膨衡量指標"
+ },
+ {
+  "id": "quarterly_weighted_median_cpi",
+  "order": 4,
+  "n": "季度Weighted Median(核心)",
+  "e": "Quarterly Weighted Median CPI",
+  "f": [
+   "inf"
+  ],
+  "p": "CPI季度報告",
+  "org": "ABS/RBA",
+  "t": "季 · 隨CPI季度報告",
+  "read": "RBA另一官方核心通膨衡量,與Trimmed Mean互為驗證;兩者背離時提示通膨分布異常,需檢視個別分項。",
+  "bond": "與Trimmed Mean同向確認時強化政策立場信心;背離時市場定價不確定性上升。",
+  "rel": "對照:季度Trimmed Mean。",
+  "src": "https://www.rba.gov.au/inflation/measures-cpi.html",
+  "sn": "RBA通膨衡量指標"
+ },
+ {
+  "id": "producer_price_index",
+  "order": 5,
+  "n": "PPI 生產者物價指數",
+  "e": "Producer Price Index",
+  "f": [
+   "inf"
+  ],
+  "org": "ABS",
+  "t": "季 · CPI季度公布後約2週",
+  "read": "產出端價格壓力的上游訊號,留意運輸倉儲、建築等成本傳導分項,提前預示消費端通膨管線。",
+  "bond": "意外走高強化通膨黏性敘事,但市場反應通常小於CPI本身。",
+  "rel": "下游:CPI;對照:進出口物價指數。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/producer-price-indexes-australia/latest-release",
+  "sn": "ABS PPI"
+ },
+ {
+  "id": "international_trade_price_indexes",
+  "order": 6,
+  "n": "進出口物價指數",
+  "e": "International Trade Price Indexes",
+  "f": [
+   "inf",
+   "act"
+  ],
+  "org": "ABS",
+  "t": "季",
+  "read": "反映大宗商品(鐵礦砂、煤炭、能源)與匯率對貿易條件的影響,澳幣走弱時進口物價傳導風險上升。",
+  "bond": "出口物價大漲改善貿易條件,支撐澳幣與長端殖利率;進口物價大漲則是輸入性通膨風險。",
+  "rel": "上游:大宗商品價格、AUD匯率;下游:CPI貿易品分項。",
+  "src": "https://www.abs.gov.au/statistics/economy/international-trade/international-trade-price-indexes-australia/latest-release",
+  "sn": "ABS貿易物價指數"
+ },
+ {
+  "id": "consumer_inflation_expectations",
+  "order": 7,
+  "n": "消費者通膨預期",
+  "e": "Consumer Inflation Expectations",
+  "f": [
+   "inf"
+  ],
+  "org": "Melbourne Institute",
+  "t": "月",
+  "read": "家庭對未來12個月通膨預期的中位數,若持續脫離RBA目標區間上緣,提示通膨心理脫錨風險。",
+  "bond": "預期脫錨會迫使RBA延長緊縮溝通時間,即使實際數字回落。",
+  "rel": "對照:RBA自身企業/市場通膨預期調查。",
+  "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys/cis",
+  "sn": "Melbourne Institute通膨預期"
+ },
+ {
+  "id": "selected_living_cost_indexes",
+  "order": 8,
+  "n": "生活成本指數",
+  "e": "Selected Living Cost Indexes",
+  "f": [
+   "inf"
+  ],
+  "org": "ABS",
+  "t": "季",
+  "read": "按家戶類型(退休族群/自僱者/救助對象/其他)拆分的生活成本壓力,籃子權重含房貸利息,升息週期中比CPI更早反映家庭痛感。",
+  "bond": "對財政支出(年金指數化)與消費力道判斷有輔助價值,非RBA直接政策變數。",
+  "rel": "對照:CPI;應用:年金/福利指數化基準。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/selected-living-cost-indexes-australia/latest-release",
+  "sn": "ABS生活成本指數"
+ },
+ {
+  "id": "unemployment_rate",
+  "order": 9,
+  "n": "失業率",
+  "e": "Unemployment Rate",
+  "f": [
+   "lab"
+  ],
+  "mom": "勞動力調查",
+  "org": "ABS",
+  "t": "月 · 約每月中旬週四",
+  "read": "觀察水位與3個月移動平均去噪;留意州別分歧(NSW/VIC vs WA/QLD資源州)與移民驅動的勞動供給成長對失業率的機械性影響。",
+  "bond": "意外走高強化RBA降息定價,曲線前端領跌;意外走低則延後降息預期。",
+  "rel": "子項:參與率、低度就業率;對照:職缺數(需求端領先指標)。",
+  "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
+  "sn": "ABS勞動力調查"
+ },
+ {
+  "id": "participation_rate",
+  "order": 10,
+  "n": "參與率",
+  "e": "Participation Rate",
+  "f": [
+   "lab"
+  ],
+  "p": "勞動力調查",
+  "org": "ABS",
+  "t": "月 · 隨勞動力調查",
+  "read": "澳洲受高移民淨流入影響,參與率與人口結構變化緊密相關;參與率走高本身可能推升失業率(供給效應),須合併就業增減判讀,避免誤讀為需求轉弱。",
+  "bond": "對利率路徑的直接含義弱於失業率本身,但是判斷失業率變化「品質」的關鍵。",
+  "rel": "對照:淨海外移民數據(ABS人口統計)。",
+  "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
+  "sn": "ABS勞動力調查"
+ },
+ {
+  "id": "underemployment_rate",
+  "order": 11,
+  "n": "低度就業率/就業不足率",
+  "e": "Underemployment Rate",
+  "f": [
+   "lab"
+  ],
+  "p": "勞動力調查",
+  "org": "ABS",
+  "t": "季 · 隨2/5/8/11月細項發布",
+  "read": "衡量想工作更多小時但找不到的比例,是比失業率更敏感的勞動市場鬆弛度領先指標,RBA評估「充分就業」時併同參考。",
+  "bond": "走高時即使失業率持穩,仍可能被解讀為勞動市場鬆動訊號。",
+  "rel": "綜合:就業不足指數(Underutilisation Rate=失業率+低度就業率)。",
+  "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/underemployed-workers-australia/latest-release",
+  "sn": "ABS低度就業調查"
+ },
+ {
+  "id": "employment_change_ft_pt",
+  "order": 12,
+  "n": "就業人數增減(全職/兼職)",
+  "e": "Employment Change (FT/PT)",
+  "f": [
+   "lab"
+  ],
+  "p": "勞動力調查",
+  "org": "ABS",
+  "t": "月 · 隨勞動力調查",
+  "read": "全職就業增減比總就業數更具訊號品質,兼職堆積掩蓋全職疲弱是常見的假警報型態,須拆解判讀。",
+  "bond": "全職就業意外強勁支撐鷹派立場;兼職主導的表面強勁通常不改變降息路徑。",
+  "rel": "對照:NAB企業調查就業分項、ANZ-Indeed徵才廣告。",
+  "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
+  "sn": "ABS勞動力調查"
+ },
+ {
+  "id": "job_vacancies",
+  "order": 13,
+  "n": "職缺數",
+  "e": "Job Vacancies",
+  "f": [
+   "lab"
+  ],
+  "org": "ABS",
+  "t": "季 · 2/5/8/11月",
+  "read": "需求端領先指標,職缺數與失業率的相對位置(Beveridge curve)反映勞動市場鬆緊;職缺持續下滑而失業率未升,提示需求降溫但尚未傳導至裁員。",
+  "bond": "職缺加速下滑通常領先失業率上升1-2季,是提前部位調整的參考。",
+  "rel": "高頻替代:ANZ-Indeed徵才廣告指數(補季度空窗)。",
+  "src": "https://www.abs.gov.au/statistics/labour/jobs/job-vacancies-australia/latest-release",
+  "sn": "ABS職缺調查"
+ },
+ {
+  "id": "monthly_hours_worked",
+  "order": 14,
+  "n": "月工時",
+  "e": "Monthly Hours Worked",
+  "f": [
+   "lab"
+  ],
+  "p": "勞動力調查",
+  "org": "ABS",
+  "t": "月 · 隨勞動力調查",
+  "read": "企業縮減工時通常先於裁員發生;工時成長持續低於就業人數成長,是勞動需求降溫但尚未反映在失業率的早期訊號,RBA近年溝通中對此指標的引用頻率明顯上升。",
+  "bond": "工時與就業成長的裂口擴大時,即使失業率持穩,鴿派論述的證據基礎也在累積。",
+  "rel": "母報告:勞動力調查;對照:低度就業率(同屬勞動閒置量測)。",
+  "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
+  "sn": "ABS勞動力調查"
+ },
+ {
+  "id": "population_net_overseas_migration",
+  "order": 15,
+  "n": "人口與淨海外移民",
+  "e": "Population & Net Overseas Migration",
+  "f": [
+   "lab",
+   "act"
+  ],
+  "org": "ABS",
+  "t": "季 · 滯後約2季",
+  "read": "澳洲特有的結構變數:高移民淨流入同時推升勞動供給(壓低薪資壓力)與住房需求(推升房租通膨),是解讀失業率、人均GDP、房租分項的共同分母;移民政策收緊時各指標的判讀基準需同步調整。",
+  "bond": "移民放緩=勞動供給趨緊(偏鷹)但住房需求降溫(偏鴿),對債市的淨效果取決於哪個通道主導,需個案判讀。",
+  "rel": "下游:參與率、失業率(供給效應)、房租通膨、人均GDP。",
+  "src": "https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/latest-release",
+  "sn": "ABS人口統計"
+ },
+ {
+  "id": "anz_indeed_job_ads",
+  "order": 16,
+  "n": "ANZ-Indeed 徵才廣告指數",
+  "e": "ANZ-Indeed Job Ads",
+  "f": [
+   "lab"
+  ],
+  "org": "ANZ Research/Indeed",
+  "t": "月",
+  "read": "私部門高頻徵才需求代理指標,可補足ABS季度職缺數之間的空窗期,對轉折點較敏感但需留意樣本涵蓋偏向特定產業。",
+  "bond": "連續下滑時可作為官方季度職缺數轉弱的早期線索。",
+  "rel": "對照:ABS職缺數(官方季度基準)。",
+  "src": "https://www.anz.com/institutional/economics-markets-insights/",
+  "sn": "ANZ-Indeed徵才廣告指數"
+ },
+ {
+  "id": "wage_price_index",
+  "order": 17,
+  "n": "WPI 薪資價格指數(總指數)",
+  "e": "Wage Price Index",
+  "f": [
+   "wag"
+  ],
+  "mom": "WPI報告",
+  "org": "ABS",
+  "t": "季 · 2/5/8/11月中旬",
+  "read": "剔除職務組成變化的純薪資通膨量尺,是RBA評估「薪資-物價螺旋」風險的關鍵季度數字;留意私部門vs公部門分歧(公部門常受集體協議一次性調整干擾)。",
+  "bond": "意外走高且伴隨核心通膨黏性,強化RBA延後降息;走低則是鴿派確認訊號之一。",
+  "rel": "子項:私部門/公部門WPI;對照:單位勞動成本(國民所得帳)。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/wage-price-index-australia/latest-release",
+  "sn": "ABS薪資價格指數"
+ },
+ {
+  "id": "private_public_sector_wpi",
+  "order": 18,
+  "n": "私部門/公部門WPI",
+  "e": "Private/Public Sector WPI",
+  "f": [
+   "wag"
+  ],
+  "p": "WPI報告",
+  "org": "ABS",
+  "t": "季 · 隨WPI報告",
+  "read": "私部門薪資更貼近市場化薪資壓力,公部門則受各州集體協議週期干擾,兩者背離時應以私部門數字為政策訊號主體。",
+  "bond": "私部門加速優先於公部門觸發利率路徑重定價。",
+  "rel": "對照:企業獲利(單位勞動成本分母)。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/wage-price-index-australia/latest-release",
+  "sn": "ABS薪資價格指數"
+ },
+ {
+  "id": "unit_labour_costs",
+  "order": 19,
+  "n": "單位勞動成本",
+  "e": "Unit Labour Costs",
+  "f": [
+   "wag"
+  ],
+  "org": "ABS(國民所得帳)",
+  "t": "季 · 隨GDP報告",
+  "read": "薪資成長扣除生產力成長後的淨成本壓力,比WPI總指數更貼近企業實際定價壓力的傳導能力。",
+  "bond": "生產力成長若能吸收薪資漲幅,通膨傳導風險降低,對長端有邊際利多。",
+  "rel": "上游:WPI、勞動生產力;下游:企業定價行為/核心通膨。",
+  "src": "https://www.abs.gov.au/statistics/economy/national-accounts/australian-national-accounts-national-income-expenditure-and-product/latest-release",
+  "sn": "ABS國民所得帳"
+ },
+ {
+  "id": "gross_domestic_product",
+  "order": 20,
+  "n": "GDP",
+  "e": "Gross Domestic Product",
+  "f": [
+   "act"
+  ],
+  "org": "ABS",
+  "t": "季 · 季末後約2-2.5個月(3/6/9/12月)",
+  "read": "留意家庭消費(占比最大)、公共支出、淨出口與礦業投資的分項貢獻;人均GDP(扣除高移民人口成長)常揭露比headline更疲弱的實質動能。",
+  "bond": "疲弱且伴隨人均GDP連續萎縮,強化降息論述;但GDP對RBA決策的即時影響力低於通膨與勞動數據。",
+  "rel": "分項:家庭消費、資本形成(見Capex調查領先訊號)、貿易帳。",
+  "src": "https://www.abs.gov.au/statistics/economy/national-accounts/australian-national-accounts-national-income-expenditure-and-product/latest-release",
+  "sn": "ABS國民所得帳"
+ },
+ {
+  "id": "monthly_household_spending_indicator",
+  "order": 21,
+  "n": "家庭月度支出指標(MHSI)",
+  "e": "Monthly Household Spending Indicator",
+  "f": [
+   "act"
+  ],
+  "org": "ABS",
+  "t": "月 · 次月月初",
+  "read": "以銀行卡片交易與超市數據編製,涵蓋商品+服務(涵蓋度優於舊零售銷售的33%);ABS已於2025/7/31停止Retail Trade發布,MHSI為官方接替的消費月頻主指標。名目值需對照CPI看實質;現金交易未涵蓋,卡片化趨勢會墊高名目成長。",
+  "bond": "消費動能的主要月頻讀值;連續疲弱支撐降息定價,單月雜訊大看3個月趨勢。",
+  "rel": "下游:GDP家庭消費分項;對照:消費者信心指數、家庭儲蓄率。",
+  "src": "https://www.abs.gov.au/statistics/economy/finance/monthly-household-spending-indicator/latest-release",
+  "sn": "ABS MHSI"
+ },
+ {
+  "id": "private_new_capital_expenditure",
+  "order": 22,
+  "n": "私部門新增資本支出(Capex調查)",
+  "e": "Private New Capital Expenditure",
+  "f": [
+   "act"
+  ],
+  "org": "ABS",
+  "t": "季 · 含下財年預期支出估計",
+  "read": "GDP資本形成的領先指標,尤其礦業投資意向對資源州財政與出口動能有直接含義;「預期支出」欄位比實際支出更具前瞻性。",
+  "bond": "礦業投資意向大幅下修,提前預示未來出口與州財政收入疲弱,對長端澳債利多。",
+  "rel": "下游:GDP資本形成分項、出口(大宗商品產能)。",
+  "src": "https://www.abs.gov.au/statistics/economy/business-indicators/private-new-capital-expenditure-and-expected-expenditure-australia/latest-release",
+  "sn": "ABS私部門資本支出調查"
+ },
+ {
+  "id": "manufacturing_pmi",
+  "order": 23,
+  "n": "S&P Global/Judo Bank 製造業PMI",
+  "e": "Manufacturing PMI",
+  "f": [
+   "act"
+  ],
+  "org": "S&P Global/Judo Bank",
+  "t": "月 · 初(flash)/月中(final)",
+  "read": "50為榮枯線,留意新出口訂單分項對中國需求與大宗商品週期的敏感度,澳洲製造業占GDP比重小但對全球週期訊號有參考價值。",
+  "bond": "連續低於50且伴隨服務業同步走弱,強化景氣降溫敘事。",
+  "rel": "對照:服務業PMI、NAB企業狀況指數。",
+  "src": "https://www.pmi.spglobal.com/Public/Home/PressRelease",
+  "sn": "S&P Global澳洲PMI"
+ },
+ {
+  "id": "services_pmi",
+  "order": 24,
+  "n": "S&P Global/Judo Bank 服務業PMI",
+  "e": "Services PMI",
+  "f": [
+   "act"
+  ],
+  "org": "S&P Global/Judo Bank",
+  "t": "月 · 初(flash)/月中(final)",
+  "read": "服務業占澳洲GDP比重遠高於製造業,是判斷整體景氣動能更重要的分項;留意就業分項與勞動力調查的印證關係。",
+  "bond": "服務業PMI走弱且與零售銷售同步確認,強化降息路徑。",
+  "rel": "對照:製造業PMI、NAB企業狀況。",
+  "src": "https://www.pmi.spglobal.com/Public/Home/PressRelease",
+  "sn": "S&P Global澳洲PMI"
+ },
+ {
+  "id": "international_trade_in_goods",
+  "order": 25,
+  "n": "貿易帳(國際貨物貿易)",
+  "e": "International Trade in Goods",
+  "f": [
+   "act"
+  ],
+  "org": "ABS",
+  "t": "月",
+  "read": "澳洲長年享有貿易順差,主要由鐵礦砂、煤炭、天然氣出口貢獻;順差收窄反映大宗商品價格或中國需求走弱,對澳幣與長端利率有直接含義。",
+  "bond": "順差大幅收窄=貿易條件惡化,對AUD與長端澳債殖利率(透過財政收入預期)偏空。",
+  "rel": "上游:大宗商品價格、中國PMI/工業生產;下游:GDP淨出口分項。",
+  "src": "https://www.abs.gov.au/statistics/economy/international-trade/international-trade-goods-australia/latest-release",
+  "sn": "ABS國際貨物貿易"
+ },
+ {
+  "id": "westpac_mi_leading_index",
+  "order": 26,
+  "n": "Westpac-MI領先指標",
+  "e": "Westpac-MI Leading Index",
+  "f": [
+   "act"
+  ],
+  "org": "Westpac/Melbourne Institute",
+  "t": "月",
+  "read": "澳洲唯一被廣泛引用的綜合景氣領先指標(對應美國Conference Board LEI的角色),看六個月年化成長率相對趨勢的偏離:持續高於趨勢=未來3-9個月動能加速,低於趨勢=減速。",
+  "bond": "領先指標持續低於趨勢且伴隨消費/勞動同步走弱時,是提前佈局降息交易的訊號組合之一。",
+  "rel": "成分包含:S&P/ASX 200、住宅許可、工時、大宗商品價格、殖利率利差等;對照:NAB企業狀況。",
+  "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys",
+  "sn": "Westpac-MI領先指標"
+ },
+ {
+  "id": "business_indicators",
+  "order": 27,
+  "n": "企業指標(獲利/存貨/銷售)",
+  "e": "Business Indicators",
+  "f": [
+   "act"
+  ],
+  "org": "ABS",
+  "t": "季 · GDP前瞻指標(先行公布)",
+  "read": "GDP公布前的先行拼圖,企業獲利與存貨變化的組合可提前判讀GDP驚奇方向(存貨累積可能虛增GDP、獲利疲弱預示企業投資縮手)。",
+  "bond": "與最終GDP數字的驚奇方向高度相關,是提前部位調整的參考。",
+  "rel": "下游:GDP;對照:Capex調查。",
+  "src": "https://www.abs.gov.au/statistics/economy/business-indicators/business-indicators-australia/latest-release",
+  "sn": "ABS企業指標"
+ },
+ {
+  "id": "consumer_sentiment_index",
+  "order": 28,
+  "n": "Westpac-Melbourne Institute消費者信心指數",
+  "e": "Consumer Sentiment Index",
+  "f": [
+   "con"
+  ],
+  "org": "Westpac/Melbourne Institute",
+  "t": "月中",
+  "read": "家庭對財務狀況與經濟前景的信心水位,100為榮枯分界;對RBA會議後的房貸利率變動高度敏感,常見會議後單月劇烈跳動。",
+  "bond": "信心崩跌且伴隨零售銷售走弱,強化降息論述;但單一月份雜訊大,需搭配趨勢判讀。",
+  "rel": "對照:NAB企業信心(企業端)、零售銷售(行為驗證)。",
+  "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys/cis",
+  "sn": "Westpac-MI消費者信心"
+ },
+ {
+  "id": "nab_business_confidence_conditions",
+  "order": 29,
+  "n": "NAB企業信心/企業狀況指數",
+  "e": "NAB Business Confidence/Conditions",
+  "f": [
+   "con",
+   "act"
+  ],
+  "org": "NAB",
+  "t": "月",
+  "read": "企業對未來的信心(confidence)與當下經營狀況(conditions)拆分為兩個獨立分項,狀況指數比信心指數更貼近實際商業活動,兩者背離時以狀況指數為準。",
+  "bond": "企業狀況指數連續走弱是景氣實質降溫的較可靠訊號,優先於信心分項。",
+  "rel": "對照:S&P Global PMI、Capex調查。",
+  "src": "https://business.nab.com.au/category/nab-monthly-business-survey/",
+  "sn": "NAB企業調查"
+ },
+ {
+  "id": "building_approvals",
+  "order": 30,
+  "n": "建築許可",
+  "e": "Building Approvals",
+  "f": [
+   "hou"
+  ],
+  "org": "ABS",
+  "t": "月",
+  "read": "未來住宅供給的領先指標,獨棟屋vs公寓/多戶單元分項透露供給結構;澳洲長年面臨結構性住宅供給不足,許可數持續低迷會加劇房價/房租通膨壓力。",
+  "bond": "許可數持續疲弱=未來供給缺口擴大,是房租式通膨黏性的中期利空(對inf面向)。",
+  "rel": "下游:住宅開工與完工(私部門數據補位);上游:房貸利率、人口成長。",
+  "src": "https://www.abs.gov.au/statistics/industry/building-and-construction/building-approvals-australia/latest-release",
+  "sn": "ABS建築許可"
+ },
+ {
+  "id": "residential_property_price_index",
+  "order": 31,
+  "n": "住宅價格指數",
+  "e": "Residential Property Price Index",
+  "f": [
+   "hou"
+  ],
+  "org": "ABS",
+  "t": "季",
+  "read": "官方八大首府城市住宅價格季度變化,涵蓋度與方法論比CoreLogic月頻指數更嚴謹,但時效性較低,通常作為月頻數據的季度校準基準。",
+  "bond": "房價加速上漲支撐家庭財富效應與消費,但也升高RBA對金融穩定風險的關注。",
+  "rel": "對照:CoreLogic房價指數(月頻高時效版)。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/residential-property-price-indexes-eight-capital-cities/latest-release",
+  "sn": "ABS住宅價格指數"
+ },
+ {
+  "id": "lending_indicators",
+  "order": 32,
+  "n": "房貸放款指標",
+  "e": "Lending Indicators",
+  "f": [
+   "hou",
+   "fin"
+  ],
+  "org": "ABS",
+  "t": "月",
+  "read": "新增房貸承諾金額與筆數,首購族/置換族/投資客分項比例能提前反映信貸循環轉向,通常領先房價指數1-2季。",
+  "bond": "投資客貸款占比快速上升常伴隨房市過熱疑慮,升高總體審慎政策(APRA)介入風險。",
+  "rel": "上游:RBA現金利率、銀行放款標準;下游:房價指數、建築許可。",
+  "src": "https://www.abs.gov.au/statistics/economy/finance/lending-indicators/latest-release",
+  "sn": "ABS房貸放款指標"
+ },
+ {
+  "id": "corelogic_home_value_index",
+  "order": 33,
+  "n": "CoreLogic房價指數",
+  "e": "CoreLogic Home Value Index",
+  "f": [
+   "hou"
+  ],
+  "org": "CoreLogic",
+  "t": "月(每日/每週亦有更新)",
+  "read": "私部門高時效房價代理指標,涵蓋每日/每週/每月頻率,是官方季度住宅價格指數公布前的主要市場觀察窗口。",
+  "bond": "連續多月房價加速,升高市場對RBA暫緩降息或延後寬鬆的臆測,尤其雪梨/墨爾本領漲時。",
+  "rel": "對照:官方季度住宅價格指數(權威版校準)。",
+  "src": "https://www.corelogic.com.au/news-research/news/hedonic-home-value-index",
+  "sn": "CoreLogic房價指數"
+ },
+ {
+  "id": "building_activity_commencements_completi",
+  "order": 34,
+  "n": "建築活動(開工/完工)",
+  "e": "Building Activity (Commencements/Completions)",
+  "f": [
+   "hou"
+  ],
+  "org": "ABS",
+  "t": "季 · 滯後約1-2季",
+  "read": "補上「許可→開工→完工」供給鏈的後兩段:完工量才是實際新增供給;完工持續低於開工=工期拉長/營建產能瓶頸(勞工短缺、營建商倒閉),許可暢旺但完工低迷時供給缺口仍在擴大。",
+  "bond": "完工瓶頸延長住宅供給不足,是房租式通膨黏性的中期結構因素,間接支撐RBA對通膨的謹慎立場。",
+  "rel": "上游:建築許可、HIA新屋銷售;關聯:房租通膨(CPI住房分項)、人口與淨海外移民(需求端)。",
+  "src": "https://www.abs.gov.au/statistics/industry/building-and-construction/building-activity-australia/latest-release",
+  "sn": "ABS建築活動"
+ },
+ {
+  "id": "hia_new_home_sales",
+  "order": 35,
+  "n": "HIA新屋銷售",
+  "e": "HIA New Home Sales",
+  "f": [
+   "hou"
+  ],
+  "org": "Housing Industry Association",
+  "t": "月",
+  "read": "私部門建商新屋銷售調查,是建築許可轉化為實際開工前的更早期先行訊號,對利率變動的反應速度快於官方許可數據。",
+  "bond": "新屋銷售急凍通常領先建築許可與開工數據轉弱,是房市週期轉折的早期偵測工具。",
+  "rel": "下游:建築許可、房貸放款指標。",
+  "src": "https://hia.com.au/our-industry/media-centre",
+  "sn": "HIA新屋銷售調查"
+ },
+ {
+  "id": "underlying_cash_balance",
+  "order": 36,
+  "n": "聯邦預算基本現金餘額",
+  "e": "Underlying Cash Balance",
+  "f": [
+   "fis"
+  ],
+  "mom": "聯邦預算",
+  "org": "Australian Treasury",
+  "t": "年度(5月Budget)+MYEFO(12月中期更新)",
+  "read": "澳洲財政基準指標,基本現金餘額是官方最常引用的赤字/盈餘口徑;需留意大宗商品價格對稅收預測的敏感度(資源稅收波動大)。",
+  "bond": "赤字擴大且伴隨AOFM上修發債計畫,對長端澳債供給面構成壓力;意外轉盈餘則是長端利多。",
+  "rel": "子項:淨/毛負債水位;下游:AOFM發債計畫。",
+  "src": "https://budget.gov.au/",
+  "sn": "澳洲聯邦預算"
+ },
+ {
+  "id": "commonwealth_monthly_financial_statement",
+  "order": 37,
+  "n": "月度財政帳",
+  "e": "Commonwealth Monthly Financial Statements",
+  "f": [
+   "fis"
+  ],
+  "org": "Department of Finance",
+  "t": "月 · 滯後約1個月",
+  "read": "基本現金餘額的月度累計進度vs Budget預測profile,是提前發現財政偏離(稅收短收/支出超支)的唯一月頻官方窗口;年度Budget與MYEFO一年只更新兩次,月度財政帳補足其間的追蹤空窗。",
+  "bond": "累計赤字持續跑贏Budget profile時,AOFM上修發債計畫的機率上升,供給面壓力可提前定價。",
+  "rel": "上游:聯邦預算基本現金餘額(年度基準);下游:AOFM發債計畫(供給反應)。",
+  "src": "https://www.finance.gov.au/publications/commonwealth-monthly-financial-statements",
+  "sn": "Dept of Finance月度財政帳"
+ },
+ {
+  "id": "net_gross_debt",
+  "order": 38,
+  "n": "淨/毛負債水位",
+  "e": "Net/Gross Debt",
+  "f": [
+   "fis"
+  ],
+  "p": "聯邦預算",
+  "org": "Australian Treasury/AOFM",
+  "t": "隨Budget/MYEFO更新",
+  "read": "淨負債占GDP比是國際比較與信評機構關注的核心指標,澳洲主權評等(三大機構AAA)的穩定性部分繫於此比率的路徑。",
+  "bond": "負債比率快速上升時信評展望轉負風險上升,雖距下調門檻仍遠,但趨勢惡化會逐步反映在長端期限溢價。",
+  "rel": "對照:AOFM未償公債總額(見AOFM發債計畫卡)。",
+  "src": "https://www.aofm.gov.au/",
+  "sn": "AOFM"
+ },
+ {
+  "id": "aofm_treasury_bond_issuance_program",
+  "order": 39,
+  "n": "AOFM公債發行計畫(Treasury Bonds)",
+  "e": "AOFM Treasury Bond Issuance Program",
+  "f": [
+   "fis"
+  ],
+  "org": "AOFM",
+  "t": "年度計畫(Budget/MYEFO公布)+每週五公布下週標售明細",
+  "read": "澳洲公債(ACGB)供給的主要來源,留意新發行期別(是否新增超長天期)與整體發債規模是否隨財政赤字上修;每週五公布下週標售明細具高頻交易含義。",
+  "bond": "發債規模上修或新增超長天期供給,直接構成殖利率曲線特定天期的供給面壓力,尤其市場消化能力有限時。",
+  "rel": "上游:聯邦預算基本現金餘額;對照:Treasury Notes(短天期調節工具)。",
+  "src": "https://www.aofm.gov.au/program/issuance-program",
+  "sn": "AOFM發行計畫"
+ },
+ {
+  "id": "treasury_notes",
+  "order": 40,
+  "n": "Treasury Notes(短天期國庫券)",
+  "e": "Treasury Notes",
+  "f": [
+   "fis",
+   "fin"
+  ],
+  "org": "AOFM",
+  "t": "每週例行標售(存量目標至少250億澳幣)",
+  "read": "短天期現金管理工具,存量目標通常維持在AOFM設定的下限;是觀察政府短期流動性操作與貨幣市場供給的窗口。",
+  "bond": "T-Notes存量若明顯上調,反映政府短期現金需求上升,可能是季節性稅收缺口或提前為長債發行鋪墊。",
+  "rel": "對照:RBA現金利率走廊、BBSW(短端定價基準)。",
+  "src": "https://www.aofm.gov.au/",
+  "sn": "AOFM"
+ },
+ {
+  "id": "treasury_indexed_bonds",
+  "order": 41,
+  "n": "抗通膨公債(Treasury Indexed Bonds)發行",
+  "e": "Treasury Indexed Bonds",
+  "f": [
+   "fis",
+   "inf"
+  ],
+  "org": "AOFM",
+  "t": "不定期(頻率低於Treasury Bonds)",
+  "read": "澳洲抗通膨債(TIB)存量占比遠小於名目公債,主要功能是投資人基礎多元化(年金/保險資金的長期通膨對沖需求);拍賣利率隱含的損益兩平通膨率可作為市場通膨預期的市場化參考。",
+  "bond": "TIB隱含損益兩平通膨率快速上升,是市場定價通膨脫錨風險的即時訊號,比消費者調查更具交易含義。",
+  "rel": "對照:消費者通膨預期調查(家庭端)、季度Trimmed Mean(官方端)。",
+  "src": "https://www.aofm.gov.au/",
+  "sn": "AOFM"
+ },
+ {
+  "id": "rba_cash_rate_exchange_settlement_balanc",
+  "order": 42,
+  "n": "RBA現金利率 & ES餘額",
+  "e": "RBA Cash Rate & Exchange Settlement Balances",
+  "f": [
+   "fin"
+  ],
+  "org": "RBA",
+  "t": "逐次理事會會議(現行每年8次)",
+  "read": "現金利率是政策核心錨點;Exchange Settlement(ES)餘額反映銀行體系流動性水位,RBA資產負債表正常化過程中ES餘額緩步回落是觀察重點。",
+  "bond": "會議決策與聲明措辭(尤其是否維持data-dependent或轉向明確前瞻指引)是單一最大的短端波動來源。",
+  "rel": "對照:市場定價的未來會議機率(遠期OIS曲線)、BBSW。",
+  "src": "https://www.rba.gov.au/monetary-policy/int-rate-decisions/",
+  "sn": "RBA利率決策"
+ },
+ {
+  "id": "private_sector_credit_growth",
+  "order": 43,
+  "n": "私部門信貸成長",
+  "e": "Private Sector Credit Growth",
+  "f": [
+   "fin",
+   "hou"
+  ],
+  "org": "RBA",
+  "t": "月",
+  "read": "拆分住宅/企業/個人信貸成長,住宅信貸成長是房市週期與升息傳導效果最直接的驗證指標;信貸成長趨緩通常領先房價與消費走弱。",
+  "bond": "信貸成長急凍是升息傳導已見效的確認訊號,強化RBA暫停或轉向鴿派的論述基礎。",
+  "rel": "上游:RBA現金利率、房貸放款指標;下游:房價指數、零售銷售。",
+  "src": "https://www.rba.gov.au/statistics/tables/",
+  "sn": "RBA金融統計(信貸總量)"
+ },
+ {
+  "id": "rba_balance_sheet_bond_holdings",
+  "order": 44,
+  "n": "RBA資產負債表(債券持有部位)",
+  "e": "RBA Balance Sheet (Bond Holdings)",
+  "f": [
+   "fin"
+  ],
+  "org": "RBA",
+  "t": "週/月頻",
+  "read": "RBA疫情期間購債部位(含已於2021年到期停止的Term Funding Facility)持續到期不再展延,資產負債表緩步縮減;留意持有部位到期速度是否影響公債市場流動性與供給面。",
+  "bond": "RBA持有部位到期加速時,等同市場需消化更多淨供給,對長端殖利率構成邊際上行壓力,需與AOFM發債計畫合併判讀總供給。",
+  "rel": "對照:AOFM公債發行計畫(總供給面的另一半)。",
+  "src": "https://www.rba.gov.au/statistics/tables/",
+  "sn": "RBA資產負債表統計"
+ }
+]

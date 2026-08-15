@@ -1,0 +1,127 @@
+/* 澳洲版配色：暖色調深色主題。
+   刻意與美國那份（藍灰冷色 --bg:#0E1116）區隔——兩份手冊常同時開著，
+   底色一眼就要能分辨自己在看哪一國。8 個面向色也不沿用美國版的色票。 */
+:root{
+  --bg:#14120E; --card:#1E1B15; --card2:#26221A; --border:#383227;
+  --text:#EDE9E0; --text2:#ADA595; --text3:#7C7565;
+  --inf:#B3453F; --lab:#C08A2A; --wag:#7FA03A; --act:#3F8F5C;
+  --con:#2E8E93; --hou:#4C6DB8; --fis:#8A5FB0; --fin:#B85586;
+  --green:#3FB27F; --yellow:#D9A441; --gray:#7C7565;
+  /* 債市多空：比照台股紅漲綠跌，以「債券價格」為準——
+     利多債市＝債價上漲＝紅，利空債市＝債價下跌（殖利率上行）＝綠。
+     這組語義與美國版一致，不因換配色而改動。 */
+  --bull:#E06C5A; --bear:#4FBF8B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+  font-family:-apple-system,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.55;padding:16px;max-width:1280px;margin:0 auto}
+
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+h1{font-size:22px;font-weight:700}
+.sub{color:var(--text2);font-size:13px;margin-top:2px}
+h2{font-size:15px;color:var(--text2);font-weight:600;margin:22px 0 10px;letter-spacing:.5px}
+
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:9px}
+.btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);
+  font-size:12.5px;padding:7px 13px;border-radius:8px;cursor:pointer;white-space:nowrap;
+  text-decoration:none;display:inline-flex;align-items:center;min-height:34px;font-family:inherit}
+.btn:hover{color:var(--text);border-color:var(--text3)}
+.btn-primary{color:var(--text);border-color:var(--fin)}
+.btn:disabled{opacity:.5;cursor:default}
+.hint{font-size:11.5px;color:var(--text3)}
+.legend{font-size:11.5px;color:var(--text3);margin-top:7px;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.legend span{padding:1px 5px;border-radius:3px;border:1px solid currentColor;opacity:.9}
+.legend .bear{color:var(--bear)}
+.legend .bull{color:var(--bull)}
+.legend .flat{color:var(--text3)}
+
+.statusbar{display:flex;gap:6px;flex-wrap:wrap}
+.stat{background:var(--card2);border:1px solid var(--border);color:var(--text2);
+  font-size:12px;padding:7px 12px;border-radius:8px;white-space:nowrap;cursor:pointer;user-select:none}
+.stat.on{color:var(--text);border-color:currentColor}
+
+/* 13 格 ÷ 7 欄＝剛好兩列，不用橫向拉 bar */
+.rhythm{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;padding-bottom:8px}
+.slot{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px}
+.slot .when{font-size:11px;color:var(--text3)}
+.slot .what{font-size:12.5px;color:var(--text);margin-top:2px;word-break:break-word}
+@media(max-width:1080px){.rhythm{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:820px){.rhythm{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.rhythm{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.controls{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;border-bottom:1px solid var(--border)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chip{border:1px solid var(--border);background:var(--card);color:var(--text2);font-size:13px;
+  padding:7px 13px;border-radius:999px;cursor:pointer;user-select:none;min-height:34px}
+.chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.chip.on{color:var(--text);border-color:currentColor}
+.chip .cnt{color:var(--text3);font-size:11px;margin-left:4px}
+.searchrow{display:flex;gap:10px;align-items:center}
+#q{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);
+  padding:9px 12px;font-size:14px;min-height:40px}
+#count{font-size:12px;color:var(--text3);white-space:nowrap}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;margin-top:14px}
+.card{background:var(--card);border:1px solid var(--border);border-left-width:4px;border-radius:10px;padding:13px 14px}
+.card .namerow{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.card .name{font-size:16.5px;font-weight:700}
+.card .en{font-size:11.5px;color:var(--text3);margin-top:1px}
+.light{font-size:12px;white-space:nowrap;color:var(--text3);padding-top:2px}
+
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 6px}
+.tag{font-size:10.5px;padding:2px 8px;border-radius:999px;border:1px solid;background:transparent}
+.badge{font-size:10.5px;padding:2px 8px;border-radius:5px;background:var(--card2);color:var(--text2);
+  border:1px dashed var(--border);cursor:pointer}
+.badge.mom{cursor:default;border-style:solid}
+.meta{font-size:12px;color:var(--text2);margin-top:2px}
+
+/* 數值列：數值 + 變動 + 迷你走勢圖 + 期別 */
+.valrow{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  background:var(--card2);border-radius:8px;padding:9px 12px;margin-top:9px}
+.valbox{display:flex;flex-direction:column;gap:1px;min-width:0}
+.valbox .v{font-size:19px;font-weight:700;letter-spacing:-.2px}
+.valbox .v.na{color:var(--text3);font-size:15px}
+.valbox .vlabel{font-size:10.5px;color:var(--text3)}
+.chg{font-size:12px;color:var(--text2);white-space:nowrap}
+/* 語義不明確的卡維持中性灰——沒有把握的多空判斷不給 */
+.chg.bear{color:var(--bear)}
+.chg.bull{color:var(--bull)}
+.chg .bondtag{font-size:10.5px;margin-left:5px;padding:1px 4px;border-radius:3px;
+  border:1px solid currentColor;opacity:.85;letter-spacing:.3px}
+.spark{flex:0 0 auto}
+.asofbox{text-align:right;flex:0 0 auto}
+.asofbox .asof{font-size:11px;color:var(--text3);display:block;white-space:nowrap}
+/* 「期別結束後 N 天」比原本的「N 天前」長，允許折行免得擠壓走勢圖 */
+.asofbox .age{font-size:10px;color:var(--text3);display:block;line-height:1.35}
+
+/* 🆕＝今天期別才往前推進的卡（新公布），隔天自動消失 */
+.isnew{margin-right:3px;font-size:11px;vertical-align:1px}
+.card:has(.isnew){border-color:var(--fin)}
+
+.note{font-size:12.5px;color:var(--text);background:rgba(255,255,255,.03);border-left:2px solid var(--text3);
+  padding:6px 9px;margin-top:7px;line-height:1.5;border-radius:0 6px 6px 0}
+.warn{font-size:11.5px;color:var(--yellow);background:rgba(217,164,65,.07);border-left:2px solid var(--yellow);
+  padding:6px 9px;margin-top:6px;line-height:1.5;border-radius:0 6px 6px 0}
+.extras{font-size:11.5px;color:var(--text2);margin-top:6px;display:flex;gap:12px;flex-wrap:wrap}
+.extras b{color:var(--text);font-weight:600}
+
+details{margin-top:9px}
+summary{font-size:12.5px;color:var(--text2);cursor:pointer;user-select:none;padding:4px 0;
+  min-height:32px;display:flex;align-items:center}
+.dl{font-size:13px;margin-top:7px}
+.dl .k{color:var(--text3);font-size:11.5px;display:block;margin-bottom:2px;letter-spacing:.5px}
+.dl+.dl{margin-top:10px}
+.dl a{color:var(--fin);text-decoration:none;word-break:break-all}
+
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--border);
+  font-size:12px;color:var(--text3);line-height:1.8}
+footer b{color:var(--text2)}
+footer .bull{color:var(--bull)}
+footer .bear{color:var(--bear)}
+
+@media(max-width:480px){
+  body{padding:12px}
+  .grid{grid-template-columns:1fr}
+  .spark{display:none}
+}

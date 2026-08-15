@@ -1,0 +1,143 @@
+name: 更新澳洲總經數值
+
+on:
+  schedule:
+    # 台北 10:23 / 13:23 / 16:23（= UTC 02:23 / 05:23 / 08:23）。
+    #
+    # 這組時間**不能照抄美國那份**（台北 03:47/06:47）：美國數據在台北的半夜公布，
+    # 澳洲數據卻是在台北的上班時間公布——ABS 多數指標 11:30 AEST（台北 09:30）、
+    # RBA 決議 14:30 AEST（台北 12:30）、AOFM 標售約台北中午。照美國時間排，
+    # 每天都會抓不到當天剛發布的新數據。
+    #
+    # 刻意避開整點與 UTC 00:00：GitHub 的排程是 best-effort，UTC 00:00 是全平台
+    # 最壅塞的時段（多數人都寫 '0 0 * * *'），公開 repo 的優先序又更低。
+    # 美國那份原本設 UTC 00:00 的排程實際穩定遲到 10 小時以上。
+    #
+    # 排三次是為了對延遲避險，也剛好對上澳洲的發布節奏。若數值沒變，
+    # 「提交變更」那步會自己略過，不會產生空 commit。
+    - cron: '23 2 * * *'
+    - cron: '23 5 * * *'
+    - cron: '23 8 * * *'
+  workflow_dispatch:        # 重要數據公布後想立刻更新時，手動按這個
+  push:
+    branches: [main]
+    paths:                  # 改到抓取邏輯時自動重跑一次驗證
+      - 'scripts/**'
+      - 'data/mapping.json'
+      - '.github/workflows/update.yml'
+
+permissions:
+  contents: write
+  actions: write   # 提交資料後要能 dispatch pages.yml 觸發部署
+  issues: write    # 失敗時開 issue 通知
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: 安裝相依套件
+        run: pip install -r requirements.txt
+
+      - name: 回歸測試
+        # 這幾組測試擋的都是「算錯／抓錯數字」，不過就不該更新資料
+        run: python scripts/test_transform.py
+
+      - name: 抓取並組裝 latest.json
+        # ABS / RBA / AOFM 三條來源都是公開免金鑰的，這裡不需要任何 secret
+        run: python scripts/build.py
+
+      - name: 檢查產出是否可用
+        # 防呆：如果多數卡片都掛掉（例如金鑰過期），就讓流程失敗並保留舊資料，
+        # 不要把一份幾乎全空的 latest.json 推上去
+        run: |
+          python - <<'PY'
+          import json, sys
+          d = json.load(open("data/latest.json", encoding="utf-8"))
+          s = d["summary"]
+          total = sum(s.values())
+          print(f"綠燈 {s['green']} / 黃燈 {s['yellow']} / 未取得 {s['gray']}（共 {total}）")
+          # 目前 45 張卡有 30 張已自動化，穩定狀態下綠燈約 29 張。
+          # 門檻設 20：容得下幾張季頻卡同時過期，但擋得住「來源整批掛掉」。
+          # 之後把私人機構那幾張接起來時，這個數字要跟著往上調。
+          if s["green"] < 20:
+              print("::error::綠燈少於 20 張，判定抓取異常，中止更新以保留上一版資料")
+              sys.exit(1)
+          PY
+
+      - name: 提交變更
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet data/latest.json; then
+            echo "數值沒有變化，不需提交"
+            exit 0
+          fi
+          git add data/latest.json
+          git commit -m "資料更新 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+          echo "COMMITTED=1" >> "$GITHUB_ENV"
+
+          # 抓 56 張卡要花好幾分鐘，這段時間主分支常被別的 push 動過
+          # （手動改程式碼、或另一次排程）——plain push 一撞就整次失敗、
+          # 資料白抓。改成 fetch+merge 重試，衝突一律保留這次剛跑出的新值
+          # （只有 data/latest.json 會變，用 -X ours 安全）。
+          for i in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "push 被拒絕（第 $i 次），fetch 後重新合併再試"
+            git fetch origin main
+            git merge -X ours origin/main -m "合併：保留本次新抓的資料"
+          done
+          echo "::error::push 重試 5 次仍失敗，資料留在 runner 上未提交"
+          exit 1
+
+      - name: 觸發網站部署
+        # GITHUB_TOKEN 推的 commit 不會觸發其他 workflow（GitHub 防遞迴），
+        # 所以 push 本身帶不動 pages.yml——workflow_dispatch 是這條規則的例外，
+        # 這裡在有新資料時明確 dispatch 一次，網站才會跟著更新
+        if: env.COMMITTED == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sf -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pages.yml/dispatches" \
+            -d '{"ref":"main"}'
+
+      - name: 失敗時開 issue 通知
+        # 2026-08-12 踩坑（us-macro-detail，同一套架構）：排程失敗沒有任何通知，是「剛好想更新」
+        # 才發現網站停在舊資料。開 issue 與留言 GitHub 都會寄信，不必另接 Slack／webhook。
+        # 已有未關閉的同名 issue 時只補留言，避免連續失敗每天開一張新的。
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="🔴 自動化失敗：${{ github.workflow }}"
+          body=$(printf '%s\n' \
+            "**workflow**：${{ github.workflow }}" \
+            "**觸發方式**：${{ github.event_name }}" \
+            "**時間**：$(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M') 台北" \
+            "**log**：$RUN_URL" \
+            "" \
+            "資料未更新，網站仍停在上一版。修好後手動補跑一次 update workflow 即可。" \
+            "處理完請把這張 issue 關掉——還開著的話，之後的失敗只會累積留言不會另開新張。")
+          existing=$(gh issue list --state open --label automation-failure --limit 50 \
+            --json number,title --jq ".[] | select(.title == \"$title\") | .number" | head -1)
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "$title" --label automation-failure --body "$body"
+          fi

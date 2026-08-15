@@ -1,0 +1,5 @@
+requests>=2.31
+openpyxl>=3.1
+# aofm.gov.au / finance.gov.au 有 Akamai 機器人偵測，會對一般 HTTP 客戶端
+# 靜默丟棄連線。curl_cffi 模擬 Chrome 的 TLS 指紋才連得上（見 common.get_impersonated）
+curl_cffi>=0.7
