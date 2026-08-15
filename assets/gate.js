@@ -14,7 +14,9 @@ const GATE = {
   hash: '89e7eb2764599ac5aa68fc2087c5dd9687531b356efed164ea5949936b2a99e2',            // 同上；留空＝尚未設密碼，直接放行
   iterations: 200000,
   ttlDays: 30,         // 解鎖後記住幾天
-  storeKey: 'umg.gate'
+  storeKey: 'amg.gate',   // 不可與美國站的 'umg.gate' 相同：同一個
+                          // github.io 帳號下所有 Pages 站台共用 origin，
+                          // localStorage 也共用，同 key 會互相蓋掉解鎖憑證
 };
 
 /* ------------------------------------------------------------ 雜湊計算 */
