@@ -14,9 +14,9 @@
 | Step 2 repo 骨架 | ✅ 完成 |
 | Step 3 45 卡結構 + mapping | ✅ 30 張接線完成，15 張待接 |
 | Step 4 抓取模組 | 🔄 `abs_api.py`／`rba.py` 完成並實測；`aofm.py` 只有檔案索引；`au_html.py` 是空殼 |
-| Step 5 版面在地化 | ⬜ 未開始（配色仍是美國藍灰） |
-| Step 6 上線部署 | ⬜ 未開始（尚未建 GitHub repo） |
-| Step 7 改寫 skill | ⬜ 未開始 |
+| Step 5 版面在地化 | ✅ 暖色調配色、澳洲發布節奏條、CPI 雙軌說明 |
+| Step 6 上線部署 | ✅ https://jennycheng9191-code.github.io/au-macro-guide/ |
+| Step 7 改寫 skill | ✅ SKILL.md 已改成維運手冊，舊模板封存 |
 
 ## 已自動化（30 張）
 
@@ -42,14 +42,8 @@ PPI、進出口物價、生活成本、失業率、參與率、低度就業率�
    缺的是解析器。注意路徑帶日期資料夾會變，不可寫死網址
 2. **私人機構 6 張的網頁解析**：S&P Global PMI ×2、Westpac ×2、NAB、Cotality、HIA
    （站台都連得上，缺解析規則）
-3. **住宅價格卡文字改寫**：口徑已從「指數」變成「平均價格」，
-   `indicators.json` 的 `n`／`read`／`bond` 要跟著改
-4. **CoreLogic 卡更名**：已更名 Cotality，卡名與 `src` 網址要改
-5. **版面在地化**：配色換暖色調、文案改澳洲、發布節奏條換 ABS/RBA 行事曆
-6. **上線**：建 GitHub repo → 用個人 token 開 Pages → 設 cron（台北 10:23/13:23/16:23，
-   即 UTC `23 2`／`23 5`／`23 8`）→ 調「綠燈少於 N 張就中止」的門檻（目前沿用美國的 25，
-   以澳洲 30 張自動化卡計，建議設 20）→ 設密碼閘
-7. **改寫 `~/.claude/skills/au-macro-guide/SKILL.md`** 成維運手冊
+3. **把剩下 25 張自動化卡逐一對過官方新聞稿**（目前只對過勞動力 5 卡）
+4. **接卡後調高綠燈門檻**：目前設 20，對應 30 張自動化卡
 
 ## 走不通的路（不要再試）
 
