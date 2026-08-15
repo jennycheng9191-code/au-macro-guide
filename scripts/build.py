@@ -168,10 +168,22 @@ def main() -> int:
                    "raw_latest": old.get("value")}
             status = "yellow"
 
-        # 季頻卡的觀測日期是季別起始月（2026-Q2 標成 2026-04），標成 Q 免得誤讀成月度
-        if m.get("label_as") == "quarter" and res.get("asof"):
-            y, mo = res["asof"][:4], int(res["asof"][5:7])
-            res["value_label"] = f"{y} Q{(mo - 1) // 3 + 1} 預測值"
+        # 值的說明標籤。三個來源依序疊上去，人工值最優先：
+        #   1. mapping 的 value_label（口徑說明，如「季度 · 年增率（RBA 正式引用版）」）
+        #   2. label_as=quarter 補上季別（觀測日期是季別起始月，2026-Q2 標成 2026-04，
+        #      不標會被誤讀成月度資料）
+        #   3. 人工值自己帶的 value_label 蓋過前兩者
+        #
+        # 這裡不可以照抄美國版寫成「Q2 預測值」——那是 GDPNow 那張預測卡專用的，
+        # 澳洲這批季頻卡是 ABS 實際公布的數字，標成預測值是錯的。
+        if not (cid in manual and manual[cid].get("value_label")):
+            label = m.get("value_label", "")
+            if m.get("label_as") == "quarter" and res.get("asof"):
+                y, mo = res["asof"][:4], int(res["asof"][5:7])
+                q = f"{y} Q{(mo - 1) // 3 + 1}"
+                label = f"{q}　{label}" if label else q
+            if label:
+                res["value_label"] = label
 
         # 灰燈代表這個值不可信（沒抓到，或沒過關卡 1）。值必須清掉——
         # 留著的話前端只要有一處照著 value 渲染，就會把被擋下的錯誤數字顯示出來。

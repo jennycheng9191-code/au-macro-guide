@@ -513,18 +513,18 @@
  {
   "id": "residential_property_price_index",
   "order": 31,
-  "n": "住宅價格指數",
-  "e": "Residential Property Price Index",
+  "n": "住宅平均價格(ABS季度)",
+  "e": "Residential Dwellings: Mean Price",
   "f": [
    "hou"
   ],
   "org": "ABS",
   "t": "季",
-  "read": "官方八大首府城市住宅價格季度變化,涵蓋度與方法論比CoreLogic月頻指數更嚴謹,但時效性較低,通常作為月頻數據的季度校準基準。",
-  "bond": "房價加速上漲支撐家庭財富效應與消費,但也升高RBA對金融穩定風險的關注。",
-  "rel": "對照:CoreLogic房價指數(月頻高時效版)。",
-  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/residential-property-price-indexes-eight-capital-cities/latest-release",
-  "sn": "ABS住宅價格指數"
+  "read": "ABS原本的「住宅價格指數」(RPPI)已於2021-Q4停止發布,改用本序列的全澳住宅平均價格。注意口徑不同:這是價格「水位」不是指數,看的是絕對價位與季變動幅度,不能直接與舊RPPI的指數點位接續比較。涵蓋度與方法論比Cotality月頻指數嚴謹,但時效性低,作為月頻數據的季度校準基準。",
+  "bond": "房價水位持續墊高支撐家庭財富效應與消費,但也升高RBA對金融穩定風險的關注。",
+  "rel": "對照:Cotality房價指數(月頻高時效版)。同卡附帶住宅存量總值與戶數。",
+  "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/total-value-dwellings/latest-release",
+  "sn": "ABS住宅總值與均價"
  },
  {
   "id": "lending_indicators",
@@ -546,18 +546,18 @@
  {
   "id": "corelogic_home_value_index",
   "order": 33,
-  "n": "CoreLogic房價指數",
-  "e": "CoreLogic Home Value Index",
+  "n": "Cotality房價指數(原CoreLogic)",
+  "e": "Cotality Home Value Index",
   "f": [
    "hou"
   ],
-  "org": "CoreLogic",
+  "org": "Cotality",
   "t": "月(每日/每週亦有更新)",
-  "read": "私部門高時效房價代理指標,涵蓋每日/每週/每月頻率,是官方季度住宅價格指數公布前的主要市場觀察窗口。",
+  "read": "私部門高時效房價代理指標,涵蓋每日/每週/每月頻率,是ABS季度數據公布前的主要市場觀察窗口。CoreLogic已更名為Cotality,舊名仍常見於媒體與行情終端,查證時兩個名字都要試。",
   "bond": "連續多月房價加速,升高市場對RBA暫緩降息或延後寬鬆的臆測,尤其雪梨/墨爾本領漲時。",
-  "rel": "對照:官方季度住宅價格指數(權威版校準)。",
-  "src": "https://www.corelogic.com.au/news-research/news/hedonic-home-value-index",
-  "sn": "CoreLogic房價指數"
+  "rel": "對照:ABS住宅平均價格(季度權威版校準)。",
+  "src": "https://www.cotality.com/au/insights",
+  "sn": "Cotality房價指數"
  },
  {
   "id": "building_activity_commencements_completi",

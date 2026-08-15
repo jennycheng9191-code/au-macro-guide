@@ -1,5 +1,5 @@
 {
- "build_time": "2026-08-15 21:59",
+ "build_time": "2026-08-15 23:25",
  "summary": {
   "green": 29,
   "yellow": 1,
@@ -9,7 +9,7 @@
   "monthly_cpi_indicator": {
    "value": 3.8,
    "value_fmt": "3.8%",
-   "value_label": "",
+   "value_label": "月度 · 年增率",
    "asof": "2026-06-01",
    "asof_label": "",
    "age_days": 45,
@@ -89,7 +89,7 @@
   "monthly_trimmed_mean_cpi": {
    "value": 3.6,
    "value_fmt": "3.6%",
-   "value_label": "",
+   "value_label": "月度核心 · 年增率",
    "asof": "2026-06-01",
    "asof_label": "",
    "age_days": 45,
@@ -169,7 +169,7 @@
   "quarterly_cpi": {
    "value": 3.9418876358833677,
    "value_fmt": "3.9%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　季度 · 年增率（RBA 正式引用版）",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -287,7 +287,7 @@
   "quarterly_trimmed_mean_cpi": {
    "value": 3.6,
    "value_fmt": "3.6%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　季度核心 · 年增率（RBA 首選）",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -403,7 +403,7 @@
   "quarterly_weighted_median_cpi": {
    "value": 3.6,
    "value_fmt": "3.6%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　季度核心 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -519,7 +519,7 @@
   "producer_price_index": {
    "value": 3.6,
    "value_fmt": "3.6%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　最終需求(排除出口) · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -635,7 +635,7 @@
   "international_trade_price_indexes": {
    "value": 3.9,
    "value_fmt": "3.9%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　出口物價 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -774,7 +774,7 @@
   "selected_living_cost_indexes": {
    "value": 3.7,
    "value_fmt": "3.7%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　受僱者家庭 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -1359,7 +1359,7 @@
   "job_vacancies": {
    "value": 329.5,
    "value_fmt": "329.5千個",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -1593,7 +1593,7 @@
   "population_net_overseas_migration": {
    "value": 56.6,
    "value_fmt": "56.6千人",
-   "value_label": "2025 Q4 預測值",
+   "value_label": "2025 Q4　淨海外移民(季)",
    "asof": "2025-10-01",
    "asof_label": "",
    "age_days": 227,
@@ -1732,7 +1732,7 @@
   "wage_price_index": {
    "value": 3.3,
    "value_fmt": "3.3%",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　總指數 · 年增率",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -1850,7 +1850,7 @@
   "private_public_sector_wpi": {
    "value": 3.2,
    "value_fmt": "3.2%",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　私部門 · 年增率",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -2087,7 +2087,7 @@
   "gross_domestic_product": {
    "value": 0.3,
    "value_fmt": "0.3%",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　實質 GDP · 季增率",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -2205,7 +2205,7 @@
   "monthly_household_spending_indicator": {
    "value": 6.0,
    "value_fmt": "6.0%",
-   "value_label": "",
+   "value_label": "總支出 · 年增率",
    "asof": "2026-06-01",
    "asof_label": "",
    "age_days": 45,
@@ -2323,7 +2323,7 @@
   "private_new_capital_expenditure": {
    "value": 6.502714528806419,
    "value_fmt": "6.5%",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　實際支出 · 季增率",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -2481,7 +2481,7 @@
   "international_trade_in_goods": {
    "value": 1929.0,
    "value_fmt": "1,929百萬澳元",
-   "value_label": "",
+   "value_label": "貨物貿易差額(季調)",
    "asof": "2026-06-01",
    "asof_label": "",
    "age_days": 45,
@@ -2618,7 +2618,7 @@
   "business_indicators": {
    "value": -1.3,
    "value_fmt": "-1.3%",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　營業毛利 · 季增率",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -2778,7 +2778,7 @@
   "building_approvals": {
    "value": 11.260415444196692,
    "value_fmt": "11.3%",
-   "value_label": "",
+   "value_label": "住宅核准戶數 · 月增率",
    "asof": "2026-06-01",
    "asof_label": "",
    "age_days": 45,
@@ -2896,7 +2896,7 @@
   "residential_property_price_index": {
    "value": 1111.1,
    "value_fmt": "1,111.1千澳元",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　住宅平均價格(季)",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -3015,7 +3015,7 @@
   "lending_indicators": {
    "value": -5.222162475904657,
    "value_fmt": "-5.2%",
-   "value_label": "2026 Q2 預測值",
+   "value_label": "2026 Q2　新承作房貸金額 · 季增率",
    "asof": "2026-04-01",
    "asof_label": "",
    "age_days": 45,
@@ -3152,7 +3152,7 @@
   "building_activity_commencements_completi": {
    "value": 48012.0,
    "value_fmt": "48,012戶",
-   "value_label": "2026 Q1 預測值",
+   "value_label": "2026 Q1　開工戶數(季)",
    "asof": "2026-01-01",
    "asof_label": "",
    "age_days": 135,
@@ -3535,7 +3535,7 @@
   "private_sector_credit_growth": {
    "value": 8.5,
    "value_fmt": "8.5%",
-   "value_label": "",
+   "value_label": "總信貸(排除金融業) · 年增率",
    "asof": "2026-06-30",
    "asof_label": "",
    "age_days": 16,
@@ -3655,7 +3655,7 @@
   "rba_balance_sheet_bond_holdings": {
    "value": 358512.0,
    "value_fmt": "358,512$m",
-   "value_label": "",
+   "value_label": "總資產",
    "asof": "2026-08-12",
    "asof_label": "",
    "age_days": 0,
