@@ -1,1 +1,15 @@
-{}
+{
+  "unit_labour_costs": {
+    "value": 0.5,
+    "asof": "2026-01",
+    "value_label": "2026 Q1　實質單位勞動成本 · 季增率",
+    "note": "由上季 -0.7% 翻正至 +0.5%，年增亦 +0.5%，勞動成本壓力再起",
+    "extras": {
+      "年增率(%)": 0.5,
+      "GDP每小時產出季增率(%)": -0.6
+    },
+    "by": "Jenny",
+    "at": "2026-08-17",
+    "_src": "ABS Australian National Accounts: National Income, Expenditure and Product, March 2026（2026-06-03 發布）『March quarter key figures』表 Productivity 區塊：Real unit labour costs，Dec 25 to Mar 26 = 0.5、Through the year Mar 25 to Mar 26 = 0.5。ABS 的 RULC_LAB 序列停在 2018-Q3，此數字只在新聞稿表格公布，不進 SDMX API，故每季國民所得帳發布後（3/6/9/12 月上旬）需人工更新一次"
+  }
+}

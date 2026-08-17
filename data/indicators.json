@@ -3,7 +3,7 @@
   "id": "monthly_cpi_indicator",
   "order": 0,
   "n": "CPI 月度(總指數)",
-  "e": "Monthly CPI Indicator",
+  "e": "Monthly CPI",
   "f": [
    "inf"
   ],
