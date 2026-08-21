@@ -1,5 +1,5 @@
 {
- "build_time": "2026-08-21 12:25",
+ "build_time": "2026-08-21 15:57",
  "summary": {
   "green": 30,
   "yellow": 0,
@@ -3427,7 +3427,7 @@
     }
    ],
    "extras": {
-    "ES餘額($m)": 210226.0
+    "ES餘額($m)": 205733.0
    },
    "also": {},
    "status": "green",
@@ -3559,18 +3559,14 @@
    "bond_dir": 1
   },
   "rba_balance_sheet_bond_holdings": {
-   "value": 358512.0,
-   "value_fmt": "358,512$m",
+   "value": 361217.0,
+   "value_fmt": "361,217$m",
    "value_label": "總資產",
-   "asof": "2026-08-12",
+   "asof": "2026-08-19",
    "asof_label": "",
-   "age_days": 3,
-   "new_since": "",
+   "age_days": 0,
+   "new_since": "2026-08-21",
    "history": [
-    {
-     "date": "2026-03-04",
-     "value": 369739.0
-    },
     {
      "date": "2026-03-11",
      "value": 365585.0
@@ -3662,13 +3658,17 @@
     {
      "date": "2026-08-12",
      "value": 358512.0
+    },
+    {
+     "date": "2026-08-19",
+     "value": 361217.0
     }
    ],
    "extras": {},
    "also": {},
    "status": "green",
    "notes": [],
-   "note": "位於近 24 期的第 29 百分位",
+   "note": "位於近 24 期的第 58 百分位",
    "source_label": "RBA A1 ARBAATAW",
    "unit": "$m",
    "display": "level",
