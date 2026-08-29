@@ -16,7 +16,7 @@ sys.path[:0] = [str(HERE), str(HERE / "sources")]
 from common import DATA, load_env, read_json, write_json   # noqa: E402
 import rules                                               # noqa: E402
 import validate                                            # noqa: E402
-from sources import abs_api, aofm, au_html, rba            # noqa: E402
+from sources import abs_api, aofm, au_html, finance_gov, rba, westpac_iq  # noqa: E402
 
 TPE = timezone(timedelta(hours=8))
 
@@ -32,6 +32,12 @@ def _fetch_one(card_id: str, m: dict, ctx: dict) -> dict:
     if src == "aofm":
         # AOFM 的檔案路徑每次更新都會變，先抓一次 data-hub 索引全卡共用
         return aofm.fetch(card_id, m, ctx.setdefault("aofm_index", aofm.file_index()))
+    if src == "finance":
+        # 兩張卡（月度財政帳、淨/毛負債）吃同一頁，模組內部有頁面快取
+        return finance_gov.fetch(card_id, m)
+    if src == "westpac":
+        # Melbourne Institute 全站 403，這兩個聯名指標改從 Westpac IQ 取
+        return westpac_iq.fetch(card_id, m)
     if src == "html":
         return au_html.fetch(card_id, m)
     if src == "manual":

@@ -1,1 +1,32 @@
-{}
+{
+ "westpac_mi_leading_index": [
+  {
+   "date": "2026-07-01",
+   "value": -0.2
+  }
+ ],
+ "consumer_sentiment_index": [
+  {
+   "date": "2026-08-01",
+   "value": 88.9
+  }
+ ],
+ "commonwealth_monthly_financial_statement": [
+  {
+   "date": "2026-05-01",
+   "value": -10.9
+  }
+ ],
+ "net_gross_debt": [
+  {
+   "date": "2026-05-01",
+   "value": 537.4
+  }
+ ],
+ "underlying_cash_balance": [
+  {
+   "date": "2026-05-01",
+   "value": -28.3
+  }
+ ]
+}

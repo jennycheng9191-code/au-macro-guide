@@ -213,7 +213,7 @@
   "t": "月 · 隨勞動力調查",
   "read": "全職就業增減比總就業數更具訊號品質,兼職堆積掩蓋全職疲弱是常見的假警報型態,須拆解判讀。",
   "bond": "全職就業意外強勁支撐鷹派立場;兼職主導的表面強勁通常不改變降息路徑。",
-  "rel": "對照:NAB企業調查就業分項、ANZ-Indeed徵才廣告。",
+  "rel": "對照:NAB企業調查就業分項、ANZ-Indeed徵才廣告(兩者皆手冊外,機構擋自動抓取)。",
   "src": "https://www.abs.gov.au/statistics/labour/employment-and-unemployment/labour-force-australia/latest-release",
   "sn": "ABS勞動力調查"
  },
@@ -382,40 +382,8 @@
   "sn": "ABS私部門資本支出調查"
  },
  {
-  "id": "manufacturing_pmi",
-  "order": 23,
-  "n": "S&P Global/Judo Bank 製造業PMI",
-  "e": "Manufacturing PMI",
-  "f": [
-   "act"
-  ],
-  "org": "S&P Global/Judo Bank",
-  "t": "月 · 初(flash)/月中(final)",
-  "read": "50為榮枯線,留意新出口訂單分項對中國需求與大宗商品週期的敏感度,澳洲製造業占GDP比重小但對全球週期訊號有參考價值。",
-  "bond": "連續低於50且伴隨服務業同步走弱,強化景氣降溫敘事。",
-  "rel": "對照:服務業PMI、NAB企業狀況指數。",
-  "src": "https://www.pmi.spglobal.com/Public/Home/PressRelease",
-  "sn": "S&P Global澳洲PMI"
- },
- {
-  "id": "services_pmi",
-  "order": 24,
-  "n": "S&P Global/Judo Bank 服務業PMI",
-  "e": "Services PMI",
-  "f": [
-   "act"
-  ],
-  "org": "S&P Global/Judo Bank",
-  "t": "月 · 初(flash)/月中(final)",
-  "read": "服務業占澳洲GDP比重遠高於製造業,是判斷整體景氣動能更重要的分項;留意就業分項與勞動力調查的印證關係。",
-  "bond": "服務業PMI走弱且與零售銷售同步確認,強化降息路徑。",
-  "rel": "對照:製造業PMI、NAB企業狀況。",
-  "src": "https://www.pmi.spglobal.com/Public/Home/PressRelease",
-  "sn": "S&P Global澳洲PMI"
- },
- {
   "id": "international_trade_in_goods",
-  "order": 25,
+  "order": 23,
   "n": "貿易帳(國際貨物貿易)",
   "e": "International Trade in Goods",
   "f": [
@@ -431,7 +399,7 @@
  },
  {
   "id": "westpac_mi_leading_index",
-  "order": 26,
+  "order": 24,
   "n": "Westpac-MI領先指標",
   "e": "Westpac-MI Leading Index",
   "f": [
@@ -441,13 +409,13 @@
   "t": "月",
   "read": "澳洲唯一被廣泛引用的綜合景氣領先指標(對應美國Conference Board LEI的角色),看六個月年化成長率相對趨勢的偏離:持續高於趨勢=未來3-9個月動能加速,低於趨勢=減速。",
   "bond": "領先指標持續低於趨勢且伴隨消費/勞動同步走弱時,是提前佈局降息交易的訊號組合之一。",
-  "rel": "成分包含:S&P/ASX 200、住宅許可、工時、大宗商品價格、殖利率利差等;對照:NAB企業狀況。",
+  "rel": "成分包含:S&P/ASX 200、住宅許可、工時、大宗商品價格、殖利率利差等;對照:NAB企業狀況(手冊外)。",
   "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys",
   "sn": "Westpac-MI領先指標"
  },
  {
   "id": "business_indicators",
-  "order": 27,
+  "order": 25,
   "n": "企業指標(獲利/存貨/銷售)",
   "e": "Business Indicators",
   "f": [
@@ -463,7 +431,7 @@
  },
  {
   "id": "consumer_sentiment_index",
-  "order": 28,
+  "order": 26,
   "n": "Westpac-Melbourne Institute消費者信心指數",
   "e": "Consumer Sentiment Index",
   "f": [
@@ -473,30 +441,13 @@
   "t": "月中",
   "read": "家庭對財務狀況與經濟前景的信心水位,100為榮枯分界;對RBA會議後的房貸利率變動高度敏感,常見會議後單月劇烈跳動。",
   "bond": "信心崩跌且伴隨零售銷售走弱,強化降息論述;但單一月份雜訊大,需搭配趨勢判讀。",
-  "rel": "對照:NAB企業信心(企業端)、零售銷售(行為驗證)。",
+  "rel": "對照:NAB企業信心(企業端,手冊外)、零售銷售(行為驗證)。",
   "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys/cis",
   "sn": "Westpac-MI消費者信心"
  },
  {
-  "id": "nab_business_confidence_conditions",
-  "order": 29,
-  "n": "NAB企業信心/企業狀況指數",
-  "e": "NAB Business Confidence/Conditions",
-  "f": [
-   "con",
-   "act"
-  ],
-  "org": "NAB",
-  "t": "月",
-  "read": "企業對未來的信心(confidence)與當下經營狀況(conditions)拆分為兩個獨立分項,狀況指數比信心指數更貼近實際商業活動,兩者背離時以狀況指數為準。",
-  "bond": "企業狀況指數連續走弱是景氣實質降溫的較可靠訊號,優先於信心分項。",
-  "rel": "對照:S&P Global PMI、Capex調查。",
-  "src": "https://business.nab.com.au/category/nab-monthly-business-survey/",
-  "sn": "NAB企業調查"
- },
- {
   "id": "building_approvals",
-  "order": 30,
+  "order": 27,
   "n": "建築許可",
   "e": "Building Approvals",
   "f": [
@@ -512,7 +463,7 @@
  },
  {
   "id": "residential_property_price_index",
-  "order": 31,
+  "order": 28,
   "n": "住宅平均價格(ABS季度)",
   "e": "Residential Dwellings: Mean Price",
   "f": [
@@ -522,13 +473,13 @@
   "t": "季",
   "read": "ABS原本的「住宅價格指數」(RPPI)已於2021-Q4停止發布,改用本序列的全澳住宅平均價格。注意口徑不同:這是價格「水位」不是指數,看的是絕對價位與季變動幅度,不能直接與舊RPPI的指數點位接續比較。涵蓋度與方法論比Cotality月頻指數嚴謹,但時效性低,作為月頻數據的季度校準基準。",
   "bond": "房價水位持續墊高支撐家庭財富效應與消費,但也升高RBA對金融穩定風險的關注。",
-  "rel": "對照:Cotality房價指數(月頻高時效版)。同卡附帶住宅存量總值與戶數。",
+  "rel": "對照:Cotality房價指數(月頻高時效版,手冊外)。同卡附帶住宅存量總值與戶數。",
   "src": "https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/total-value-dwellings/latest-release",
   "sn": "ABS住宅總值與均價"
  },
  {
   "id": "lending_indicators",
-  "order": 32,
+  "order": 29,
   "n": "房貸放款指標",
   "e": "Lending Indicators",
   "f": [
@@ -544,24 +495,8 @@
   "sn": "ABS房貸放款指標"
  },
  {
-  "id": "corelogic_home_value_index",
-  "order": 33,
-  "n": "Cotality房價指數(原CoreLogic)",
-  "e": "Cotality Home Value Index",
-  "f": [
-   "hou"
-  ],
-  "org": "Cotality",
-  "t": "月(每日/每週亦有更新)",
-  "read": "私部門高時效房價代理指標,涵蓋每日/每週/每月頻率,是ABS季度數據公布前的主要市場觀察窗口。CoreLogic已更名為Cotality,舊名仍常見於媒體與行情終端,查證時兩個名字都要試。",
-  "bond": "連續多月房價加速,升高市場對RBA暫緩降息或延後寬鬆的臆測,尤其雪梨/墨爾本領漲時。",
-  "rel": "對照:ABS住宅平均價格(季度權威版校準)。",
-  "src": "https://www.cotality.com/au/insights",
-  "sn": "Cotality房價指數"
- },
- {
   "id": "building_activity_commencements_completi",
-  "order": 34,
+  "order": 30,
   "n": "建築活動(開工/完工)",
   "e": "Building Activity (Commencements/Completions)",
   "f": [
@@ -571,29 +506,13 @@
   "t": "季 · 滯後約1-2季",
   "read": "補上「許可→開工→完工」供給鏈的後兩段:完工量才是實際新增供給;完工持續低於開工=工期拉長/營建產能瓶頸(勞工短缺、營建商倒閉),許可暢旺但完工低迷時供給缺口仍在擴大。",
   "bond": "完工瓶頸延長住宅供給不足,是房租式通膨黏性的中期結構因素,間接支撐RBA對通膨的謹慎立場。",
-  "rel": "上游:建築許可、HIA新屋銷售;關聯:房租通膨(CPI住房分項)、人口與淨海外移民(需求端)。",
+  "rel": "上游:建築許可、HIA新屋銷售(手冊外);關聯:房租通膨(CPI住房分項)、人口與淨海外移民(需求端)。",
   "src": "https://www.abs.gov.au/statistics/industry/building-and-construction/building-activity-australia/latest-release",
   "sn": "ABS建築活動"
  },
  {
-  "id": "hia_new_home_sales",
-  "order": 35,
-  "n": "HIA新屋銷售",
-  "e": "HIA New Home Sales",
-  "f": [
-   "hou"
-  ],
-  "org": "Housing Industry Association",
-  "t": "月",
-  "read": "私部門建商新屋銷售調查,是建築許可轉化為實際開工前的更早期先行訊號,對利率變動的反應速度快於官方許可數據。",
-  "bond": "新屋銷售急凍通常領先建築許可與開工數據轉弱,是房市週期轉折的早期偵測工具。",
-  "rel": "下游:建築許可、房貸放款指標。",
-  "src": "https://hia.com.au/our-industry/media-centre",
-  "sn": "HIA新屋銷售調查"
- },
- {
   "id": "underlying_cash_balance",
-  "order": 36,
+  "order": 31,
   "n": "聯邦預算基本現金餘額",
   "e": "Underlying Cash Balance",
   "f": [
@@ -610,7 +529,7 @@
  },
  {
   "id": "commonwealth_monthly_financial_statement",
-  "order": 37,
+  "order": 32,
   "n": "月度財政帳",
   "e": "Commonwealth Monthly Financial Statements",
   "f": [
@@ -626,7 +545,7 @@
  },
  {
   "id": "net_gross_debt",
-  "order": 38,
+  "order": 33,
   "n": "淨/毛負債水位",
   "e": "Net/Gross Debt",
   "f": [
@@ -643,7 +562,7 @@
  },
  {
   "id": "aofm_treasury_bond_issuance_program",
-  "order": 39,
+  "order": 34,
   "n": "AOFM公債發行計畫(Treasury Bonds)",
   "e": "AOFM Treasury Bond Issuance Program",
   "f": [
@@ -659,7 +578,7 @@
  },
  {
   "id": "treasury_notes",
-  "order": 40,
+  "order": 35,
   "n": "Treasury Notes(短天期國庫券)",
   "e": "Treasury Notes",
   "f": [
@@ -676,7 +595,7 @@
  },
  {
   "id": "treasury_indexed_bonds",
-  "order": 41,
+  "order": 36,
   "n": "抗通膨公債(Treasury Indexed Bonds)發行",
   "e": "Treasury Indexed Bonds",
   "f": [
@@ -693,7 +612,7 @@
  },
  {
   "id": "rba_cash_rate_exchange_settlement_balanc",
-  "order": 42,
+  "order": 37,
   "n": "RBA現金利率 & ES餘額",
   "e": "RBA Cash Rate & Exchange Settlement Balances",
   "f": [
@@ -709,7 +628,7 @@
  },
  {
   "id": "private_sector_credit_growth",
-  "order": 43,
+  "order": 38,
   "n": "私部門信貸成長",
   "e": "Private Sector Credit Growth",
   "f": [
@@ -726,7 +645,7 @@
  },
  {
   "id": "rba_balance_sheet_bond_holdings",
-  "order": 44,
+  "order": 39,
   "n": "RBA資產負債表(債券持有部位)",
   "e": "RBA Balance Sheet (Bond Holdings)",
   "f": [

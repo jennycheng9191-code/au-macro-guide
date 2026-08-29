@@ -1,68 +1,989 @@
 {
-  "_doc": {
-    "說明": "45 張卡的資料來源映射表。ABS 的 SDMX key 已於 2026-08-15 逐一實打驗證回傳唯一序列。",
-    "source 型別": {
-      "abs": "ABS Data API（SDMX，免金鑰）。dataflow + key 指定單一序列",
-      "abs_derived": "由多條 ABS 序列相減得出",
-      "rba": "RBA 統計表 CSV（固定檔名，免金鑰）",
-      "aofm": "AOFM Data Hub 的 xlsx/csv。⚠️ 站台有 Akamai 機器人偵測，走 common.get_impersonated",
-      "html": "解析官方網頁 HTML",
-      "manual": "人工輸入（data/manual.json）"
-    },
-    "ABS key 格式": "維度值以 . 相接，順序見各 dataflow 的 DSD；留空代表該維度取全部。常用碼：REGION AUS 或 50=全澳、SEX 3=合計、AGE 1599=15歲以上、TSEST 10=原始 20=季調、SECTOR 7=公私合計 1=私 2=公",
-    "filter": "安全網。ABS 偶爾在 dataflow 加新維度，原本唯一的 key 會突然回傳多條序列——有 filter 才擋得下來，否則程式會默默挑一條當答案",
-    "display": "level=原值 | yoy=年增率 | mom=月變動% | mom_diff=月變動絕對量 | qoq=季變動% | qoq_diff=季變動絕對量",
-    "bond_dir": "值上升對債市的意義：1=利空（殖利率上行壓力）、-1=利多。依配色慣例紅=利多債市、綠=利空債市，以債券價格為準",
-    "stale_days": "超過此天數未更新即亮黃燈。計算基準是「期別結束日」，不是發布日——所以門檻要設成『期別結束 → 下一期發布』的最大間隔再加緩衝，不是發布滯後。ABS 月頻資料在下一期公布前，年齡本來就會長到 51～66 天（例：2026-06 勞動力 7/23 發布、2026-07 要等 8/20），2026-08-17 全面校準前設 45 天，導致 9 張完全正常的卡同時亮黃燈、綠燈掉到 20 剛好卡在中止門檻上。現行：勞動力月頻 60、月度 CPI 65、RBA 信貸 68、ITGS 72、建築許可 72、MHSI 75、季頻 150～200"
+ "_doc": {
+  "說明": "45 張卡的資料來源映射表。ABS 的 SDMX key 已於 2026-08-15 逐一實打驗證回傳唯一序列。",
+  "source 型別": {
+   "abs": "ABS Data API（SDMX，免金鑰）。dataflow + key 指定單一序列",
+   "abs_derived": "由多條 ABS 序列相減得出",
+   "rba": "RBA 統計表 CSV（固定檔名，免金鑰）",
+   "aofm": "AOFM Data Hub 的 xlsx/csv。⚠️ 站台有 Akamai 機器人偵測，走 common.get_impersonated",
+   "html": "解析官方網頁 HTML",
+   "manual": "人工輸入（data/manual.json）"
   },
-
-  "monthly_cpi_indicator":            {"source":"abs","dataflow":"CPI","key":"3.10001.10.50.M","filter":{"MEASURE":"3","INDEX":"10001","FREQ":"M"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":65,"sanity":{"min":-3,"max":15},"value_label":"月度 · 年增率","note":"月度口徑，非 RBA 政策溝通的正式引用版"},
-  "monthly_trimmed_mean_cpi":         {"source":"abs","dataflow":"CPI","key":"3.999902.20.50.M","filter":{"MEASURE":"3","INDEX":"999902","FREQ":"M"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":65,"sanity":{"min":-2,"max":12},"value_label":"月度核心 · 年增率"},
-  "quarterly_cpi":                    {"source":"abs","dataflow":"CPI","key":"1.10001.10.50.Q","filter":{"MEASURE":"1","INDEX":"10001","FREQ":"Q"},"bond_dir":1,"display":"yoy","also":["qoq"],"also_labels":{"qoq":"季增率"},"unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-3,"max":15},"value_label":"季度 · 年增率（RBA 正式引用版）","note":"CPI_Q 裡沒有 headline 全澳總指數，只能從指數值自算年增率"},
-  "quarterly_trimmed_mean_cpi":       {"source":"abs","dataflow":"CPI_Q","key":"3.999902.20.50.Q","filter":{"MEASURE":"3","INDEX":"999902"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-2,"max":12},"value_label":"季度核心 · 年增率（RBA 首選）"},
-  "quarterly_weighted_median_cpi":    {"source":"abs","dataflow":"CPI_Q","key":"3.999903.20.50.Q","filter":{"MEASURE":"3","INDEX":"999903"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-2,"max":12},"value_label":"季度核心 · 年增率"},
-
-  "unemployment_rate":                {"source":"abs","dataflow":"LF","key":"M13.3.1599.20.AUS.M.","filter":{"MEASURE":"M13","SEX":"3","TSEST":"20","REGION":"AUS"},"bond_dir":-1,"display":"level","unit":"%","decimals":1,"stale_days":60,"sanity":{"min":2,"max":15}},
-  "participation_rate":               {"source":"abs","dataflow":"LF","key":"M12.3.1599.20.AUS.M.","filter":{"MEASURE":"M12","SEX":"3","TSEST":"20","REGION":"AUS"},"bond_dir":-1,"display":"level","unit":"%","decimals":1,"stale_days":60,"sanity":{"min":58,"max":72}},
-  "underemployment_rate":             {"source":"abs","dataflow":"LF_UNDER","key":"M23.3.1599.20.AUS.M.","filter":{"PARM_ITEM":"M23","SEX":"3","AGE":"1599","TSEST":"20","REGION":"AUS"},"bond_dir":-1,"display":"level","unit":"%","decimals":1,"stale_days":60,"sanity":{"min":3,"max":16},"extras":{"未充分利用率":{"dataflow":"LF_UNDER","key":"M24.3.1599.20.AUS.M.","filter":{"PARM_ITEM":"M24","SEX":"3","AGE":"1599","TSEST":"20","REGION":"AUS"}}}},
-  "employment_change_ft_pt":          {"source":"abs","dataflow":"LF","key":"M3.3.1599.20.AUS.M.","filter":{"MEASURE":"M3","SEX":"3","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"mom_diff","unit":"千人","decimals":1,"stale_days":60,"sanity":{"min":-200,"max":200},"extras":{"全職就業月變動(千人)":{"dataflow":"LF","key":"M1.3.1599.20.AUS.M.","filter":{"MEASURE":"M1","SEX":"3","TSEST":"20","REGION":"AUS"},"display":"mom_diff"},"兼職就業月變動(千人)":{"dataflow":"LF","key":"M2.3.1599.20.AUS.M.","filter":{"MEASURE":"M2","SEX":"3","TSEST":"20","REGION":"AUS"},"display":"mom_diff"}}},
-  "job_vacancies":                    {"source":"abs","dataflow":"JV","key":"M1.7..20.AUS.Q.","filter":{"MEASURE":"M1","SECTOR":"7","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"level","also":["qoq"],"also_labels":{"qoq":"季變動"},"unit":"千個","decimals":1,"stale_days":150,"label_as":"quarter","sanity":{"min":50,"max":700}},
-  "monthly_hours_worked":             {"source":"abs","dataflow":"LF_HOURS","key":"M18.3.1599.TOT.20.AUS.M.","filter":{"MEASURE":"M18","SEX":"3","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"mom","unit":"%","decimals":1,"stale_days":60,"sanity":{"min":-10,"max":10}},
-
-  "wage_price_index":                 {"source":"abs","dataflow":"WPI","key":"3.THRPEB.7..20.AUS.Q","filter":{"MEASURE":"3","INDEX":"THRPEB","SECTOR":"7","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":150,"label_as":"quarter","sanity":{"min":0,"max":8},"value_label":"總指數 · 年增率","note":"季增率不可用 also:qoq——主序列 MEASURE=3 本身就是年增率(%)，對百分比再取變動率會得到無意義的數字（2026-Q1 曾顯示 -2.9%，官方是 +0.8%）。季增率改抓 ABS 自己算好的 MEASURE=2","extras":{"季增率":{"dataflow":"WPI","key":"2.THRPEB.7..20.AUS.Q","filter":{"MEASURE":"2","INDEX":"THRPEB","SECTOR":"7","TSEST":"20","REGION":"AUS"},"decimals":1}}},
-  "private_public_sector_wpi":        {"source":"abs","dataflow":"WPI","key":"3.THRPEB.1..20.AUS.Q","filter":{"MEASURE":"3","INDEX":"THRPEB","SECTOR":"1","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":150,"label_as":"quarter","sanity":{"min":0,"max":8},"value_label":"私部門 · 年增率","extras":{"公部門年增率":{"dataflow":"WPI","key":"3.THRPEB.2..20.AUS.Q","filter":{"MEASURE":"3","INDEX":"THRPEB","SECTOR":"2","TSEST":"20","REGION":"AUS"}}}},
-
-  "rba_cash_rate_exchange_settlement_balanc": {"source":"rba","table":"f1","series":"FIRMMCRTD","bond_dir":1,"display":"level","unit":"%","decimals":2,"stale_days":8,"sanity":{"min":0,"max":10},"value_label":"現金利率目標","note":"2026-08-17 由 f1.1／FIRMMCRT（月頻，只有月底值）改為 f1／FIRMMCRTD（日頻）。政策利率用月頻序列，決議日到月底之間卡片會一直顯示舊利率——RBA 決議在台北 12:30 公布，日頻序列隔天就進得來。stale_days 設 8（<10）另有作用：build.py 以此當日頻代理值，避免天天掛 🆕","extras":{"ES餘額($m)":{"table":"a1","series":"ARBALESBW"}}},
-  "private_sector_credit_growth":     {"source":"rba","table":"d1","series":"DGFACNF12","bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":68,"sanity":{"min":-5,"max":20},"value_label":"總信貸(排除金融業) · 年增率","note":"舊序列 DGFAC12（Credit; Total）與 DGFACB12（Business）都在 2019-06 停更——RBA 當年改版財務總量定義，現行改用 NF（排除金融業）／NW（納入部分金融業）系列。2026-08-17 已與 RBA Financial Aggregates 2026-06 新聞稿對過：DGFACNF12 = 8.5%，正是新聞稿的頭條 Total credit（年增），房貸 7.5%、企業 10.8% 亦一致，主序列定案採 NF","extras":{"房貸年增率":{"table":"d1","series":"DGFACH12"},"企業信貸年增率(排除金融業)":{"table":"d1","series":"DGFACBNF12"},"總信貸(納入部分金融業)":{"table":"d1","series":"DGFACNW12"}}},
-  "rba_balance_sheet_bond_holdings":  {"source":"rba","table":"a1","series":"ARBAATAW","bond_dir":-1,"display":"level","unit":"$m","decimals":0,"stale_days":14,"sanity":{"min":100000,"max":700000},"value_label":"總資產"},
-
-  "producer_price_index":             {"source":"abs","dataflow":"PPI_FD","key":"3.TOT.TOT.TOTXE.Q","filter":{"MEASURE":"3","INDEX":"TOT"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-8,"max":20},"value_label":"最終需求(排除出口) · 年增率"},
-  "international_trade_price_indexes": {"source":"abs","dataflow":"ITPI_EXP","key":"3.8093697.Q","filter":{"MEASURE":"3","INDEX":"8093697"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-30,"max":40},"value_label":"出口物價 · 年增率","note":"出口的 All groups 掛在 SITC Rev3 碼 8093697；3111001 只有指數與貢獻度，沒有年增率","extras":{"進口物價年增率":{"dataflow":"ITPI_IMP","key":"3.6011001.Q","filter":{"MEASURE":"3","INDEX":"6011001"}}}},
-  "consumer_inflation_expectations":  {"source":"manual","_todo":"Melbourne Institute 403，連 curl_cffi 都被擋"},
-  "selected_living_cost_indexes":     {"source":"abs","dataflow":"LCI","key":"3.10001.P1.50.Q","filter":{"MEASURE":"3","INDEX":"10001","HOUSHOLD_TYPE":"P1"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-3,"max":15},"value_label":"受僱者家庭 · 年增率"},
-  "population_net_overseas_migration": {"source":"abs","dataflow":"ERP_COMP_Q","key":"9.AUS.Q.","filter":{"MEASURE":"9","REGION":"AUS"},"bond_dir":1,"display":"level","unit":"千人","decimals":1,"stale_days":260,"label_as":"quarter","sanity":{"min":-100,"max":300},"value_label":"淨海外移民(季)","extras":{"常住人口(千人)":{"dataflow":"ERP_COMP_Q","key":"10.AUS.Q.","filter":{"MEASURE":"10","REGION":"AUS"},"decimals":0}}},
-  "anz_indeed_job_ads":               {"source":"manual","_todo":"ANZ 網址待定位"},
-  "unit_labour_costs":                {"source":"manual","unit":"%","decimals":1,"bond_dir":1,"note":"ABS 的 RULC_LAB（實質單位勞動成本）在 ANA_AGG 裡停在 2018-Q3，ANA_INC 也只有薪資報酬總額 COE 沒有 ULC。自己拿 COE÷實質GDP 相除算出來的不是 ABS 官方口徑，不可當成官方數字上架。2026-08-17 確認：現行數字只在國民所得帳新聞稿的『quarter key figures』表 Productivity 區塊公布（Real unit labour costs），不進 SDMX API——每季發布後（3/6/9/12 月上旬）人工更新 data/manual.json 一次"},
-  "gross_domestic_product":           {"source":"abs","dataflow":"ANA_AGG","key":"M2.GPM.20.AUS.Q.","filter":{"MEASURE":"M2","DATA_ITEM":"GPM","TSEST":"20"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":170,"label_as":"quarter","sanity":{"min":-10,"max":10},"value_label":"實質 GDP · 季增率","extras":{"GDP水準(百萬澳元,CVM)":{"dataflow":"ANA_AGG","key":"M1.GPM.20.AUS.Q.","filter":{"MEASURE":"M1","DATA_ITEM":"GPM","TSEST":"20"},"decimals":0}}},
-  "monthly_household_spending_indicator": {"source":"abs","dataflow":"HSI_M","key":"9.TOT.CUR.20.AUS.M.","filter":{"MEASURE":"9","CATEGORY":"TOT","TSEST":"20","STATE":"AUS"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":75,"sanity":{"min":-20,"max":25},"value_label":"總支出 · 年增率","note":"2025/7 起 MHSI 取代零售銷售，媒體仍常寫成 retail sales","extras":{"月增率":{"dataflow":"HSI_M","key":"8.TOT.CUR.20.AUS.M.","filter":{"MEASURE":"8","CATEGORY":"TOT","TSEST":"20","STATE":"AUS"}}}},
-  "private_new_capital_expenditure":  {"source":"abs","dataflow":"CAPEX","key":"M1.CVM.TOT.TOT.20.AUS.Q.","filter":{"MEASURE":"M1","PRICE_ADJUSTMENT":"CVM","ASSET":"TOT","INDUSTRY":"TOT","TSEST":"20","STATE":"AUS"},"bond_dir":1,"display":"qoq","unit":"%","decimals":1,"stale_days":175,"label_as":"quarter","sanity":{"min":-25,"max":25},"value_label":"實際支出 · 季增率"},
-  "manufacturing_pmi":                {"source":"manual","_todo":"S&P Global 新聞稿，待寫解析"},
-  "services_pmi":                     {"source":"manual","_todo":"S&P Global 新聞稿，待寫解析"},
-  "international_trade_in_goods":     {"source":"abs","dataflow":"ITGS","key":"M1.170.20.AUS.M.","filter":{"MEASURE":"M1","DATA_ITEM":"170","TSEST":"20"},"bond_dir":-1,"display":"level","unit":"百萬澳元","decimals":0,"stale_days":72,"sanity":{"min":-15000,"max":25000},"value_label":"貨物貿易差額(季調)"},
-  "westpac_mi_leading_index":         {"source":"manual","_todo":"westpac.com.au 可達，待寫解析"},
-  "business_indicators":              {"source":"abs","dataflow":"QBIS","key":"M8.CUR.TOT.TOT.20.AUS.Q.","filter":{"MEASURE":"M8","PRICE_ADJUSTMENT":"CUR","INDUSTRY":"TOT","SCOPE":"TOT","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"level","unit":"%","decimals":1,"stale_days":175,"label_as":"quarter","sanity":{"min":-30,"max":30},"value_label":"營業毛利 · 季增率","extras":{"存貨季增率":{"dataflow":"QBIS","key":"M4.CVM.TOT.TOT.20.AUS.Q.","filter":{"MEASURE":"M4","PRICE_ADJUSTMENT":"CVM","INDUSTRY":"TOT","SCOPE":"TOT","TSEST":"20","REGION":"AUS"}},"銷售季增率":{"dataflow":"QBIS","key":"M2.CVM.TOT.TOT.20.AUS.Q.","filter":{"MEASURE":"M2","PRICE_ADJUSTMENT":"CVM","INDUSTRY":"TOT","SCOPE":"TOT","TSEST":"20","REGION":"AUS"}}}},
-  "consumer_sentiment_index":         {"source":"manual","_todo":"westpac.com.au 可達，待寫解析"},
-  "nab_business_confidence_conditions": {"source":"manual","_todo":"business.nab.com.au 可達，待寫解析"},
-  "building_approvals":               {"source":"abs","dataflow":"BA_GCCSA","key":"1.1.9.TOT.100.10.AUS.M.","filter":{"MEASURE":"1","VALUE":"1","SECTOR":"9","WORK_TYPE":"TOT","BUILDING_TYPE":"100","REGION":"AUS"},"bond_dir":1,"display":"yoy","unit":"%","decimals":1,"stale_days":72,"sanity":{"min":-50,"max":60},"value_label":"住宅核准戶數(原始) · 年增率","note":"⚠️ 口徑差異：ABS 新聞稿頭條是季調值（2026-06 為 +7.2%／18,328 戶），但 SDMX API 的 BA_GCCSA 只有 TSEST=10 原始值（實測 TSEST=20 回 404，萬用碼列舉也只有 10），季調序列只存在於新聞稿的下載表。原始月增率波動極大（2026-06 為 +11.3%，與季調差 4 個百分點），故主數值改用年增率、月增率降為附帶。跟新聞稿或媒體對數字時以官方季調值為準。BA_GCCSA 有 11 萬條序列，key 每一維都要指定；REGION 的全澳碼是 AUS","extras":{"核准戶數(原始,戶)":{"dataflow":"BA_GCCSA","key":"1.1.9.TOT.100.10.AUS.M.","filter":{"MEASURE":"1","VALUE":"1","SECTOR":"9","WORK_TYPE":"TOT","BUILDING_TYPE":"100","REGION":"AUS"},"display":"level","decimals":0},"月增率(原始)":{"dataflow":"BA_GCCSA","key":"1.1.9.TOT.100.10.AUS.M.","filter":{"MEASURE":"1","VALUE":"1","SECTOR":"9","WORK_TYPE":"TOT","BUILDING_TYPE":"100","REGION":"AUS"},"display":"mom","decimals":1}}},
-  "residential_property_price_index": {"source":"abs","dataflow":"RES_DWELL_ST","key":"5.AUS.Q.","filter":{"MEASURE":"5","REGION":"AUS"},"bond_dir":1,"display":"level","unit":"千澳元","decimals":1,"stale_days":200,"label_as":"quarter","sanity":{"min":300,"max":3000},"value_label":"住宅平均價格(季)","note":"⚠️ 原本的 RPPI 住宅價格指數已於 2021-Q4 停止發布，改抓 RES_DWELL_ST 的平均價格——口徑從「指數」變成「價格水位」，卡片的解讀與債市含義文字需一併改寫。月頻房價走勢以 Cotality 那張卡為準","extras":{"住宅存量總值(百萬澳元)":{"dataflow":"RES_DWELL_ST","key":"1.AUS.Q.","filter":{"MEASURE":"1","REGION":"AUS"},"decimals":0},"住宅戶數(千戶)":{"dataflow":"RES_DWELL_ST","key":"4.AUS.Q.","filter":{"MEASURE":"4","REGION":"AUS"},"decimals":1}}},
-  "lending_indicators":               {"source":"abs","dataflow":"LEND_HOUSING","key":"FIN_VAL.NEWCOMMITS.DV8368.TOTDWELL.TOT.TOT.20.AUS.Q.","filter":{"MEASURE":"FIN_VAL","LOAN_PURPOSE":"TOTDWELL","LENDER_TYPE":"TOT","HOUSING_PURPOSE":"TOT","TSEST":"20","REGION":"AUS"},"bond_dir":1,"display":"qoq","unit":"%","decimals":1,"stale_days":160,"label_as":"quarter","sanity":{"min":-30,"max":30},"value_label":"新承作房貸金額 · 季增率","note":"LOAN_PURPOSE 的全體住宅碼是 TOTDWELL，不是 TOTHOUS"},
-  "corelogic_home_value_index":       {"source":"manual","_todo":"CoreLogic 已更名 Cotality，卡名與網址都要改"},
-  "building_activity_commencements_completi": {"source":"abs","dataflow":"BUILDING_ACTIVITY","key":"M6.AUS.CUR.TOT.9.TOT.20.Q.","filter":{"MEASURE":"M6","REGION":"AUS","BLD_WORK_TYPE":"TOT","SECTOR_OWN":"9","TYPE_BLDG":"TOT","TSEST":"20"},"bond_dir":1,"display":"level","unit":"戶","decimals":0,"stale_days":190,"label_as":"quarter","sanity":{"min":10000,"max":80000},"value_label":"開工戶數(季)","extras":{"完工戶數(戶)":{"dataflow":"BUILDING_ACTIVITY","key":"M7.AUS.CUR.TOT.9.TOT.20.Q.","filter":{"MEASURE":"M7","REGION":"AUS","BLD_WORK_TYPE":"TOT","SECTOR_OWN":"9","TYPE_BLDG":"TOT","TSEST":"20"},"decimals":0}}},
-  "hia_new_home_sales":               {"source":"manual","_todo":"hia.com.au 可達，待寫解析"},
-  "underlying_cash_balance":          {"source":"manual","_todo":"budget.gov.au 以 PDF 為主，比照美國 QRA 走人工"},
-  "commonwealth_monthly_financial_statement": {"source":"manual","_todo":"finance.gov.au 子頁 500，網址待定位"},
-  "net_gross_debt":                   {"source":"manual","_todo":"AOFM Data Hub，待寫 xlsx 解析"},
-  "aofm_treasury_bond_issuance_program": {"source":"manual","_todo":"AOFM Data Hub，待寫 xlsx 解析"},
-  "treasury_notes":                   {"source":"manual","_todo":"AOFM Data Hub，待寫 xlsx 解析"},
-  "treasury_indexed_bonds":           {"source":"manual","_todo":"AOFM Data Hub，待寫 xlsx 解析"}
+  "ABS key 格式": "維度值以 . 相接，順序見各 dataflow 的 DSD；留空代表該維度取全部。常用碼：REGION AUS 或 50=全澳、SEX 3=合計、AGE 1599=15歲以上、TSEST 10=原始 20=季調、SECTOR 7=公私合計 1=私 2=公",
+  "filter": "安全網。ABS 偶爾在 dataflow 加新維度，原本唯一的 key 會突然回傳多條序列——有 filter 才擋得下來，否則程式會默默挑一條當答案",
+  "display": "level=原值 | yoy=年增率 | mom=月變動% | mom_diff=月變動絕對量 | qoq=季變動% | qoq_diff=季變動絕對量",
+  "bond_dir": "值上升對債市的意義：1=利空（殖利率上行壓力）、-1=利多。依配色慣例紅=利多債市、綠=利空債市，以債券價格為準",
+  "stale_days": "超過此天數未更新即亮黃燈。計算基準是「期別結束日」，不是發布日——所以門檻要設成『期別結束 → 下一期發布』的最大間隔再加緩衝，不是發布滯後。ABS 月頻資料在下一期公布前，年齡本來就會長到 51～66 天（例：2026-06 勞動力 7/23 發布、2026-07 要等 8/20），2026-08-17 全面校準前設 45 天，導致 9 張完全正常的卡同時亮黃燈、綠燈掉到 20 剛好卡在中止門檻上。現行：勞動力月頻 60、月度 CPI 65、RBA 信貸 68、ITGS 72、建築許可 72、MHSI 75、季頻 150～200"
+ },
+ "monthly_cpi_indicator": {
+  "source": "abs",
+  "dataflow": "CPI",
+  "key": "3.10001.10.50.M",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "10001",
+   "FREQ": "M"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 65,
+  "sanity": {
+   "min": -3,
+   "max": 15
+  },
+  "value_label": "月度 · 年增率",
+  "note": "月度口徑，非 RBA 政策溝通的正式引用版"
+ },
+ "monthly_trimmed_mean_cpi": {
+  "source": "abs",
+  "dataflow": "CPI",
+  "key": "3.999902.20.50.M",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "999902",
+   "FREQ": "M"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 65,
+  "sanity": {
+   "min": -2,
+   "max": 12
+  },
+  "value_label": "月度核心 · 年增率"
+ },
+ "quarterly_cpi": {
+  "source": "abs",
+  "dataflow": "CPI",
+  "key": "1.10001.10.50.Q",
+  "filter": {
+   "MEASURE": "1",
+   "INDEX": "10001",
+   "FREQ": "Q"
+  },
+  "bond_dir": 1,
+  "display": "yoy",
+  "also": [
+   "qoq"
+  ],
+  "also_labels": {
+   "qoq": "季增率"
+  },
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -3,
+   "max": 15
+  },
+  "value_label": "季度 · 年增率（RBA 正式引用版）",
+  "note": "CPI_Q 裡沒有 headline 全澳總指數，只能從指數值自算年增率"
+ },
+ "quarterly_trimmed_mean_cpi": {
+  "source": "abs",
+  "dataflow": "CPI_Q",
+  "key": "3.999902.20.50.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "999902"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -2,
+   "max": 12
+  },
+  "value_label": "季度核心 · 年增率（RBA 首選）"
+ },
+ "quarterly_weighted_median_cpi": {
+  "source": "abs",
+  "dataflow": "CPI_Q",
+  "key": "3.999903.20.50.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "999903"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -2,
+   "max": 12
+  },
+  "value_label": "季度核心 · 年增率"
+ },
+ "unemployment_rate": {
+  "source": "abs",
+  "dataflow": "LF",
+  "key": "M13.3.1599.20.AUS.M.",
+  "filter": {
+   "MEASURE": "M13",
+   "SEX": "3",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": -1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 60,
+  "sanity": {
+   "min": 2,
+   "max": 15
+  }
+ },
+ "participation_rate": {
+  "source": "abs",
+  "dataflow": "LF",
+  "key": "M12.3.1599.20.AUS.M.",
+  "filter": {
+   "MEASURE": "M12",
+   "SEX": "3",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": -1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 60,
+  "sanity": {
+   "min": 58,
+   "max": 72
+  }
+ },
+ "underemployment_rate": {
+  "source": "abs",
+  "dataflow": "LF_UNDER",
+  "key": "M23.3.1599.20.AUS.M.",
+  "filter": {
+   "PARM_ITEM": "M23",
+   "SEX": "3",
+   "AGE": "1599",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": -1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 60,
+  "sanity": {
+   "min": 3,
+   "max": 16
+  },
+  "extras": {
+   "未充分利用率": {
+    "dataflow": "LF_UNDER",
+    "key": "M24.3.1599.20.AUS.M.",
+    "filter": {
+     "PARM_ITEM": "M24",
+     "SEX": "3",
+     "AGE": "1599",
+     "TSEST": "20",
+     "REGION": "AUS"
+    }
+   }
+  }
+ },
+ "employment_change_ft_pt": {
+  "source": "abs",
+  "dataflow": "LF",
+  "key": "M3.3.1599.20.AUS.M.",
+  "filter": {
+   "MEASURE": "M3",
+   "SEX": "3",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "mom_diff",
+  "unit": "千人",
+  "decimals": 1,
+  "stale_days": 60,
+  "sanity": {
+   "min": -200,
+   "max": 200
+  },
+  "extras": {
+   "全職就業月變動(千人)": {
+    "dataflow": "LF",
+    "key": "M1.3.1599.20.AUS.M.",
+    "filter": {
+     "MEASURE": "M1",
+     "SEX": "3",
+     "TSEST": "20",
+     "REGION": "AUS"
+    },
+    "display": "mom_diff"
+   },
+   "兼職就業月變動(千人)": {
+    "dataflow": "LF",
+    "key": "M2.3.1599.20.AUS.M.",
+    "filter": {
+     "MEASURE": "M2",
+     "SEX": "3",
+     "TSEST": "20",
+     "REGION": "AUS"
+    },
+    "display": "mom_diff"
+   }
+  }
+ },
+ "job_vacancies": {
+  "source": "abs",
+  "dataflow": "JV",
+  "key": "M1.7..20.AUS.Q.",
+  "filter": {
+   "MEASURE": "M1",
+   "SECTOR": "7",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "also": [
+   "qoq"
+  ],
+  "also_labels": {
+   "qoq": "季變動"
+  },
+  "unit": "千個",
+  "decimals": 1,
+  "stale_days": 150,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 50,
+   "max": 700
+  }
+ },
+ "monthly_hours_worked": {
+  "source": "abs",
+  "dataflow": "LF_HOURS",
+  "key": "M18.3.1599.TOT.20.AUS.M.",
+  "filter": {
+   "MEASURE": "M18",
+   "SEX": "3",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "mom",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 60,
+  "sanity": {
+   "min": -10,
+   "max": 10
+  }
+ },
+ "wage_price_index": {
+  "source": "abs",
+  "dataflow": "WPI",
+  "key": "3.THRPEB.7..20.AUS.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "THRPEB",
+   "SECTOR": "7",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 150,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 0,
+   "max": 8
+  },
+  "value_label": "總指數 · 年增率",
+  "note": "季增率不可用 also:qoq——主序列 MEASURE=3 本身就是年增率(%)，對百分比再取變動率會得到無意義的數字（2026-Q1 曾顯示 -2.9%，官方是 +0.8%）。季增率改抓 ABS 自己算好的 MEASURE=2",
+  "extras": {
+   "季增率": {
+    "dataflow": "WPI",
+    "key": "2.THRPEB.7..20.AUS.Q",
+    "filter": {
+     "MEASURE": "2",
+     "INDEX": "THRPEB",
+     "SECTOR": "7",
+     "TSEST": "20",
+     "REGION": "AUS"
+    },
+    "decimals": 1
+   }
+  }
+ },
+ "private_public_sector_wpi": {
+  "source": "abs",
+  "dataflow": "WPI",
+  "key": "3.THRPEB.1..20.AUS.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "THRPEB",
+   "SECTOR": "1",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 150,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 0,
+   "max": 8
+  },
+  "value_label": "私部門 · 年增率",
+  "extras": {
+   "公部門年增率": {
+    "dataflow": "WPI",
+    "key": "3.THRPEB.2..20.AUS.Q",
+    "filter": {
+     "MEASURE": "3",
+     "INDEX": "THRPEB",
+     "SECTOR": "2",
+     "TSEST": "20",
+     "REGION": "AUS"
+    }
+   }
+  }
+ },
+ "rba_cash_rate_exchange_settlement_balanc": {
+  "source": "rba",
+  "table": "f1",
+  "series": "FIRMMCRTD",
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 2,
+  "stale_days": 8,
+  "sanity": {
+   "min": 0,
+   "max": 10
+  },
+  "value_label": "現金利率目標",
+  "note": "2026-08-17 由 f1.1／FIRMMCRT（月頻，只有月底值）改為 f1／FIRMMCRTD（日頻）。政策利率用月頻序列，決議日到月底之間卡片會一直顯示舊利率——RBA 決議在台北 12:30 公布，日頻序列隔天就進得來。stale_days 設 8（<10）另有作用：build.py 以此當日頻代理值，避免天天掛 🆕",
+  "extras": {
+   "ES餘額($m)": {
+    "table": "a1",
+    "series": "ARBALESBW"
+   }
+  }
+ },
+ "private_sector_credit_growth": {
+  "source": "rba",
+  "table": "d1",
+  "series": "DGFACNF12",
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 68,
+  "sanity": {
+   "min": -5,
+   "max": 20
+  },
+  "value_label": "總信貸(排除金融業) · 年增率",
+  "note": "舊序列 DGFAC12（Credit; Total）與 DGFACB12（Business）都在 2019-06 停更——RBA 當年改版財務總量定義，現行改用 NF（排除金融業）／NW（納入部分金融業）系列。2026-08-17 已與 RBA Financial Aggregates 2026-06 新聞稿對過：DGFACNF12 = 8.5%，正是新聞稿的頭條 Total credit（年增），房貸 7.5%、企業 10.8% 亦一致，主序列定案採 NF",
+  "extras": {
+   "房貸年增率": {
+    "table": "d1",
+    "series": "DGFACH12"
+   },
+   "企業信貸年增率(排除金融業)": {
+    "table": "d1",
+    "series": "DGFACBNF12"
+   },
+   "總信貸(納入部分金融業)": {
+    "table": "d1",
+    "series": "DGFACNW12"
+   }
+  }
+ },
+ "rba_balance_sheet_bond_holdings": {
+  "source": "rba",
+  "table": "a1",
+  "series": "ARBAATAW",
+  "bond_dir": -1,
+  "display": "level",
+  "unit": "$m",
+  "decimals": 0,
+  "stale_days": 14,
+  "sanity": {
+   "min": 100000,
+   "max": 700000
+  },
+  "value_label": "總資產"
+ },
+ "producer_price_index": {
+  "source": "abs",
+  "dataflow": "PPI_FD",
+  "key": "3.TOT.TOT.TOTXE.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "TOT"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -8,
+   "max": 20
+  },
+  "value_label": "最終需求(排除出口) · 年增率"
+ },
+ "international_trade_price_indexes": {
+  "source": "abs",
+  "dataflow": "ITPI_EXP",
+  "key": "3.8093697.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "8093697"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -30,
+   "max": 40
+  },
+  "value_label": "出口物價 · 年增率",
+  "note": "出口的 All groups 掛在 SITC Rev3 碼 8093697；3111001 只有指數與貢獻度，沒有年增率",
+  "extras": {
+   "進口物價年增率": {
+    "dataflow": "ITPI_IMP",
+    "key": "3.6011001.Q",
+    "filter": {
+     "MEASURE": "3",
+     "INDEX": "6011001"
+    }
+   }
+  }
+ },
+ "consumer_inflation_expectations": {
+  "source": "manual",
+  "_todo": "Melbourne Institute 403，連 curl_cffi 都被擋"
+ },
+ "selected_living_cost_indexes": {
+  "source": "abs",
+  "dataflow": "LCI",
+  "key": "3.10001.P1.50.Q",
+  "filter": {
+   "MEASURE": "3",
+   "INDEX": "10001",
+   "HOUSHOLD_TYPE": "P1"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -3,
+   "max": 15
+  },
+  "value_label": "受僱者家庭 · 年增率"
+ },
+ "population_net_overseas_migration": {
+  "source": "abs",
+  "dataflow": "ERP_COMP_Q",
+  "key": "9.AUS.Q.",
+  "filter": {
+   "MEASURE": "9",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "千人",
+  "decimals": 1,
+  "stale_days": 260,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -100,
+   "max": 300
+  },
+  "value_label": "淨海外移民(季)",
+  "extras": {
+   "常住人口(千人)": {
+    "dataflow": "ERP_COMP_Q",
+    "key": "10.AUS.Q.",
+    "filter": {
+     "MEASURE": "10",
+     "REGION": "AUS"
+    },
+    "decimals": 0
+   }
+  }
+ },
+ "anz_indeed_job_ads": {
+  "source": "manual",
+  "_todo": "ANZ 網址待定位"
+ },
+ "unit_labour_costs": {
+  "source": "manual",
+  "unit": "%",
+  "decimals": 1,
+  "bond_dir": 1,
+  "note": "ABS 的 RULC_LAB（實質單位勞動成本）在 ANA_AGG 裡停在 2018-Q3，ANA_INC 也只有薪資報酬總額 COE 沒有 ULC。自己拿 COE÷實質GDP 相除算出來的不是 ABS 官方口徑，不可當成官方數字上架。2026-08-17 確認：現行數字只在國民所得帳新聞稿的『quarter key figures』表 Productivity 區塊公布（Real unit labour costs），不進 SDMX API——每季發布後（3/6/9/12 月上旬）人工更新 data/manual.json 一次"
+ },
+ "gross_domestic_product": {
+  "source": "abs",
+  "dataflow": "ANA_AGG",
+  "key": "M2.GPM.20.AUS.Q.",
+  "filter": {
+   "MEASURE": "M2",
+   "DATA_ITEM": "GPM",
+   "TSEST": "20"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -10,
+   "max": 10
+  },
+  "value_label": "實質 GDP · 季增率",
+  "extras": {
+   "GDP水準(百萬澳元,CVM)": {
+    "dataflow": "ANA_AGG",
+    "key": "M1.GPM.20.AUS.Q.",
+    "filter": {
+     "MEASURE": "M1",
+     "DATA_ITEM": "GPM",
+     "TSEST": "20"
+    },
+    "decimals": 0
+   }
+  }
+ },
+ "monthly_household_spending_indicator": {
+  "source": "abs",
+  "dataflow": "HSI_M",
+  "key": "9.TOT.CUR.20.AUS.M.",
+  "filter": {
+   "MEASURE": "9",
+   "CATEGORY": "TOT",
+   "TSEST": "20",
+   "STATE": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 75,
+  "sanity": {
+   "min": -20,
+   "max": 25
+  },
+  "value_label": "總支出 · 年增率",
+  "note": "2025/7 起 MHSI 取代零售銷售，媒體仍常寫成 retail sales",
+  "extras": {
+   "月增率": {
+    "dataflow": "HSI_M",
+    "key": "8.TOT.CUR.20.AUS.M.",
+    "filter": {
+     "MEASURE": "8",
+     "CATEGORY": "TOT",
+     "TSEST": "20",
+     "STATE": "AUS"
+    }
+   }
+  }
+ },
+ "private_new_capital_expenditure": {
+  "source": "abs",
+  "dataflow": "CAPEX",
+  "key": "M1.CVM.TOT.TOT.20.AUS.Q.",
+  "filter": {
+   "MEASURE": "M1",
+   "PRICE_ADJUSTMENT": "CVM",
+   "ASSET": "TOT",
+   "INDUSTRY": "TOT",
+   "TSEST": "20",
+   "STATE": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "qoq",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 175,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -25,
+   "max": 25
+  },
+  "value_label": "實際支出 · 季增率"
+ },
+ "international_trade_in_goods": {
+  "source": "abs",
+  "dataflow": "ITGS",
+  "key": "M1.170.20.AUS.M.",
+  "filter": {
+   "MEASURE": "M1",
+   "DATA_ITEM": "170",
+   "TSEST": "20"
+  },
+  "bond_dir": -1,
+  "display": "level",
+  "unit": "百萬澳元",
+  "decimals": 0,
+  "stale_days": 72,
+  "sanity": {
+   "min": -15000,
+   "max": 25000
+  },
+  "value_label": "貨物貿易差額(季調)"
+ },
+ "westpac_mi_leading_index": {
+  "source": "westpac",
+  "series": "leading_index",
+  "unit": "%",
+  "decimals": 2,
+  "value_label": "六個月年化成長率（相對趨勢）",
+  "sanity": {
+   "min": -8,
+   "max": 8
+  },
+  "stale_days": 70,
+  "bond_dir": 1,
+  "persist_history": true,
+  "source_label": "Westpac IQ · Westpac–MI 領先指標"
+ },
+ "business_indicators": {
+  "source": "abs",
+  "dataflow": "QBIS",
+  "key": "M8.CUR.TOT.TOT.20.AUS.Q.",
+  "filter": {
+   "MEASURE": "M8",
+   "PRICE_ADJUSTMENT": "CUR",
+   "INDUSTRY": "TOT",
+   "SCOPE": "TOT",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 175,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -30,
+   "max": 30
+  },
+  "value_label": "營業毛利 · 季增率",
+  "extras": {
+   "存貨季增率": {
+    "dataflow": "QBIS",
+    "key": "M4.CVM.TOT.TOT.20.AUS.Q.",
+    "filter": {
+     "MEASURE": "M4",
+     "PRICE_ADJUSTMENT": "CVM",
+     "INDUSTRY": "TOT",
+     "SCOPE": "TOT",
+     "TSEST": "20",
+     "REGION": "AUS"
+    }
+   },
+   "銷售季增率": {
+    "dataflow": "QBIS",
+    "key": "M2.CVM.TOT.TOT.20.AUS.Q.",
+    "filter": {
+     "MEASURE": "M2",
+     "PRICE_ADJUSTMENT": "CVM",
+     "INDUSTRY": "TOT",
+     "SCOPE": "TOT",
+     "TSEST": "20",
+     "REGION": "AUS"
+    }
+   }
+  }
+ },
+ "consumer_sentiment_index": {
+  "source": "westpac",
+  "series": "consumer_sentiment",
+  "unit": "",
+  "decimals": 1,
+  "value_label": "指數（100 = 樂觀與悲觀人數相等）",
+  "sanity": {
+   "min": 40,
+   "max": 160
+  },
+  "stale_days": 55,
+  "bond_dir": 1,
+  "persist_history": true,
+  "source_label": "Westpac IQ · Westpac–MI 消費者信心"
+ },
+ "building_approvals": {
+  "source": "abs",
+  "dataflow": "BA_GCCSA",
+  "key": "1.1.9.TOT.100.10.AUS.M.",
+  "filter": {
+   "MEASURE": "1",
+   "VALUE": "1",
+   "SECTOR": "9",
+   "WORK_TYPE": "TOT",
+   "BUILDING_TYPE": "100",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "yoy",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 72,
+  "sanity": {
+   "min": -50,
+   "max": 60
+  },
+  "value_label": "住宅核准戶數(原始) · 年增率",
+  "note": "⚠️ 口徑差異：ABS 新聞稿頭條是季調值（2026-06 為 +7.2%／18,328 戶），但 SDMX API 的 BA_GCCSA 只有 TSEST=10 原始值（實測 TSEST=20 回 404，萬用碼列舉也只有 10），季調序列只存在於新聞稿的下載表。原始月增率波動極大（2026-06 為 +11.3%，與季調差 4 個百分點），故主數值改用年增率、月增率降為附帶。跟新聞稿或媒體對數字時以官方季調值為準。BA_GCCSA 有 11 萬條序列，key 每一維都要指定；REGION 的全澳碼是 AUS",
+  "extras": {
+   "核准戶數(原始,戶)": {
+    "dataflow": "BA_GCCSA",
+    "key": "1.1.9.TOT.100.10.AUS.M.",
+    "filter": {
+     "MEASURE": "1",
+     "VALUE": "1",
+     "SECTOR": "9",
+     "WORK_TYPE": "TOT",
+     "BUILDING_TYPE": "100",
+     "REGION": "AUS"
+    },
+    "display": "level",
+    "decimals": 0
+   },
+   "月增率(原始)": {
+    "dataflow": "BA_GCCSA",
+    "key": "1.1.9.TOT.100.10.AUS.M.",
+    "filter": {
+     "MEASURE": "1",
+     "VALUE": "1",
+     "SECTOR": "9",
+     "WORK_TYPE": "TOT",
+     "BUILDING_TYPE": "100",
+     "REGION": "AUS"
+    },
+    "display": "mom",
+    "decimals": 1
+   }
+  }
+ },
+ "residential_property_price_index": {
+  "source": "abs",
+  "dataflow": "RES_DWELL_ST",
+  "key": "5.AUS.Q.",
+  "filter": {
+   "MEASURE": "5",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "千澳元",
+  "decimals": 1,
+  "stale_days": 200,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 300,
+   "max": 3000
+  },
+  "value_label": "住宅平均價格(季)",
+  "note": "⚠️ 原本的 RPPI 住宅價格指數已於 2021-Q4 停止發布，改抓 RES_DWELL_ST 的平均價格——口徑從「指數」變成「價格水位」，卡片的解讀與債市含義文字需一併改寫。月頻房價走勢以 Cotality 那張卡為準",
+  "extras": {
+   "住宅存量總值(百萬澳元)": {
+    "dataflow": "RES_DWELL_ST",
+    "key": "1.AUS.Q.",
+    "filter": {
+     "MEASURE": "1",
+     "REGION": "AUS"
+    },
+    "decimals": 0
+   },
+   "住宅戶數(千戶)": {
+    "dataflow": "RES_DWELL_ST",
+    "key": "4.AUS.Q.",
+    "filter": {
+     "MEASURE": "4",
+     "REGION": "AUS"
+    },
+    "decimals": 1
+   }
+  }
+ },
+ "lending_indicators": {
+  "source": "abs",
+  "dataflow": "LEND_HOUSING",
+  "key": "FIN_VAL.NEWCOMMITS.DV8368.TOTDWELL.TOT.TOT.20.AUS.Q.",
+  "filter": {
+   "MEASURE": "FIN_VAL",
+   "LOAN_PURPOSE": "TOTDWELL",
+   "LENDER_TYPE": "TOT",
+   "HOUSING_PURPOSE": "TOT",
+   "TSEST": "20",
+   "REGION": "AUS"
+  },
+  "bond_dir": 1,
+  "display": "qoq",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 160,
+  "label_as": "quarter",
+  "sanity": {
+   "min": -30,
+   "max": 30
+  },
+  "value_label": "新承作房貸金額 · 季增率",
+  "note": "LOAN_PURPOSE 的全體住宅碼是 TOTDWELL，不是 TOTHOUS"
+ },
+ "building_activity_commencements_completi": {
+  "source": "abs",
+  "dataflow": "BUILDING_ACTIVITY",
+  "key": "M6.AUS.CUR.TOT.9.TOT.20.Q.",
+  "filter": {
+   "MEASURE": "M6",
+   "REGION": "AUS",
+   "BLD_WORK_TYPE": "TOT",
+   "SECTOR_OWN": "9",
+   "TYPE_BLDG": "TOT",
+   "TSEST": "20"
+  },
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "戶",
+  "decimals": 0,
+  "stale_days": 190,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 10000,
+   "max": 80000
+  },
+  "value_label": "開工戶數(季)",
+  "extras": {
+   "完工戶數(戶)": {
+    "dataflow": "BUILDING_ACTIVITY",
+    "key": "M7.AUS.CUR.TOT.9.TOT.20.Q.",
+    "filter": {
+     "MEASURE": "M7",
+     "REGION": "AUS",
+     "BLD_WORK_TYPE": "TOT",
+     "SECTOR_OWN": "9",
+     "TYPE_BLDG": "TOT",
+     "TSEST": "20"
+    },
+    "decimals": 0
+   }
+  }
+ },
+ "underlying_cash_balance": {
+  "source": "finance",
+  "field": "budget_full_year",
+  "unit": " 十億",
+  "decimals": 1,
+  "value_label": "本財年全年預算估計（赤字為負）",
+  "sanity": {
+   "min": -300,
+   "max": 150
+  },
+  "stale_days": 135,
+  "bond_dir": 1,
+  "persist_history": true,
+  "source_label": "財政部 月度財政帳 · 全年預算估計"
+ },
+ "commonwealth_monthly_financial_statement": {
+  "source": "finance",
+  "field": "underlying_cash_balance",
+  "unit": " 十億",
+  "decimals": 1,
+  "value_label": "本財年迄今累計（赤字為負）",
+  "sanity": {
+   "min": -200,
+   "max": 100
+  },
+  "stale_days": 135,
+  "bond_dir": 1,
+  "persist_history": true,
+  "source_label": "財政部 月度財政帳"
+ },
+ "net_gross_debt": {
+  "source": "finance",
+  "field": "net_debt",
+  "unit": " 十億",
+  "decimals": 1,
+  "value_label": "淨負債（月度財政帳口徑）",
+  "sanity": {
+   "min": 0,
+   "max": 2000
+  },
+  "stale_days": 135,
+  "bond_dir": 1,
+  "persist_history": true,
+  "source_label": "財政部 月度財政帳"
+ },
+ "aofm_treasury_bond_issuance_program": {
+  "source": "aofm",
+  "file": "treasury_bonds_issuance",
+  "unit": " 十億",
+  "decimals": 1,
+  "value_label": "近 12 個月標售發行額（面額）",
+  "sanity": {
+   "min": 20,
+   "max": 400
+  },
+  "stale_days": 70,
+  "bond_dir": 1,
+  "source_label": "AOFM Data Hub · Treasury Bonds 標售紀錄"
+ },
+ "treasury_notes": {
+  "source": "aofm",
+  "file": "treasury_notes_issuance",
+  "unit": " 十億",
+  "decimals": 1,
+  "value_label": "在外流通面額（由標售紀錄推算）",
+  "sanity": {
+   "min": 15,
+   "max": 150
+  },
+  "stale_days": 70,
+  "bond_dir": 1,
+  "source_label": "AOFM Data Hub · Treasury Notes 標售紀錄（存量為本站推算）",
+  "mode": "outstanding"
+ },
+ "treasury_indexed_bonds": {
+  "source": "aofm",
+  "file": "treasury_indexed_bonds_issuance",
+  "unit": " 十億",
+  "decimals": 2,
+  "value_label": "近 12 個月標售發行額（面額）",
+  "sanity": {
+   "min": 0,
+   "max": 30
+  },
+  "stale_days": 120,
+  "bond_dir": 1,
+  "source_label": "AOFM Data Hub · TIB 標售紀錄"
+ }
 }
