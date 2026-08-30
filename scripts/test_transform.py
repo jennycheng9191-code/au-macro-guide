@@ -85,11 +85,45 @@ def case_daily_yoy():
     return ok, f"日頻應算得出 YoY，實得 {[(o['date'], round(o['value'],2)) for o in out]}"
 
 
+def case_anz_mapping_series_valid():
+    """mapping 的 anz series 必須是 anz.COLS 的鍵。
+
+    打錯字不會讓建置失敗，只會讓那張卡默默變成未取得——
+    fetch() 走的是「回 ok=False」而不是丟例外，防呆會照樣過。
+    """
+    import json
+    sys.path.insert(0, str(Path(__file__).resolve().parent / "sources"))
+    import anz
+
+    mp = json.loads((Path(__file__).resolve().parent.parent
+                     / "data" / "mapping.json").read_text(encoding="utf-8"))
+    bad = [k for k, v in mp.items()
+           if isinstance(v, dict) and v.get("source") == "anz"
+           and v.get("series", "sa") not in anz.COLS]
+    return not bad, f"series 不在 anz.COLS 的卡：{bad}（可用 {list(anz.COLS)}）"
+
+
+def case_anz_uses_plain_requests():
+    """anz.py 不可改用 get_impersonated。
+
+    anz.com.au 的擋法跟 AOFM／finance.gov.au **相反**：一般 requests 回 200，
+    curl_cffi 偽裝 Chrome 指紋反而 403。之後有人「統一改成偽裝指紋比較保險」
+    會讓這張卡整個抓不到，而錯誤訊息只會說取得失敗，看不出是偽裝害的。
+    """
+    src = (Path(__file__).resolve().parent / "sources" / "anz.py").read_text(encoding="utf-8")
+    kept = [l for l in src.splitlines() if not l.strip().startswith("#")]
+    code = chr(10).join(kept)
+    body = code.split('"""', 2)[-1]          # 跳過模組 docstring，註解裡有提到這個字
+    return "get_impersonated(" not in body, "anz.py 出現了 get_impersonated( 呼叫"
+
+
 CASES = [
     ("缺漏月份時基期靠日期對齊", case_missing_month),
     ("基期不存在時跳過該點",     case_no_phantom_base),
     ("月變動計算",               case_mom),
     ("日頻序列的年比",           case_daily_yoy),
+    ("ANZ mapping 的 series 有效", case_anz_mapping_series_valid),
+    ("ANZ 用一般 requests 不偽裝", case_anz_uses_plain_requests),
 ]
 
 

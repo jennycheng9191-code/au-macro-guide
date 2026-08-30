@@ -57,6 +57,25 @@ def get_text(url: str, retries: int = 3, headers: dict | None = None) -> str:
     raise RuntimeError(f"取得網頁失敗 {url}: {last}")
 
 
+def get_bytes(url: str, retries: int = 3) -> bytes:
+    """一般 requests 抓二進位檔（xlsx 等）。
+
+    給**沒有**機器人偵測的站台用。anz.com.au 就是這種，而且是反過來的：
+    一般 requests 回 200，curl_cffi 偽裝 Chrome 指紋反而 403（2026-08-30 實測）。
+    不要因為 AOFM 要偽裝就順手把這裡也換成 get_impersonated。
+    """
+    last = None
+    for attempt in range(retries):
+        try:
+            r = requests.get(url, timeout=90, headers={"User-Agent": UA})
+            r.raise_for_status()
+            return r.content
+        except Exception as e:            # noqa: BLE001
+            last = e
+            time.sleep(2.0 * (attempt + 1))
+    raise RuntimeError(f"取得檔案失敗 {url}: {last}")
+
+
 def get_impersonated(url: str, retries: int = 3, binary: bool = False):
     """給 Akamai Bot Manager 擋住的站台用（aofm.gov.au、finance.gov.au）。
 

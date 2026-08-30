@@ -538,8 +538,19 @@
   }
  },
  "anz_indeed_job_ads": {
-  "source": "manual",
-  "_todo": "ANZ 網址待定位"
+  "source": "anz",
+  "series": "sa",
+  "unit": "",
+  "decimals": 1,
+  "value_label": "指數（季調，2019=100）",
+  "display": "level",
+  "bond_dir": 1,
+  "sanity": {
+   "min": 20,
+   "max": 300
+  },
+  "stale_days": 50,
+  "source_label": "ANZ-Indeed 官方 xlsx"
  },
  "unit_labour_costs": {
   "source": "manual",

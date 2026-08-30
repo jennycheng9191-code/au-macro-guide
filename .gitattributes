@@ -1,0 +1,8 @@
+# CSV 一律 LF。Python 的 csv.writer 預設 `\r\n`（**連 Linux 也是**），
+# 而本機 git 開了 core.autocrlf=true、Actions runner 沒開——兩邊產出的 blob
+# 因此不同，只要本機建置一次再讓排程跑一次，整個檔案就會全刪全增改寫一遍。
+#
+# 2026-08-29 在 ust-positioning 上實測過：一個「資料更新」commit 是
+# 253,383 行全刪全增，而內容一個字都沒變。
+# 兩道防線缺一不可：這裡 ＋ 寫檔時的 lineterminator="\n"。
+*.csv text eol=lf

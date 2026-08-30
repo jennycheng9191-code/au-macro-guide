@@ -280,8 +280,8 @@
   "read": "私部門高頻徵才需求代理指標,可補足ABS季度職缺數之間的空窗期,對轉折點較敏感但需留意樣本涵蓋偏向特定產業。",
   "bond": "連續下滑時可作為官方季度職缺數轉弱的早期線索。",
   "rel": "對照:ABS職缺數(官方季度基準)。",
-  "src": "https://www.anz.com/institutional/economics-markets-insights/",
-  "sn": "ANZ-Indeed徵才廣告指數"
+  "src": "https://www.anz.com.au/newsroom/media/release-dates/",
+  "sn": "ANZ-Indeed徵才廣告指數（含官方xlsx下載）"
  },
  {
   "id": "wage_price_index",

@@ -16,7 +16,7 @@ sys.path[:0] = [str(HERE), str(HERE / "sources")]
 from common import DATA, load_env, read_json, write_json   # noqa: E402
 import rules                                               # noqa: E402
 import validate                                            # noqa: E402
-from sources import abs_api, aofm, au_html, finance_gov, rba, westpac_iq  # noqa: E402
+from sources import abs_api, anz, aofm, au_html, finance_gov, rba, westpac_iq  # noqa: E402
 
 TPE = timezone(timedelta(hours=8))
 
@@ -35,6 +35,9 @@ def _fetch_one(card_id: str, m: dict, ctx: dict) -> dict:
     if src == "finance":
         # 兩張卡（月度財政帳、淨/毛負債）吃同一頁，模組內部有頁面快取
         return finance_gov.fetch(card_id, m)
+    if src == "anz":
+        # anz.com.au 沒有反爬，而且跟 AOFM 相反——偽裝 Chrome 指紋反而 403
+        return anz.fetch(card_id, m)
     if src == "westpac":
         # Melbourne Institute 全站 403，這兩個聯名指標改從 Westpac IQ 取
         return westpac_iq.fetch(card_id, m)
