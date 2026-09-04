@@ -1,8 +1,8 @@
 {
- "build_time": "2026-09-04 17:45",
+ "build_time": "2026-09-04 20:49",
  "summary": {
-  "green": 38,
-  "yellow": 1,
+  "green": 35,
+  "yellow": 4,
   "gray": 1
  },
  "cards": {
@@ -3667,7 +3667,7 @@
    "value_label": "現金利率目標",
    "asof": "2026-09-03",
    "asof_label": "",
-   "age_days": 1,
+   "age_days": null,
    "new_since": "",
    "history": [
     {
@@ -3771,8 +3771,11 @@
     "ES餘額($m)": 169961.0
    },
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/f1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/f1-data.csv",
+    "本次未取得，沿用 2026-09-03 的前值"
+   ],
    "note": "創近 24 期新高",
    "source_label": "RBA F1 FIRMMCRTD",
    "unit": "%",
@@ -3785,7 +3788,7 @@
    "value_label": "總信貸(排除金融業) · 年增率",
    "asof": "2026-07-31",
    "asof_label": "",
-   "age_days": 5,
+   "age_days": null,
    "new_since": "2026-08-31",
    "history": [
     {
@@ -3891,8 +3894,11 @@
     "總信貸(納入部分金融業)": 8.5
    },
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/d1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/d1-data.csv",
+    "本次未取得，沿用 2026-07-31 的前值"
+   ],
    "note": "位於近 24 期的第 96 百分位",
    "source_label": "RBA D1 DGFACNF12",
    "unit": "%",
@@ -3905,7 +3911,7 @@
    "value_label": "總資產",
    "asof": "2026-09-02",
    "asof_label": "",
-   "age_days": 0,
+   "age_days": null,
    "new_since": "2026-09-04",
    "history": [
     {
@@ -4007,8 +4013,11 @@
    ],
    "extras": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/a1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/a1-data.csv",
+    "本次未取得，沿用 2026-09-02 的前值"
+   ],
    "note": "位於近 24 期的第 29 百分位",
    "source_label": "RBA A1 ARBAATAW",
    "unit": "$m",
