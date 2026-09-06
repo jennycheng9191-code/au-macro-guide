@@ -46,10 +46,16 @@ from __future__ import annotations
 import html as _html
 import re
 
-from common import get_impersonated
+from common import IMPERSONATE, get_impersonated
 
 NEWS = ("https://melbourneinstitute.unimelb.edu.au/news/news/macroeconomics/"
         "survey-of-consumer-inflationary-and-wage-expectations")
+
+# Cloudflare 的 bot score 帶運氣成分：同一個設定檔多數時候 200，偶爾 403。
+# 建置當天密集測試（一小時內約 20 次）之後就出現過整輪 403 的情況，
+# 正式排程一天只打 3 次不至於這樣，但還是備幾個設定檔輪替，
+# 一個被判定就換下一個。都失敗時 build.py 會沿用上一版的值並亮黃燈。
+PROFILES = (IMPERSONATE, "chrome124", "chrome120", "chrome116")
 
 _MONTHS = {m: i for i, m in enumerate(
     ["january", "february", "march", "april", "may", "june",
@@ -131,11 +137,21 @@ def parse(html: str) -> dict:
 
 
 def fetch(card_id: str, m: dict) -> dict:
+    last = None
+    html = None
+    for prof in PROFILES:
+        try:
+            html = get_impersonated(NEWS, retries=2, profile=prof)
+            break
+        except Exception as e:                          # noqa: BLE001
+            last = e
+    if html is None:
+        return {"ok": False, "reason": f"Melbourne Institute 取得失敗（{len(PROFILES)} 個設定檔全被擋）：{last}"}
+
     try:
-        html = get_impersonated(NEWS)
         got = parse(html)
     except Exception as e:                              # noqa: BLE001
-        return {"ok": False, "reason": f"Melbourne Institute 取得失敗：{e}"}
+        return {"ok": False, "reason": f"Melbourne Institute 解析失敗：{e}"}
 
     return {
         "ok": True,

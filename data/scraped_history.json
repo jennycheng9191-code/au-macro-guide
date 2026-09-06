@@ -28,5 +28,11 @@
    "date": "2026-05-01",
    "value": -28.3
   }
+ ],
+ "consumer_inflation_expectations": [
+  {
+   "date": "2026-08-01",
+   "value": 4.9
+  }
  ]
 }
