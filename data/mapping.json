@@ -482,8 +482,37 @@
   }
  },
  "consumer_inflation_expectations": {
-  "source": "manual",
-  "_todo": "Melbourne Institute 403，連 curl_cffi 都被擋"
+  "source": "mi",
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 45,
+  "persist_history": true,
+  "sanity": {
+   "min": 0,
+   "max": 12
+  },
+  "value_label": "月度 · 未來12個月預期（30% 截尾平均）",
+  "note": "免費新聞頁只有當期，歷史由本站逐月累積"
+ },
+ "consumer_inflation_expectations_q": {
+  "source": "rba",
+  "table": "g3",
+  "series": "GCONEXP",
+  "bond_dir": 1,
+  "display": "level",
+  "unit": "%",
+  "decimals": 1,
+  "stale_days": 170,
+  "label_as": "quarter",
+  "sanity": {
+   "min": 0,
+   "max": 12
+  },
+  "value_label": "季度 · 未來12個月預期（30% 截尾平均）",
+  "source_label": "RBA G3（原始資料 MI）",
+  "note": "季值是該季月度調查的彙總，水位天然高於單月，不可直接跟月度比大小"
  },
  "selected_living_cost_indexes": {
   "source": "abs",

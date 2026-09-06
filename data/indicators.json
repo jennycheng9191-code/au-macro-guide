@@ -126,16 +126,32 @@
    "inf"
   ],
   "org": "Melbourne Institute",
-  "t": "月",
+  "t": "月 · 官方頁公告下次發布日（11:00 AEST）",
   "read": "家庭對未來12個月通膨預期的中位數,若持續脫離RBA目標區間上緣,提示通膨心理脫錨風險。",
   "bond": "預期脫錨會迫使RBA延長緊縮溝通時間,即使實際數字回落。",
-  "rel": "對照:RBA自身企業/市場通膨預期調查。",
-  "src": "https://melbourneinstitute.unimelb.edu.au/publications/economic-surveys/cis",
+  "rel": "對照:同指標的季度版(RBA G3)、RBA企業/市場經濟學家通膨預期、TIB損益兩平通膨率。",
+  "src": "https://melbourneinstitute.unimelb.edu.au/news/news/macroeconomics/survey-of-consumer-inflationary-and-wage-expectations",
   "sn": "Melbourne Institute通膨預期"
  },
  {
-  "id": "selected_living_cost_indexes",
+  "id": "consumer_inflation_expectations_q",
   "order": 8,
+  "n": "消費者通膨預期（季）",
+  "e": "Consumer Inflation Expectations (Quarterly)",
+  "f": [
+   "inf"
+  ],
+  "org": "RBA G3(原始資料 Melbourne Institute)",
+  "t": "季 · 隨RBA統計表G3更新",
+  "read": "與月度同一份MI調查,但為季度彙總,水位天然高於單月,不可直接跟月度比大小;RBA統計表G3收錄的就是這個版本(目前自2022Q1起),用來看相對自身區間的位置。",
+  "bond": "家庭通膨預期長期高於實際通膨是常態,關鍵在相對自身歷史區間的位置;明顯上移會強化RBA維持限制性利率的理由,對短端不利。",
+  "rel": "對照:月度版(即時但無長期歷史)、市場經濟學家與工會官員通膨預期(同表G3)。",
+  "src": "https://www.rba.gov.au/statistics/tables/",
+  "sn": "RBA G3消費者通膨預期"
+ },
+ {
+  "id": "selected_living_cost_indexes",
+  "order": 9,
   "n": "生活成本指數",
   "e": "Selected Living Cost Indexes",
   "f": [
@@ -151,7 +167,7 @@
  },
  {
   "id": "unemployment_rate",
-  "order": 9,
+  "order": 10,
   "n": "失業率",
   "e": "Unemployment Rate",
   "f": [
@@ -168,7 +184,7 @@
  },
  {
   "id": "participation_rate",
-  "order": 10,
+  "order": 11,
   "n": "參與率",
   "e": "Participation Rate",
   "f": [
@@ -185,7 +201,7 @@
  },
  {
   "id": "underemployment_rate",
-  "order": 11,
+  "order": 12,
   "n": "低度就業率/就業不足率",
   "e": "Underemployment Rate",
   "f": [
@@ -202,7 +218,7 @@
  },
  {
   "id": "employment_change_ft_pt",
-  "order": 12,
+  "order": 13,
   "n": "就業人數增減(全職/兼職)",
   "e": "Employment Change (FT/PT)",
   "f": [
@@ -219,7 +235,7 @@
  },
  {
   "id": "job_vacancies",
-  "order": 13,
+  "order": 14,
   "n": "職缺數",
   "e": "Job Vacancies",
   "f": [
@@ -235,7 +251,7 @@
  },
  {
   "id": "monthly_hours_worked",
-  "order": 14,
+  "order": 15,
   "n": "月工時",
   "e": "Monthly Hours Worked",
   "f": [
@@ -252,7 +268,7 @@
  },
  {
   "id": "population_net_overseas_migration",
-  "order": 15,
+  "order": 16,
   "n": "人口與淨海外移民",
   "e": "Population & Net Overseas Migration",
   "f": [
@@ -269,7 +285,7 @@
  },
  {
   "id": "anz_indeed_job_ads",
-  "order": 16,
+  "order": 17,
   "n": "ANZ-Indeed 徵才廣告指數",
   "e": "ANZ-Indeed Job Ads",
   "f": [
@@ -285,7 +301,7 @@
  },
  {
   "id": "wage_price_index",
-  "order": 17,
+  "order": 18,
   "n": "WPI 薪資價格指數(總指數)",
   "e": "Wage Price Index",
   "f": [
@@ -302,7 +318,7 @@
  },
  {
   "id": "private_public_sector_wpi",
-  "order": 18,
+  "order": 19,
   "n": "私部門/公部門WPI",
   "e": "Private/Public Sector WPI",
   "f": [
@@ -319,7 +335,7 @@
  },
  {
   "id": "unit_labour_costs",
-  "order": 19,
+  "order": 20,
   "n": "單位勞動成本",
   "e": "Unit Labour Costs",
   "f": [
@@ -335,7 +351,7 @@
  },
  {
   "id": "gross_domestic_product",
-  "order": 20,
+  "order": 21,
   "n": "GDP",
   "e": "Gross Domestic Product",
   "f": [
@@ -351,7 +367,7 @@
  },
  {
   "id": "monthly_household_spending_indicator",
-  "order": 21,
+  "order": 22,
   "n": "家庭月度支出指標(MHSI)",
   "e": "Monthly Household Spending Indicator",
   "f": [
@@ -367,7 +383,7 @@
  },
  {
   "id": "private_new_capital_expenditure",
-  "order": 22,
+  "order": 23,
   "n": "私部門新增資本支出(Capex調查)",
   "e": "Private New Capital Expenditure",
   "f": [
@@ -383,7 +399,7 @@
  },
  {
   "id": "international_trade_in_goods",
-  "order": 23,
+  "order": 24,
   "n": "貿易帳(國際貨物貿易)",
   "e": "International Trade in Goods",
   "f": [
@@ -399,7 +415,7 @@
  },
  {
   "id": "westpac_mi_leading_index",
-  "order": 24,
+  "order": 25,
   "n": "Westpac-MI領先指標",
   "e": "Westpac-MI Leading Index",
   "f": [
@@ -415,7 +431,7 @@
  },
  {
   "id": "business_indicators",
-  "order": 25,
+  "order": 26,
   "n": "企業指標(獲利/存貨/銷售)",
   "e": "Business Indicators",
   "f": [
@@ -431,7 +447,7 @@
  },
  {
   "id": "consumer_sentiment_index",
-  "order": 26,
+  "order": 27,
   "n": "Westpac-Melbourne Institute消費者信心指數",
   "e": "Consumer Sentiment Index",
   "f": [
@@ -447,7 +463,7 @@
  },
  {
   "id": "building_approvals",
-  "order": 27,
+  "order": 28,
   "n": "建築許可",
   "e": "Building Approvals",
   "f": [
@@ -463,7 +479,7 @@
  },
  {
   "id": "residential_property_price_index",
-  "order": 28,
+  "order": 29,
   "n": "住宅平均價格(ABS季度)",
   "e": "Residential Dwellings: Mean Price",
   "f": [
@@ -479,7 +495,7 @@
  },
  {
   "id": "lending_indicators",
-  "order": 29,
+  "order": 30,
   "n": "房貸放款指標",
   "e": "Lending Indicators",
   "f": [
@@ -496,7 +512,7 @@
  },
  {
   "id": "building_activity_commencements_completi",
-  "order": 30,
+  "order": 31,
   "n": "建築活動(開工/完工)",
   "e": "Building Activity (Commencements/Completions)",
   "f": [
@@ -512,7 +528,7 @@
  },
  {
   "id": "underlying_cash_balance",
-  "order": 31,
+  "order": 32,
   "n": "聯邦預算基本現金餘額",
   "e": "Underlying Cash Balance",
   "f": [
@@ -529,7 +545,7 @@
  },
  {
   "id": "commonwealth_monthly_financial_statement",
-  "order": 32,
+  "order": 33,
   "n": "月度財政帳",
   "e": "Commonwealth Monthly Financial Statements",
   "f": [
@@ -545,7 +561,7 @@
  },
  {
   "id": "net_gross_debt",
-  "order": 33,
+  "order": 34,
   "n": "淨/毛負債水位",
   "e": "Net/Gross Debt",
   "f": [
@@ -562,7 +578,7 @@
  },
  {
   "id": "aofm_treasury_bond_issuance_program",
-  "order": 34,
+  "order": 35,
   "n": "AOFM公債發行計畫(Treasury Bonds)",
   "e": "AOFM Treasury Bond Issuance Program",
   "f": [
@@ -578,7 +594,7 @@
  },
  {
   "id": "treasury_notes",
-  "order": 35,
+  "order": 36,
   "n": "Treasury Notes(短天期國庫券)",
   "e": "Treasury Notes",
   "f": [
@@ -595,7 +611,7 @@
  },
  {
   "id": "treasury_indexed_bonds",
-  "order": 36,
+  "order": 37,
   "n": "抗通膨公債(Treasury Indexed Bonds)發行",
   "e": "Treasury Indexed Bonds",
   "f": [
@@ -612,7 +628,7 @@
  },
  {
   "id": "rba_cash_rate_exchange_settlement_balanc",
-  "order": 37,
+  "order": 38,
   "n": "RBA現金利率 & ES餘額",
   "e": "RBA Cash Rate & Exchange Settlement Balances",
   "f": [
@@ -628,7 +644,7 @@
  },
  {
   "id": "private_sector_credit_growth",
-  "order": 38,
+  "order": 39,
   "n": "私部門信貸成長",
   "e": "Private Sector Credit Growth",
   "f": [
@@ -645,7 +661,7 @@
  },
  {
   "id": "rba_balance_sheet_bond_holdings",
-  "order": 39,
+  "order": 40,
   "n": "RBA資產負債表(債券持有部位)",
   "e": "RBA Balance Sheet (Bond Holdings)",
   "f": [

@@ -16,7 +16,8 @@ sys.path[:0] = [str(HERE), str(HERE / "sources")]
 from common import DATA, load_env, read_json, write_json   # noqa: E402
 import rules                                               # noqa: E402
 import validate                                            # noqa: E402
-from sources import abs_api, anz, aofm, au_html, finance_gov, rba, westpac_iq  # noqa: E402
+from sources import (abs_api, anz, aofm, au_html, finance_gov,               # noqa: E402
+                     melbourne_institute, rba, westpac_iq)
 
 TPE = timezone(timedelta(hours=8))
 
@@ -39,8 +40,11 @@ def _fetch_one(card_id: str, m: dict, ctx: dict) -> dict:
         # anz.com.au 沒有反爬，而且跟 AOFM 相反——偽裝 Chrome 指紋反而 403
         return anz.fetch(card_id, m)
     if src == "westpac":
-        # Melbourne Institute 全站 403，這兩個聯名指標改從 Westpac IQ 取
+        # 消費者信心與領先指標掛 Westpac–MI 聯名，Westpac 自己發同一份報告
         return westpac_iq.fetch(card_id, m)
+    if src == "mi":
+        # Melbourne Institute 是 Cloudflare，擋的是偽裝設定檔的版本不是站台本身
+        return melbourne_institute.fetch(card_id, m)
     if src == "html":
         return au_html.fetch(card_id, m)
     if src == "manual":

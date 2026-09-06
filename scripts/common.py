@@ -15,6 +15,14 @@ DATA = ROOT / "data"
 
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) au-macro-guide/1.0"
 
+# curl_cffi 的偽裝設定檔。**一定要釘明確版本，不可以寫成 "chrome"**——
+# 那是浮動別名，指向套件當下的最新設定檔，套件一升級就換一組指紋。
+# 2026-09-06 實測 melbourneinstitute.unimelb.edu.au：同一秒、同一個網址，
+# "chrome"（curl_cffi 0.16 解析到的那組）5 次有 4 次被 Cloudflare 回 403，
+# "chrome124" / "chrome131" 連 5 次全 200。AOFM／finance.gov.au／Westpac IQ
+# 三個既有用戶對 chrome131 也都是 200，所以整包釘在這裡。
+IMPERSONATE = "chrome131"
+
 
 def load_env() -> None:
     """本機讀 .env；GitHub Actions 直接用環境變數。"""
@@ -76,7 +84,8 @@ def get_bytes(url: str, retries: int = 3) -> bytes:
     raise RuntimeError(f"取得檔案失敗 {url}: {last}")
 
 
-def get_impersonated(url: str, retries: int = 3, binary: bool = False):
+def get_impersonated(url: str, retries: int = 3, binary: bool = False,
+                     profile: str = IMPERSONATE):
     """給 Akamai Bot Manager 擋住的站台用（aofm.gov.au、finance.gov.au）。
 
     這兩個站的擋法不是回 403 而是**靜默丟棄**：TLS 握手會成功，
@@ -86,13 +95,17 @@ def get_impersonated(url: str, retries: int = 3, binary: bool = False):
     curl_cffi 會複製 Chrome 的 TLS 指紋，實測可通（2026-08-15 驗證）。
 
     不要為了「少一個相依套件」把這裡改回 requests——會靜靜地全部逾時。
+
+    Cloudflare 型的站（Melbourne Institute）擋的則是**設定檔本身**：
+    回的是 403 而不是逾時，而且忽有忽無。設定檔釘在 IMPERSONATE，
+    個別來源要換版本才傳 profile=。
     """
     from curl_cffi import requests as cr
 
     last = None
     for attempt in range(retries):
         try:
-            r = cr.get(url, impersonate="chrome", timeout=45)
+            r = cr.get(url, impersonate=profile, timeout=45)
             r.raise_for_status()
             return r.content if binary else r.text
         except Exception as e:            # noqa: BLE001

@@ -117,6 +117,32 @@ def case_anz_uses_plain_requests():
     return "get_impersonated(" not in body, "anz.py 出現了 get_impersonated( 呼叫"
 
 
+def case_impersonate_profile_pinned():
+    """common.IMPERSONATE 必須是釘版本的設定檔，不可以退回 "chrome"。
+
+    "chrome" 是 curl_cffi 的浮動別名，指向套件當下的最新設定檔。
+    2026-09-06 實測 melbourneinstitute.unimelb.edu.au：同一秒同一個網址，
+    "chrome" 5 次有 4 次被 Cloudflare 回 403，"chrome124"／"chrome131" 全數 200。
+    套件升級也可能讓 AOFM／finance.gov.au 無預警開始被擋，所以要釘死版本號。
+    """
+    import re as _re
+    import common
+    prof = getattr(common, "IMPERSONATE", "")
+    return bool(_re.fullmatch(r"[a-z_]+\d[\w.]*", prof)),         f"IMPERSONATE = {prof!r}，必須帶版本號（如 chrome131）"
+
+
+def case_mi_uses_impersonation():
+    """melbourne_institute.py 必須走 get_impersonated。
+
+    跟 ANZ 那條相反：MI 是 Cloudflare，一般 requests 幾乎必然 403。
+    有人為了少一個相依把它改成 get_text，這張卡就會靜靜地變灰燈。
+    """
+    src = (Path(__file__).resolve().parent / "sources"
+           / "melbourne_institute.py").read_text(encoding="utf-8")
+    body = src.split('"""', 2)[-1]           # 跳過模組 docstring
+    return "get_impersonated(" in body, "melbourne_institute.py 沒有呼叫 get_impersonated("
+
+
 CASES = [
     ("缺漏月份時基期靠日期對齊", case_missing_month),
     ("基期不存在時跳過該點",     case_no_phantom_base),
@@ -124,6 +150,8 @@ CASES = [
     ("日頻序列的年比",           case_daily_yoy),
     ("ANZ mapping 的 series 有效", case_anz_mapping_series_valid),
     ("ANZ 用一般 requests 不偽裝", case_anz_uses_plain_requests),
+    ("偽裝設定檔有釘版本",       case_impersonate_profile_pinned),
+    ("MI 走偽裝指紋",            case_mi_uses_impersonation),
 ]
 
 
