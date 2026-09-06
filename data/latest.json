@@ -1,8 +1,8 @@
 {
- "build_time": "2026-09-06 12:24",
+ "build_time": "2026-09-06 12:26",
  "summary": {
-  "green": 40,
-  "yellow": 1,
+  "green": 39,
+  "yellow": 2,
   "gray": 0
  },
  "cards": {
@@ -764,7 +764,7 @@
    "value_label": "月度 · 未來12個月預期（30% 截尾平均）",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 6,
+   "age_days": null,
    "new_since": "",
    "history": [
     {
@@ -777,8 +777,11 @@
     "前月值": 4.7
    },
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "Melbourne Institute 取得失敗（4 個設定檔全被擋）：取得網頁失敗（已用 Chrome 指紋模擬）https://melbourneinstitute.unimelb.edu.au/news/news/macroeconomics/survey-of-consumer-inflationary-and-wage-expectations: HTTP Error 403: ",
+    "本次未取得，沿用 2026-08-01 的前值"
+   ],
    "note": "",
    "source_label": "Melbourne Institute 通膨預期",
    "unit": "%",
