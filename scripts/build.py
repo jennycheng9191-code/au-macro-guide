@@ -177,6 +177,8 @@ def main() -> int:
             notes.append(f"本次未取得，沿用 {old.get('asof', '—')} 的前值")
             res = {"ok": True, "value": old["value"], "asof": old.get("asof", ""),
                    "history": old.get("history", []), "extras": old.get("extras", {}),
+                   # 沿用前值時子項走勢圖也要跟著留下，不然抓失敗那次圖會整張消失
+                   "extras_history": old.get("extras_history", {}),
                    "also": old.get("also", {}), "source_label": old.get("source_label", ""),
                    "raw_latest": old.get("value")}
             status = "yellow"
@@ -235,6 +237,8 @@ def main() -> int:
             "new_since": new_since,
             "history": res.get("history", []),
             "extras": {k: v for k, v in (res.get("extras") or {}).items() if v is not None},
+            # 只有 mapping 的 extras 標了 history: true 的子項才有，其餘卡一律空的
+            "extras_history": res.get("extras_history") or {},
             "also": res.get("also", {}),
             "status": status,
             "notes": notes,

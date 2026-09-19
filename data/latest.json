@@ -1,5 +1,5 @@
 {
- "build_time": "2026-09-19 10:35",
+ "build_time": "2026-09-19 11:01",
  "summary": {
   "green": 40,
   "yellow": 1,
@@ -81,6 +81,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -165,6 +166,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -281,6 +283,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {
     "季增率": 0.5998033431661831
    },
@@ -399,6 +402,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -515,6 +519,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -631,6 +636,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -749,6 +755,7 @@
    "extras": {
     "進口物價年增率": 6.2
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -780,6 +787,7 @@
     "較前月（pp）": 0.0,
     "前月值": 4.9
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -876,6 +884,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -992,6 +1001,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1108,6 +1118,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1224,6 +1235,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1342,6 +1354,7 @@
    "extras": {
     "未充分利用率": 10.8
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1461,6 +1474,204 @@
     "全職就業月變動(千人)": 16.3,
     "兼職就業月變動(千人)": -32.2
    },
+   "extras_history": {
+    "全職就業月變動(千人)": [
+     {
+      "date": "2024-08-01",
+      "value": 9.7
+     },
+     {
+      "date": "2024-09-01",
+      "value": 32.3
+     },
+     {
+      "date": "2024-10-01",
+      "value": -12.4
+     },
+     {
+      "date": "2024-11-01",
+      "value": 52.9
+     },
+     {
+      "date": "2024-12-01",
+      "value": -22.9
+     },
+     {
+      "date": "2025-01-01",
+      "value": 25.1
+     },
+     {
+      "date": "2025-02-01",
+      "value": -37.9
+     },
+     {
+      "date": "2025-03-01",
+      "value": -3.8
+     },
+     {
+      "date": "2025-04-01",
+      "value": 65.4
+     },
+     {
+      "date": "2025-05-01",
+      "value": 45.7
+     },
+     {
+      "date": "2025-06-01",
+      "value": -57.7
+     },
+     {
+      "date": "2025-07-01",
+      "value": 66.0
+     },
+     {
+      "date": "2025-08-01",
+      "value": -42.0
+     },
+     {
+      "date": "2025-09-01",
+      "value": 3.9
+     },
+     {
+      "date": "2025-10-01",
+      "value": 47.7
+     },
+     {
+      "date": "2025-11-01",
+      "value": -72.2
+     },
+     {
+      "date": "2025-12-01",
+      "value": 49.2
+     },
+     {
+      "date": "2026-01-01",
+      "value": 66.7
+     },
+     {
+      "date": "2026-02-01",
+      "value": -53.6
+     },
+     {
+      "date": "2026-03-01",
+      "value": 60.4
+     },
+     {
+      "date": "2026-04-01",
+      "value": -20.0
+     },
+     {
+      "date": "2026-05-01",
+      "value": 6.5
+     },
+     {
+      "date": "2026-06-01",
+      "value": 48.9
+     },
+     {
+      "date": "2026-07-01",
+      "value": 16.3
+     }
+    ],
+    "兼職就業月變動(千人)": [
+     {
+      "date": "2024-08-01",
+      "value": 23.0
+     },
+     {
+      "date": "2024-09-01",
+      "value": 4.3
+     },
+     {
+      "date": "2024-10-01",
+      "value": 10.1
+     },
+     {
+      "date": "2024-11-01",
+      "value": -34.3
+     },
+     {
+      "date": "2024-12-01",
+      "value": 70.1
+     },
+     {
+      "date": "2025-01-01",
+      "value": 7.7
+     },
+     {
+      "date": "2025-02-01",
+      "value": -37.4
+     },
+     {
+      "date": "2025-03-01",
+      "value": 34.5
+     },
+     {
+      "date": "2025-04-01",
+      "value": 41.8
+     },
+     {
+      "date": "2025-05-01",
+      "value": -57.0
+     },
+     {
+      "date": "2025-06-01",
+      "value": 32.5
+     },
+     {
+      "date": "2025-07-01",
+      "value": -20.0
+     },
+     {
+      "date": "2025-08-01",
+      "value": 27.5
+     },
+     {
+      "date": "2025-09-01",
+      "value": 5.4
+     },
+     {
+      "date": "2025-10-01",
+      "value": -14.5
+     },
+     {
+      "date": "2025-11-01",
+      "value": 33.0
+     },
+     {
+      "date": "2025-12-01",
+      "value": 8.2
+     },
+     {
+      "date": "2026-01-01",
+      "value": -30.6
+     },
+     {
+      "date": "2026-02-01",
+      "value": 75.7
+     },
+     {
+      "date": "2026-03-01",
+      "value": -40.4
+     },
+     {
+      "date": "2026-04-01",
+      "value": -15.0
+     },
+     {
+      "date": "2026-05-01",
+      "value": 31.6
+     },
+     {
+      "date": "2026-06-01",
+      "value": 31.4
+     },
+     {
+      "date": "2026-07-01",
+      "value": -32.2
+     }
+    ]
+   },
    "also": {},
    "status": "green",
    "notes": [],
@@ -1577,6 +1788,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {
     "季變動": -2.109328579916825
    },
@@ -1695,6 +1907,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1813,6 +2026,7 @@
    "extras": {
     "常住人口(千人)": 27921.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -1937,6 +2151,7 @@
     "樣本月數": 619,
     "相對2010年代平均(%)": 16.2
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2055,6 +2270,7 @@
    "extras": {
     "季增率": 0.8
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2173,6 +2389,7 @@
    "extras": {
     "公部門年增率": 3.4
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2195,6 +2412,7 @@
     "年增率(%)": 0.5,
     "GDP每小時產出季增率(%)": -0.6
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [
@@ -2315,6 +2533,7 @@
    "extras": {
     "GDP水準(百萬澳元,CVM)": 699461.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2433,6 +2652,7 @@
    "extras": {
     "月增率": 1.1
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2549,6 +2769,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "yellow",
    "notes": [
@@ -2667,6 +2888,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2698,6 +2920,7 @@
     "前期值": -0.17,
     "較前期": 0.08
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2816,6 +3039,7 @@
    "extras": {
     "存貨季增率": -0.2
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2847,6 +3071,7 @@
     "前期值": 88.9,
     "較前期": -4.5
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -2966,6 +3191,7 @@
     "核准戶數(原始,戶)": 18981.0,
     "月增率(原始)": -0.5
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3085,6 +3311,7 @@
     "住宅存量總值(百萬澳元)": 12688857.0,
     "住宅戶數(千戶)": 11531.1
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3201,6 +3428,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3319,6 +3547,7 @@
    "extras": {
     "完工戶數(戶)": 43816.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3347,6 +3576,7 @@
     "財政餘額全年估計(十億)": -50.1,
     "財政年度": "2025-26"
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3375,6 +3605,7 @@
     "預算進度應為(十億)": -18.5,
     "財政餘額迄今(十億)": -17.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3402,6 +3633,7 @@
     "毛債·政府證券(十億)": 901.6,
     "預算估計淨債(十億)": 556.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3523,6 +3755,7 @@
     "最近標售金額(億)": 10.0,
     "近12次認購倍數": 4.12
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3645,6 +3878,7 @@
     "近12次認購倍數": 3.46,
     "近12個月發行": 141.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3766,6 +4000,7 @@
     "最近標售金額(億)": 1.0,
     "近12次認購倍數": 4.12
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -3884,6 +4119,7 @@
    "extras": {
     "ES餘額($m)": 173965.0
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -4004,6 +4240,7 @@
     "企業信貸年增率(排除金融業)": 10.6,
     "總信貸(納入部分金融業)": 8.5
    },
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],
@@ -4120,6 +4357,7 @@
     }
    ],
    "extras": {},
+   "extras_history": {},
    "also": {},
    "status": "green",
    "notes": [],

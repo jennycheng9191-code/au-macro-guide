@@ -44,6 +44,155 @@ function sparkline(history) {
   </svg>`;
 }
 
+/* ------------------------------------------- 子項對照圖（柱＝當期、線＝3期均） */
+/* 只有 mapping 的 extras 標了 history:true 的卡才有 extras_history。
+   目前用在就業人數增減（全職 vs 兼職）：兩者月變動常常方向相反，
+   合計數看起來持平時底下可能是「全職增、兼職減」的結構轉換，
+   只看合計那條迷你圖完全看不出來。
+
+   柱與線同一個 y 軸：柱是每期實際值（噪音大，ABS 樣本輪替單月可跳 ±40 千人），
+   線是 3 期移動平均（趨勢）。兩個系列共用縮放，才比得出誰大誰小。 */
+const SUB_COLORS = ['#C08A2A', '#2E8E93'];      // 勞動色、信心色，與面向色票同源
+const TOTAL_COLOR = '#ADA595';                  // 合計用中性灰，不跟兩條子項搶眼
+
+/* 視窗裡只要有缺值就整格留白，不要拿 0 補——0 在月變動這種正負序列裡
+   是「持平」，補進去會把缺漏畫成一次真實的走平 */
+function movingAvg(vals, n) {
+  return vals.map((_, i) => {
+    if (i < n - 1) return null;
+    let s = 0;
+    for (let k = i - n + 1; k <= i; k++) {
+      if (vals[k] == null) return null;
+      s += vals[k];
+    }
+    return s / n;
+  });
+}
+
+const maLine = (pts, col) => `<polyline points="${pts.join(' ')}" fill="none" stroke="${col}"
+  stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+/* 柱＋3期均線圖。series = [{label, color, hist:[{date,value}]}]，1 條或多條都畫得出來。
+   合計與子項兩張圖共用這支：格式一模一樣，上下排在一起才對得起來
+   （合計那張的柱高 ＝ 底下兩條子項柱高相加）。
+   兩張圖各自縮放——合計的擺盪幅度比單一子項大，硬共用會把子項壓扁。 */
+function barMaChart({series, unit, head, aria}) {
+  const valid = series.filter(s => (s.hist || []).length >= 4);
+  if (!valid.length) return '';
+
+  // 以第一條的日期軸為準，其餘照日期對齊——序列長度可能不同（某月子項缺值）
+  const dates = valid[0].hist.map(h => h.date);
+  const vals2d = valid.map(s => {
+    const byDate = Object.fromEntries(s.hist.map(h => [h.date, h.value]));
+    return dates.map(d => (byDate[d] != null ? byDate[d] : null));
+  });
+  const labels = valid.map(s => s.label);
+  const colors = valid.map(s => s.color);
+  const series0 = vals2d;
+
+  const flat = series0.flat().filter(v => v != null);
+  if (!flat.length) return '';
+  const maxAbs = Math.max(...flat.map(Math.abs)) || 1;
+  const lo = Math.min(0, Math.min(...flat)), hi = Math.max(0, Math.max(...flat));
+  const span = (hi - lo) || 1;
+
+  const w = 300, h = 132, padL = 34, padR = 8, padT = 10, padB = 18;
+  const iw = w - padL - padR, ih = h - padT - padB;
+  // 每期佔一格，x 是格的中心：頭尾各內縮半格，否則第一根柱會壓到 y 軸刻度、
+  // 最後一根會凸出右邊界（線圖可以貼邊，柱圖不行）
+  const slot0 = iw / dates.length;
+  const x = i => (dates.length === 1
+    ? padL + iw / 2
+    : padL + slot0 / 2 + i * (iw - slot0) / (dates.length - 1));
+  const y = v => padT + (hi - v) / span * ih;
+  const zeroY = y(0);
+
+  // 柱：n 個系列把一格等分，靠在同一期的左右兩側互不遮蔽；單一系列就整格置中
+  const slot = slot0, n = series0.length;
+  const bw = Math.max(1.5, slot / n - 1.2);
+  let bars = '';
+  series0.forEach((vals, si) => {
+    vals.forEach((v, i) => {
+      if (v == null) return;
+      const cx = x(i) - slot / 2 + slot / (2 * n) + si * slot / n;
+      const top = Math.min(y(v), zeroY), hgt = Math.abs(y(v) - zeroY);
+      bars += `<rect x="${(cx - bw / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}"
+        height="${Math.max(0.6, hgt).toFixed(1)}" fill="${colors[si]}" opacity=".28"/>`;
+    });
+  });
+
+  // 線：3 期移動平均。前兩期沒有均值，線從第三期才開始
+  let lines = '';
+  series0.forEach((vals, si) => {
+    const ma = movingAvg(vals, 3);
+    // 缺值處斷線：連續有值的段落各畫一條，不要跨過缺口硬連
+    let seg = [];
+    ma.forEach((v, i) => {
+      if (v == null) { if (seg.length > 1) lines += maLine(seg, colors[si]); seg = []; return; }
+      seg.push(`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
+    });
+    if (seg.length > 1) lines += maLine(seg, colors[si]);
+  });
+
+  const tick = v => `<text x="${padL - 5}" y="${(y(v) + 3.5).toFixed(1)}" text-anchor="end"
+    font-size="9" fill="#7C7565">${Math.round(v)}</text>`;
+  const ym = dates[0].slice(0, 7), yl = dates[dates.length - 1].slice(0, 7);
+
+  const legend = labels.map((lab, si) =>
+    `<span style="color:${colors[si]}">■ ${lab}` +
+    `<b>${(series0[si][series0[si].length - 1] ?? 0).toFixed(1)}</b></span>`).join('');
+
+  return `<div class="subchart">
+    <div class="subhead">${head}（柱＝當期、線＝3期移動平均，單位 ${unit}）</div>
+    <svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" role="img"
+         aria-label="${aria}">
+      <line x1="${padL}" y1="${zeroY.toFixed(1)}" x2="${w - padR}" y2="${zeroY.toFixed(1)}"
+        stroke="#383227" stroke-width="1"/>
+      ${tick(hi)}${tick(0)}${tick(lo)}
+      ${bars}${lines}
+      <text x="${padL}" y="${h - 5}" font-size="9" fill="#7C7565">${ym}</text>
+      <text x="${w - padR}" y="${h - 5}" font-size="9" fill="#7C7565" text-anchor="end">${yl}</text>
+    </svg>
+    <div class="sublegend">${legend}<span class="submeta">最大單期 ${maxAbs.toFixed(1)} ${unit}</span></div>
+  </div>`;
+}
+
+/* 兩張圖分屬兩層：合計在卡片正面（取代 76px 迷你圖），子項留在展開區。
+   正面看整體方向，想知道「這個月是誰在動」再展開——同格式、同 24 期、
+   同 x 軸，展開後上下對得起來（合計柱高 ＝ 兩條子項柱高相加，
+   2024-08 起 24 期實測最大差 0.08 千人，純四捨五入）。
+   兩張各自縮放：合計擺盪到 107 千人，共用縮放會把子項壓扁。
+
+   只有帶 extras_history 的卡會有（目前是就業人數增減那張），
+   其餘 40 張卡維持原本的迷你圖版面。 */
+function subSeriesOf(card) {
+  const eh = card.extras_history || {};
+  return Object.keys(eh).filter(k => (eh[k] || []).length >= 4);
+}
+
+function mainChart(card) {
+  if (subSeriesOf(card).length < 2) return '';
+  return barMaChart({
+    series: [{label: '合計', color: TOTAL_COLOR, hist: card.history || []}],
+    unit: card.unit || '', head: '合計', aria: '合計月變動走勢'
+  });
+}
+
+function detailCharts(card) {
+  const eh = card.extras_history || {};
+  const subs = subSeriesOf(card);
+  if (subs.length < 2) return '';
+  return barMaChart({
+    series: subs.map((lab, i) => ({
+      // 圖例只留「全職」「兼職」，單位與口徑已經寫在標題那行
+      label: lab.replace(/\(.*\)/, '').replace('就業月變動', '').trim(),
+      color: SUB_COLORS[i % SUB_COLORS.length],
+      hist: eh[lab]
+    })),
+    unit: card.unit || '', head: '全職 vs 兼職', aria: '全職與兼職就業月變動走勢'
+  });
+}
+
 /* ------------------------------------------------- 相對上期的變動與方向 */
 /* 箭頭一律誠實表示「數值」的升降，債市多空由顏色與標籤承載。
    兩者分開才不會誤讀——50 張卡的語義方向並不一致（CPI 升是利空、
@@ -126,6 +275,9 @@ function renderCard(d) {
     })
     .join('');
 
+  // 有合計圖的卡（目前只有就業人數增減）就不再放 76px 迷你圖，兩個一起會重複
+  const big = mainChart(c);
+
   const warn = (c.notes && c.notes.length && c.status !== 'green')
     ? `<div class="warn">⚠︎ ${c.notes.join('；')}</div>` : '';
 
@@ -147,14 +299,16 @@ function renderCard(d) {
         ${c.value_label ? `<span class="vlabel">${c.value_label}</span>` : ''}
         ${changeText(c)}
       </div>
-      ${sparkline(c.history)}
+      ${big ? '' : sparkline(c.history)}
       <div class="asofbox"><span class="asof">${asof}</span><span class="age">${age}</span></div>
     </div>
+    ${big}
     ${c.note ? `<div class="note">📌 ${c.note}</div>` : ''}
     ${warn}
     ${extras ? `<div class="extras">${extras}</div>` : ''}
     <details>
       <summary>解讀 · 債市含義 · 關聯 ▾</summary>
+      ${detailCharts(c)}
       <div class="dl"><span class="k">怎麼解讀</span>${d.read}</div>
       <div class="dl"><span class="k">債市含義</span>${d.bond}</div>
       <div class="dl"><span class="k">關聯指標</span>${d.rel}</div>

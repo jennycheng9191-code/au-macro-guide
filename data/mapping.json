@@ -227,7 +227,8 @@
      "TSEST": "20",
      "REGION": "AUS"
     },
-    "display": "mom_diff"
+    "display": "mom_diff",
+    "history": true
    },
    "兼職就業月變動(千人)": {
     "dataflow": "LF",
@@ -238,7 +239,8 @@
      "TSEST": "20",
      "REGION": "AUS"
     },
-    "display": "mom_diff"
+    "display": "mom_diff",
+    "history": true
    }
   }
  },

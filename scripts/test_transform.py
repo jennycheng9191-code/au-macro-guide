@@ -209,6 +209,22 @@ def case_westpac_description_forms():
     return True, ""
 
 
+def case_ft_pt_extras_keep_history():
+    """就業人數增減的全職／兼職子項必須留著歷史，卡片才畫得出對照圖。
+
+    `extras` 預設只留當期值（省 latest.json 體積），要畫圖得在 mapping 標
+    `history: true`。這個旗標被拿掉時前端只會安靜地不畫圖——沒有錯誤、
+    沒有黃燈，卡片看起來一切正常，所以釘在這裡。
+    """
+    import json
+    m = json.loads((Path(__file__).resolve().parent.parent / "data" / "mapping.json")
+                   .read_text(encoding="utf-8"))
+    ex = (m.get("employment_change_ft_pt") or {}).get("extras") or {}
+    missing = [k for k, v in ex.items() if not v.get("history")]
+    return (len(ex) == 2 and not missing,
+            f"這些子項沒有 history: true → {missing or '找不到全職／兼職兩個子項'}")
+
+
 CASES = [
     ("缺漏月份時基期靠日期對齊", case_missing_month),
     ("基期不存在時跳過該點",     case_no_phantom_base),
@@ -220,6 +236,7 @@ CASES = [
     ("MI 走偽裝指紋",            case_mi_uses_impersonation),
     ("MI 頭條句四種語序",        case_mi_headline_sentence_forms),
     ("Westpac description 兩個坑", case_westpac_description_forms),
+    ("全職／兼職子項留歷史",     case_ft_pt_extras_keep_history),
 ]
 
 

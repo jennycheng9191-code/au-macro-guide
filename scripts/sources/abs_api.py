@@ -147,17 +147,26 @@ def fetch(card_id: str, m: dict) -> dict:
     # 附帶序列（子項／對照組），例如勞動力調查同時帶全職與兼職就業。
     # ABS 回的是完整浮點精度（失業率會是 4.42834371），一定要四捨五入——
     # extras 不會經過 build.fmt，原樣送進前端就是一串沒有意義的小數。
+    #
+    # spec 加 "history": true 時，除了當期值再留下整段序列（放進 extras_history），
+    # 前端才畫得出子項的走勢圖。預設**不留**：每條歷史是 24 期 × 兩個欄位，
+    # 41 張卡全開會讓 latest.json 肥一圈，而多數卡的 extras 只是拿來對照當期數字。
     extras: dict = {}
+    extras_hist: dict = {}
     for lab, spec in (m.get("extras") or {}).items():
         try:
             r = _result(spec.get("dataflow", m["dataflow"]), spec.get("key", ""),
                         spec.get("filter"), spec.get("display", "level"),
                         spec.get("start", m.get("start")), "")
-            extras[lab] = (round(r["value"], spec.get("decimals", m.get("decimals", 1)))
-                           if r["ok"] else None)
+            dec = spec.get("decimals", m.get("decimals", 1))
+            extras[lab] = round(r["value"], dec) if r["ok"] else None
+            if spec.get("history") and r["ok"]:
+                extras_hist[lab] = [{"date": h["date"], "value": round(h["value"], dec)}
+                                    for h in r["history"]]
         except Exception:                               # noqa: BLE001
             extras[lab] = None
     res["extras"] = extras
+    res["extras_history"] = extras_hist
 
     # 同一條序列的其他呈現形式（例如季度 CPI 同時給 QoQ 與 YoY）
     also: dict = {}
