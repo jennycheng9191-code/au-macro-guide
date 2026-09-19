@@ -77,9 +77,11 @@ _MONTHS = {m: i for i, m in enumerate(
 
 _MONTH_RE = "|".join(_MONTHS)
 
-# 頭條句的三種寫法都要吃：升、降、持平
+# 頭條句的寫法每期會換，升／降／持平各有自己的介系詞與語序，四種都要吃。
+# 2026-09 那期是「was unchanged in September at 4.9 per cent」——月份在前、
+# 介系詞是 at 不是 to，只吃 to 的第一支就整個掉出去（見頂端「解析錨點」）。
 _VALUE_RE = re.compile(
-    rf"\bin\s+({_MONTH_RE})\s+to\s+([\d.]+)\s+per\s+cent"          # …in August to 4.9 per cent
+    rf"\bin\s+({_MONTH_RE})\s+(?:to|at)\s+([\d.]+)\s+per\s+cent"   # …in September at/to 4.9 per cent
     rf"|\bto\s+([\d.]+)\s+per\s+cent\s+in\s+({_MONTH_RE})"          # …to 4.9 per cent in August
     rf"|\b(?:unchanged|remained|steady)\s+at\s+([\d.]+)\s+per\s+cent\s+in\s+({_MONTH_RE})",
     re.I)
@@ -89,6 +91,9 @@ _CHANGE_RE = re.compile(
     r"([\d.]+)\s+percentage\s+points?", re.I)
 
 _DOWN = {"fell", "declined", "decreased", "dropped"}
+
+# 持平句沒有「rose by X percentage points」可抓，但 unchanged 本身就說明變動是 0
+_FLAT_RE = re.compile(r"\b(?:unchanged|remained|steady|stable)\b", re.I)
 
 _NEXT_RE = re.compile(rf"Next release:.*?(\d{{1,2}})\s+({_MONTH_RE})\s+(\d{{4}})", re.I | re.S)
 
@@ -147,6 +152,9 @@ def parse(html: str) -> dict:
             delta = -delta
         extras["較前月（pp）"] = round(delta, 2)
         extras["前月值"] = round(float(value) - delta, 2)
+    elif _FLAT_RE.search(lead):
+        extras["較前月（pp）"] = 0.0
+        extras["前月值"] = float(value)
     return {"value": float(value), "asof": asof, "extras": extras, "headline": h1}
 
 

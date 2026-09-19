@@ -143,6 +143,72 @@ def case_mi_uses_impersonation():
     return "get_impersonated(" in body, "melbourne_institute.py 沒有呼叫 get_impersonated("
 
 
+def case_mi_headline_sentence_forms():
+    """MI 頭條句的四種語序都要解得出數值與月份。
+
+    2026-09 那期把句型從「rose by 0.2 percentage points in August to 4.9 per cent」
+    換成「was unchanged in September at 4.9 per cent」——月份在前、介系詞是 at，
+    當時的正則三支全部不中，卡片停在 8 月。**這裡的字串是官方原文，不要改寫**：
+    每期換句型是常態，靠這條在解析層先爆，而不是等排程亮黃燈才發現。
+    """
+    import sources.melbourne_institute as mi
+    samples = [
+        # 2026-09 實際原文（持平／月份在前／at）
+        ("The expected inflation rate (30-per-cent trimmed mean measure) was unchanged "
+         "in September at 4.9 per cent.", 4.9, "september"),
+        # 2026-08 實際原文（上升／月份在前／to）
+        ("The expected inflation rate (30-per-cent trimmed mean measure) rose by 0.2 "
+         "percentage points in August to 4.9 per cent.", 4.9, "august"),
+        # 另外兩種語序（數值在前）
+        ("The expected inflation rate fell to 4.7 per cent in July.", 4.7, "july"),
+        ("The expected inflation rate remained at 4.7 per cent in June.", 4.7, "june"),
+    ]
+    for text, want_v, want_m in samples:
+        mm = mi._VALUE_RE.search(text)
+        if not mm:
+            return False, f"解不出數值：{text[:80]}"
+        month, value = (mm.group(1), mm.group(2)) if mm.group(1) else \
+                       (mm.group(4), mm.group(3)) if mm.group(3) else \
+                       (mm.group(6), mm.group(5))
+        if abs(float(value) - want_v) > 1e-9 or (month or "").lower() != want_m:
+            return False, f"解出 {value}／{month}，應為 {want_v}／{want_m}：{text[:60]}"
+    return True, ""
+
+
+def case_westpac_description_forms():
+    """Westpac description 的兩個坑：小數點與硬換行。
+
+    兩者都在 2026-09 同時發作，而且都不會報錯，只會讓卡片沿用前值：
+    - 變動幅度帶小數（`declined 5.2% to 84.4`）時，`[^.]*?` 會被那個點截斷；
+      前一期是 `rose 6% to 88.9`（整數）才僥倖通過
+    - description 裡留著字面上的 `\\r\\n`，把 `Leading Index` 切成兩段，
+      desc_must 比對不到
+    字串同樣是官方原文，照抄不要整形。
+    """
+    import sources.westpac_iq as w
+    cases = [
+        ("consumer_sentiment",
+         "The Westpac–Melbourne Institute Consumer Sentiment Index declined 5.2% "
+         "to 84.4 in September from 88.9 in August.", 84.4, "September"),
+        ("leading_index",
+         "The six-month annualised growth rate in the Westpac–Melbourne Institute "
+         "Leading \\r\\nIndex, which indicates the likely pace of economic activity "
+         "relative to trend three to \\r\\nnine months into the future, lifted to "
+         "–0.09% in August from –0.17% in July.", -0.09, "August"),
+    ]
+    for series, raw, want_v, want_m in cases:
+        spec = w.SPECS[series]
+        desc = w._norm(raw)
+        if not __import__("re").search(spec["desc_must"], desc, 2):
+            return False, f"{series}：desc_must 比對不到（硬換行沒被攤平？）"
+        mm = __import__("re").search(spec["pattern"], desc, 2)
+        if not mm:
+            return False, f"{series}：pattern 解不出數值：{desc[:90]}"
+        if abs(w._num(mm.group(1)) - want_v) > 1e-9 or mm.group(2) != want_m:
+            return False, f"{series}：解出 {mm.group(1)}／{mm.group(2)}，應為 {want_v}／{want_m}"
+    return True, ""
+
+
 CASES = [
     ("缺漏月份時基期靠日期對齊", case_missing_month),
     ("基期不存在時跳過該點",     case_no_phantom_base),
@@ -152,6 +218,8 @@ CASES = [
     ("ANZ 用一般 requests 不偽裝", case_anz_uses_plain_requests),
     ("偽裝設定檔有釘版本",       case_impersonate_profile_pinned),
     ("MI 走偽裝指紋",            case_mi_uses_impersonation),
+    ("MI 頭條句四種語序",        case_mi_headline_sentence_forms),
+    ("Westpac description 兩個坑", case_westpac_description_forms),
 ]
 
 

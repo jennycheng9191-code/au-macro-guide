@@ -3,12 +3,20 @@
   {
    "date": "2026-07-01",
    "value": -0.2
+  },
+  {
+   "date": "2026-08-01",
+   "value": -0.09
   }
  ],
  "consumer_sentiment_index": [
   {
    "date": "2026-08-01",
    "value": 88.9
+  },
+  {
+   "date": "2026-09-01",
+   "value": 84.4
   }
  ],
  "commonwealth_monthly_financial_statement": [
@@ -32,6 +40,10 @@
  "consumer_inflation_expectations": [
   {
    "date": "2026-08-01",
+   "value": 4.9
+  },
+  {
+   "date": "2026-09-01",
    "value": 4.9
   }
  ]

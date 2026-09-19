@@ -44,22 +44,39 @@ _MONTHS = {m: i for i, m in enumerate(
 _page_cache: dict[str, str] = {}
 
 # 兩張卡的解析規格。pattern 的第一個群組是數值、第二個是月份。
+# 「錨點到 to」之間用 `(?:[^.]|\.\d)*?` 而不是 `[^.]*?`：句子裡的變動幅度可能帶小數，
+# `declined 5.2% to 84.4 in September`（2026-09）那個點會把 [^.] 直接截斷，
+# 而 `rose 6% to 88.9`（2026-08，整數）剛好躲過——所以小數點只在後面接數字時放行。
 SPECS = {
     "consumer_sentiment": {
         "slug": "consumer-sentiment",
         "desc_must": r"Consumer Sentiment Index",
-        "pattern": r"Consumer Sentiment Index[^.]*?\bto\s+([-−–]?[\d.]+)\s+in\s+([A-Za-z]+)",
+        "pattern": r"Consumer Sentiment Index(?:[^.]|\.\d)*?\bto\s+([-−–]?[\d.]+)\s+in\s+([A-Za-z]+)",
         "prior": r"from\s+([-−–]?[\d.]+)\s+in\s+([A-Za-z]+)",
         "label": "Westpac–MI 消費者信心指數",
     },
     "leading_index": {
         "slug": "leading-index",
         "desc_must": r"Leading Index",
-        "pattern": r"Leading Index[^.]*?\bto\s+([-−–]?[\d.]+)%\s+in\s+([A-Za-z]+)",
+        "pattern": r"Leading Index(?:[^.]|\.\d)*?\bto\s+([-−–]?[\d.]+)%\s+in\s+([A-Za-z]+)",
         "prior": r"from\s+([-−–]?[\d.]+)%\s+in\s+([A-Za-z]+)",
         "label": "Westpac–MI 領先指標（六個月年化）",
     },
 }
+
+
+def _norm(d: str) -> str:
+    """把 description 裡的逸出序列攤平成單一空白。
+
+    description 是從排版過的文字來的，裡面留著硬換行，而且 JSON 逸出沒被解碼——
+    2026-09 那期寫的是字面上的 `Leading \\r\\nIndex`（反斜線加 r、n 四個字元），
+    於是 `desc_must = "Leading Index"` 比對失敗、整張卡黃燈。
+    要比對片語就得先把這些字面逸出換成空白。
+    """
+    for esc in ("\\r", "\\n", "\\t"):
+        d = d.replace(esc, " ")
+    d = d.replace("\\u2013", "–").replace("\\/", "/")
+    return re.sub(r"\s+", " ", d).strip()
 
 
 def _num(s: str) -> float | None:
@@ -98,11 +115,11 @@ def _description(url: str, must: str) -> str:
     if url not in _page_cache:
         _page_cache[url] = get_impersonated(url)
     raw = _page_cache[url]
-    cands = [_html.unescape(m.group(1))
+    cands = [_norm(_html.unescape(m.group(1)))
              for m in re.finditer(r'"description":"([^"]{25,600})"', raw)]
     for d in cands:
         if re.search(must, d, re.I):
-            return d.replace("\\u2013", "–").replace("\\/", "/")
+            return d
     raise RuntimeError(f"文章裡找不到含「{must}」的 description 欄（共 {len(cands)} 段）")
 
 

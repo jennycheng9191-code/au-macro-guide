@@ -510,9 +510,9 @@
    "min": 0,
    "max": 12
   },
-  "value_label": "季度 · 未來12個月預期（30% 截尾平均）",
+  "value_label": "季末單月觀測 · 未來12個月預期（30% 截尾平均）",
   "source_label": "RBA G3（原始資料 MI）",
-  "note": "季值是該季月度調查的彙總，水位天然高於單月，不可直接跟月度比大小"
+  "note": "RBA G3 標明 End-quarter observation：取季末那個月的月值，與月度卡同口徑、可直接比較"
  },
  "selected_living_cost_indexes": {
   "source": "abs",
