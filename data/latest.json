@@ -1,8 +1,8 @@
 {
- "build_time": "2026-10-14 00:11",
+ "build_time": "2026-10-14 15:48",
  "summary": {
-  "green": 39,
-  "yellow": 2,
+  "green": 35,
+  "yellow": 6,
   "gray": 0
  },
  "cards": {
@@ -12,7 +12,7 @@
    "value_label": "月度 · 年增率",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-30",
    "history": [
     {
@@ -101,7 +101,7 @@
    "value_label": "月度核心 · 年增率",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-30",
    "history": [
     {
@@ -190,7 +190,7 @@
    "value_label": "2026 Q2　季度 · 年增率（RBA 正式引用版）",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -309,7 +309,7 @@
    "value_label": "2026 Q2　季度核心 · 年增率（RBA 首選）",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -426,7 +426,7 @@
    "value_label": "2026 Q2　季度核心 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -543,7 +543,7 @@
    "value_label": "2026 Q2　最終需求(排除出口) · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -660,7 +660,7 @@
    "value_label": "2026 Q2　出口物價 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -911,7 +911,7 @@
    "value_label": "2026 Q2　受僱者家庭 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -1028,7 +1028,7 @@
    "value_label": "",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-24",
    "history": [
     {
@@ -1145,7 +1145,7 @@
    "value_label": "",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-24",
    "history": [
     {
@@ -1262,7 +1262,7 @@
    "value_label": "",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-24",
    "history": [
     {
@@ -1381,7 +1381,7 @@
    "value_label": "",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-24",
    "history": [
     {
@@ -1698,7 +1698,7 @@
    "value_label": "2026 Q3",
    "asof": "2026-07-01",
    "asof_label": "",
-   "age_days": 13,
+   "age_days": 14,
    "new_since": "2026-10-01",
    "history": [
     {
@@ -1817,7 +1817,7 @@
    "value_label": "",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-24",
    "history": [
     {
@@ -1934,7 +1934,7 @@
    "value_label": "2026 Q1　淨海外移民(季)",
    "asof": "2026-01-01",
    "asof_label": "",
-   "age_days": 194,
+   "age_days": 195,
    "new_since": "2026-09-19",
    "history": [
     {
@@ -2053,7 +2053,7 @@
    "value_label": "指數（季調，2019=100）",
    "asof": "2026-09-01",
    "asof_label": "",
-   "age_days": 12,
+   "age_days": 13,
    "new_since": "2026-10-06",
    "history": [
     {
@@ -2178,7 +2178,7 @@
    "value_label": "2026 Q2　總指數 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-08-29",
    "history": [
     {
@@ -2297,7 +2297,7 @@
    "value_label": "2026 Q2　私部門 · 年增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-08-29",
    "history": [
     {
@@ -2441,7 +2441,7 @@
    "value_label": "2026 Q2　實質 GDP · 季增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-09-02",
    "history": [
     {
@@ -2560,7 +2560,7 @@
    "value_label": "總支出 · 年增率",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-29",
    "history": [
     {
@@ -2679,7 +2679,7 @@
    "value_label": "2026 Q2　實際支出 · 季增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-08-29",
    "history": [
     {
@@ -2798,7 +2798,7 @@
    "value_label": "貨物貿易差額(季調)",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-10-01",
    "history": [
     {
@@ -2915,7 +2915,7 @@
    "value_label": "六個月年化成長率（相對趨勢）",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": null,
    "new_since": "2026-09-19",
    "history": [
     {
@@ -2933,8 +2933,11 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "description 解不出數值：The six-month annualised growth rate in the Westpac–Melbourne Institute Leading Index, which indicates the likely pace o",
+    "本次未取得，沿用 2026-08-01 的前值"
+   ],
    "note": "",
    "source_label": "Westpac IQ · Westpac–MI 領先指標",
    "unit": "%",
@@ -2947,7 +2950,7 @@
    "value_label": "2026 Q2　營業毛利 · 季增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-08-31",
    "history": [
     {
@@ -3102,7 +3105,7 @@
    "value_label": "住宅核准戶數(原始) · 年增率",
    "asof": "2026-08-01",
    "asof_label": "",
-   "age_days": 43,
+   "age_days": 44,
    "new_since": "2026-09-30",
    "history": [
     {
@@ -3222,7 +3225,7 @@
    "value_label": "2026 Q2　住宅平均價格(季)",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-09-19",
    "history": [
     {
@@ -3342,7 +3345,7 @@
    "value_label": "2026 Q2　新承作房貸金額 · 季增率",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "",
    "history": [
     {
@@ -3459,7 +3462,7 @@
    "value_label": "2026 Q2　開工戶數(季)",
    "asof": "2026-04-01",
    "asof_label": "",
-   "age_days": 104,
+   "age_days": 105,
    "new_since": "2026-10-07",
    "history": [
     {
@@ -3578,7 +3581,7 @@
    "value_label": "本財年全年預算估計（赤字為負）",
    "asof": "2026-05-01",
    "asof_label": "",
-   "age_days": 135,
+   "age_days": 136,
    "new_since": "",
    "history": [
     {
@@ -3593,8 +3596,10 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "期別結束後已 136 天仍未更新（正常應在 135 天內）"
+   ],
    "note": "",
    "source_label": "財政部 月度財政帳 · 全年預算估計",
    "unit": " 十億",
@@ -3607,7 +3612,7 @@
    "value_label": "本財年迄今累計（赤字為負）",
    "asof": "2026-05-01",
    "asof_label": "",
-   "age_days": 135,
+   "age_days": 136,
    "new_since": "",
    "history": [
     {
@@ -3622,8 +3627,10 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "期別結束後已 136 天仍未更新（正常應在 135 天內）"
+   ],
    "note": "",
    "source_label": "財政部 月度財政帳",
    "unit": " 十億",
@@ -3636,7 +3643,7 @@
    "value_label": "淨負債（月度財政帳口徑）",
    "asof": "2026-05-01",
    "asof_label": "",
-   "age_days": 135,
+   "age_days": 136,
    "new_since": "",
    "history": [
     {
@@ -3650,8 +3657,10 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "期別結束後已 136 天仍未更新（正常應在 135 天內）"
+   ],
    "note": "",
    "source_label": "財政部 月度財政帳",
    "unit": " 十億",
@@ -3659,8 +3668,8 @@
    "bond_dir": 1
   },
   "aofm_treasury_bond_issuance_program": {
-   "value": 109.7,
-   "value_fmt": "109.7 十億",
+   "value": 110.4,
+   "value_fmt": "110.4 十億",
    "value_label": "近 12 個月標售發行額（面額）",
    "asof": "2026-10-01",
    "asof_label": "",
@@ -3761,14 +3770,14 @@
     },
     {
      "date": "2026-10-01",
-     "value": 109.7
+     "value": 110.4
     }
    ],
    "extras": {
-    "本財年迄今發行": 40.2,
-    "最近標售日": "2026-10-13",
-    "最近標售金額(億)": 3.0,
-    "近12次認購倍數": 4.19
+    "本財年迄今發行": 40.9,
+    "最近標售日": "2026-10-14",
+    "最近標售金額(億)": 7.0,
+    "近12次認購倍數": 4.18
    },
    "extras_history": {},
    "also": {},
@@ -4029,15 +4038,11 @@
    "value": 4.6,
    "value_fmt": "4.60%",
    "value_label": "現金利率目標",
-   "asof": "2026-10-12",
+   "asof": "2026-10-13",
    "asof_label": "",
    "age_days": 1,
    "new_since": "",
    "history": [
-    {
-     "date": "2026-09-09",
-     "value": 4.35
-    },
     {
      "date": "2026-09-10",
      "value": 4.35
@@ -4129,6 +4134,10 @@
     {
      "date": "2026-10-12",
      "value": 4.6
+    },
+    {
+     "date": "2026-10-13",
+     "value": 4.6
     }
    ],
    "extras": {
@@ -4150,7 +4159,7 @@
    "value_label": "總信貸(排除金融業) · 年增率",
    "asof": "2026-08-31",
    "asof_label": "",
-   "age_days": 13,
+   "age_days": 14,
    "new_since": "2026-09-30",
    "history": [
     {
@@ -4271,7 +4280,7 @@
    "value_label": "總資產",
    "asof": "2026-10-07",
    "asof_label": "",
-   "age_days": 0,
+   "age_days": 1,
    "new_since": "2026-10-09",
    "history": [
     {
