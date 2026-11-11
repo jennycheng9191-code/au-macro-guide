@@ -1,8 +1,8 @@
 {
- "build_time": "2026-11-11 20:51",
+ "build_time": "2026-11-12 00:25",
  "summary": {
-  "green": 38,
-  "yellow": 3,
+  "green": 34,
+  "yellow": 7,
   "gray": 0
  },
  "cards": {
@@ -822,7 +822,7 @@
    "value_label": "2026 Q3　季末單月觀測 · 未來12個月預期（30% 截尾平均）",
    "asof": "2026-09-30",
    "asof_label": "",
-   "age_days": 0,
+   "age_days": null,
    "new_since": "2026-09-19",
    "history": [
     {
@@ -905,8 +905,11 @@
    "extras": {},
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/g3-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/g3-data.csv",
+    "本次未取得，沿用 2026-09-30 的前值"
+   ],
    "note": "位於近 19 期的第 58 百分位",
    "source_label": "RBA G3（原始資料 MI）",
    "unit": "%",
@@ -4054,7 +4057,7 @@
    "value_label": "現金利率目標",
    "asof": "2026-11-10",
    "asof_label": "",
-   "age_days": 1,
+   "age_days": null,
    "new_since": "",
    "history": [
     {
@@ -4159,8 +4162,11 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/f1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/f1-data.csv",
+    "本次未取得，沿用 2026-11-10 的前值"
+   ],
    "note": "創近 24 期新高",
    "source_label": "RBA F1 FIRMMCRTD",
    "unit": "%",
@@ -4173,7 +4179,7 @@
    "value_label": "總信貸(排除金融業) · 年增率",
    "asof": "2026-09-30",
    "asof_label": "",
-   "age_days": 12,
+   "age_days": null,
    "new_since": "2026-10-30",
    "history": [
     {
@@ -4280,8 +4286,11 @@
    },
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/d1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/d1-data.csv",
+    "本次未取得，沿用 2026-09-30 的前值"
+   ],
    "note": "位於近 24 期的第 96 百分位",
    "source_label": "RBA D1 DGFACNF12",
    "unit": "%",
@@ -4294,7 +4303,7 @@
    "value_label": "總資產",
    "asof": "2026-11-04",
    "asof_label": "",
-   "age_days": 1,
+   "age_days": null,
    "new_since": "2026-11-06",
    "history": [
     {
@@ -4397,8 +4406,11 @@
    "extras": {},
    "extras_history": {},
    "also": {},
-   "status": "green",
-   "notes": [],
+   "status": "yellow",
+   "notes": [
+    "抓取例外：取得網頁失敗 https://www.rba.gov.au/statistics/tables/csv/a1-data.csv: 403 Client Error: Forbidden for url: https://www.rba.gov.au/statistics/tables/csv/a1-data.csv",
+    "本次未取得，沿用 2026-11-04 的前值"
+   ],
    "note": "位於近 24 期的第 8 百分位",
    "source_label": "RBA A1 ARBAATAW",
    "unit": "$m",
